@@ -1,4 +1,4 @@
-package com.junsoo.shopping;
+package com.junsoo.shopping.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
