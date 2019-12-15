@@ -13,7 +13,8 @@
 <body>
     <div>
 	    <jsp:include page="header/header.jsp"></jsp:include>
-	    
+	    <jsp:include page="side/shoppingList.jsp"></jsp:include>
+	    <jsp:include page="content/homeContent.jsp"></jsp:include>
 	    <jsp:include page="footer/footer.jsp"></jsp:include>
     </div>
 </body>

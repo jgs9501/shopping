@@ -4,6 +4,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style type="text/css">
+	.myMenu{
+		position: static;
+		font-size: x-small;
+		list-style-type: none;
+		float: right;
+	}
+	.myMenu-li{
+		width: 80px;
+		float: right;
+	}
+</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,7 +29,7 @@
 					<input class="form-control mr-sm-2" type="text"	placeholder="Search">
 					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 				</form>
-				<ul class="navbar-nav mr-auto">
+				<ul class="navbar-nav my-auto">
 					<li class="nav-item dropdown">
 					    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes</a>
 						<div class="dropdown-menu" aria-labelledby="themes">
@@ -35,11 +47,13 @@
 					<li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
 				</ul>
-				<div>
-				<button type="button" class="btn btn-secondary"	style="font-size: x-small;">로 그 인</button>
-				<button type="button" class="btn btn-secondary"	style="font-size: x-small;">회 원 가 입</button>
-			    </div>
 			</div>
+		</div>
+		<div>
+		<ul class="myMenu navbar-nav">
+			<li class="myMenu-li nav-item"><a class="nav-link" href="#">로 그 인</a></li>
+			<li class="myMenu-li nav-item"><a class="nav-link" href="#">회 원 가 입</a></li>
+	    </ul>
 		</div>
 	</nav>
 </body>
