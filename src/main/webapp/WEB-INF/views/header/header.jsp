@@ -52,7 +52,7 @@
 		</div>
 		<div>
 		<ul class="myMenu navbar-nav">
-			<li class="myMenu-li nav-item"><a class="nav-link" href="#">로 그 인</a></li>
+			<li class="myMenu-li nav-item"><a class="nav-link" href="../contents/login/loginPage.jsp">로 그 인</a></li>
 			<li class="myMenu-li nav-item"><a class="nav-link" href="#">회 원 가 입</a></li>
 	    </ul>
 		</div>

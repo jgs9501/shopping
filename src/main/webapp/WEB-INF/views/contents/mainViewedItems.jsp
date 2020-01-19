@@ -3,10 +3,10 @@
 <html>
 <head>
 	<!-- Link Swiper's CSS -->
-	<link rel="stylesheet" href="./resources/swiper/css/swiper.css">
-	<script src="./resources/bootstrap/js/jquery.min.js"></script> 
+	<link rel="stylesheet" href="./resources/css/swiper.css">
+	<script src="./resources/js/jquery.min.js"></script> 
 	<!-- Swiper JS -->
-	<script src="./resources/swiper/js/swiper.min.js"></script>
+	<script src="./resources/js/swiper.min.js"></script>
 	<!-- Demo styles -->
 	<style type="text/css">
 	    .viewed-items-containers {
@@ -68,17 +68,17 @@
     <!-- Initialize Swiper -->
     <script>
         var swiper = new Swiper('.viewed-items-containers', {
-        	slidesPerView: 4,
+            slidesPerView: 4,
             spaceBetween: 30,
             slidesPerGroup: 4,
-       	 	pagination: {
-        	el: '.swiper-pagination',
-        	clickable: true,
-      	},
+       	    pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+      	    },
       	navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
-        },
+            },
     	});
     </script>
 </body>

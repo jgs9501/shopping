@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.min.css">
-	<script src="./resources/bootstrap/js/jquery.min.js"></script> 
-	<script src="./resources/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./resources/css/bootstrap.min.css">
+	<script src="./resources/js/jquery.min.js"></script> 
+	<script src="./resources/js/bootstrap.min.js"></script>
 	<title>JS Shop</title>
 	<style type="text/css">
 		.header {
@@ -24,6 +24,8 @@
 			max-width: 1400px;
 		}
 		.set {
+		    margin-left: auto;
+			margin-right: auto;
 			width: 1518px;
 		}
 		.aside-main {
