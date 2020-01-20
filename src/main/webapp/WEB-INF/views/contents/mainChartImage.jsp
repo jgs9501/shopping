@@ -3,10 +3,10 @@
 <html>
 <head>
 	<!-- Link Swiper's CSS -->
-	<link rel="stylesheet" href="./resources/swiper/css/swiper.css">
+	<link rel="stylesheet" href="./resources/css/swiper.css">
 	<!-- Swiper JS -->
-	<script src="./resources/bootstrap/js/jquery.min.js"></script> 
-	<script src="./resources/swiper/js/swiper.min.js"></script>
+	<script src="./resources/js/jquery.min.js"></script> 
+	<script src="./resources/js/swiper.min.js"></script>
 	<!-- Demo styles -->
     <style type="text/css">
 	    .swiper-container {

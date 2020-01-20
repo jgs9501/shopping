@@ -22,7 +22,7 @@
     </div>
     <div class="container" style="font-size: x-small;">
     	<ul style="list-style-type: none; text-align: right;">
-    		<li>TEL. Korea : 010-9917-0747 | Japan : 080-4139-0747 | jgs950130@gmail.com</li>
+    		<li>TEL. KakaoTalk : voicefam | LINE : sosojs | jgs950130@gmail.com</li>
     		<li>Copyright ⓒ 2019. JANG JUNSOO. All rights reserved.</li>
     	</ul>
     </div>
