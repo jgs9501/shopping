@@ -8,6 +8,7 @@
 	.footer {
 		float: left;
 		position: relative;
+		width: 100%
 	}
 </style>
 </head>
