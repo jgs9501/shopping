@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="./resources/css/bootstrap.min.css">
-	<script src="./resources/js/jquery.min.js"></script> 
-	<script src="./resources/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	<title>JS Shop</title>
 	<style type="text/css">
 		.header {
@@ -65,7 +68,7 @@
 	    	<article>
 				<jsp:include page="contents/mainContent.jsp"></jsp:include>
 	    	</article>
-			<article><h5 class="article-viewed-items">최근 본 상품</h5>
+			<article><p class="lead">최근 본 상품</p>
 				<jsp:include page="contents/mainViewedItems.jsp"></jsp:include>
 			</article>
 	    </section>
