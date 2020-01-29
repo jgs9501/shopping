@@ -35,14 +35,17 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<!-- 검색툴바 -->
-				<form class="navbar-form navbar-left" role="search">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="검색할 상품을 입력하세요">
-						<button type="submit" class="btn btn-default">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-						</button>
-					</div>
-				</form>
+				<div class="navbar-form navbar-left">
+				    <div class="input-group">
+				    	<input type="text" class="form-control" placeholder="상품을 검색하세요">
+				      	<span class="input-group-btn">
+					        <button class="btn btn-default" type="button">
+					        	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					        </button>
+				      	</span>
+				  </div>
+				</div>
+							
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Link <span class="sr-only">소개</span></a></li>
 					<li><a href="#">Link</a></li>
@@ -53,10 +56,9 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="${contextPage}/contents/login/loginPage">로그인</a></li>
-					<li><a href="#">회원가입</a></li>
+					<li><a href="${contextPage}/contents/regist/registPage">회원가입</a></li>
 				</ul>
 			</div>
-			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container-fluid -->
 	</nav>

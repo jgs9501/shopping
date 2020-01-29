@@ -61,6 +61,7 @@
 			      	<button type="button" class="btn btn-primary btn-lg btn-block">로 그 인</button>
 			    </div>
 			    <h6 style="float: right;"><a href="">비밀번호를 잊으셨나요?</a></h6>
+			    <hr class="my-4">
 				<br><h6 style="float: right;">회원가입을 원하실 경우는 <a href="">여기</a></h6>
 				
 		    </fieldset>
