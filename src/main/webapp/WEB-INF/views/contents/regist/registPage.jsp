@@ -17,15 +17,18 @@
 			margin-left: auto;
 			margin-right: auto;
 			width: 100%;
-			
 		}
+		
 		.form-width{
 			float: left;
 			padding-left: 100px;
-			min-width: 500px;
+			min-width: 600px;
 			max-width: 800px;
 			width: 600px;
 			position: relative;
+		}
+		.padding-left{
+			padding-left: 50px;
 		}
 	</style>
 </head>
@@ -35,7 +38,7 @@
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
 	
-	<ol class="breadcrumb center-auto">
+	<ol class="breadcrumb container">
 		<li><a href="#">Home</a></li>
 		<li><a href="#">Library</a></li>
 		<li class="active">Data</li>
@@ -61,21 +64,21 @@
 	  		</div><hr>
 			<!-- 비밀번호 -->
 	  		<div class="form-group">
-	    		<label for="inputPassword3" class="col-sm-2 control-label">비밀번호</label>
+	    		<label for="inputPassword" class="col-sm-2 control-label">비밀번호</label>
 	    		<div class="col-sm-10">
 	      			<input type="password" class="form-control" id="password" placeholder="영문 숫자포함 6자리이상 입력해주세요">
 	    		</div>
 	  		</div><hr>
 			<!-- 비밀번호 확인 -->
 	  		<div class="form-group">
-	    		<label for="inputPassword3" class="col-sm-2 control-label">비밀번호 확인</label>
+	    		<label for="inputPasswordCheck" class="col-sm-2 control-label">비밀번호 확인</label>
 	    		<div class="col-sm-10">
 	      			<input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호를 다시 입력해주세요">
 	    		</div>
 	  		</div><hr>
 	  		<!-- 이름 -->
 	  		<div class="form-group">
-	    		<label for="inputPassword3" class="col-sm-2 control-label">이 름</label>
+	    		<label for="inputUserName" class="col-sm-2 control-label">이 름</label>
 	    		<div class="col-sm-10">
 	      			<input type="text" class="form-control" id="userName">
 	    		</div>
@@ -103,6 +106,16 @@
 	    		<div class="col-sm-3">
 	      			<input type="text" class="form-control" id="birthDay" placeholder="01">
 	    		</div>
+	  		</div><hr>
+	  		<!-- 성별 -->
+	  		<div class="form-group">
+	    		<label for="inputGender" class="col-sm-2 control-label">성 별</label>
+	    		<label class="radio-inline padding-left">
+					<input type="radio" name="inlineRadioOptions" id="radioMan" checked="checked"> 남자
+				</label>
+				<label class="radio-inline padding-left">
+					<input type="radio" name="inlineRadioOptions" id="radioGirl"> 여자
+				</label>
 	  		</div><hr>
 	  		<!-- 전화번호 -->
 	  		<div class="form-group">

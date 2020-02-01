@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-heading">전기 / 전자제품</a>
+        <a href="#" class="list-group-item list-group-item-action">전기 / 전자제품</a>
         <a href="#" class="list-group-item list-group-item-action">화장품 / 향수</a>
         <a href="#" class="list-group-item list-group-item-action">식료품</a>
         <a href="#" class="list-group-item list-group-item-action">의류</a>
