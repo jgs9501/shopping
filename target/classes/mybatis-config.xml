@@ -4,4 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
  
 <configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	<typeAliases>
+		<package name="com.junsoo.shopping.common.vo.regist"/>
+	</typeAliases>
 </configuration>
