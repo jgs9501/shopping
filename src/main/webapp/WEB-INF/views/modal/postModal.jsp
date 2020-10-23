@@ -6,7 +6,7 @@
 </head>
 <body>
 	<!-- 다음 우편검색 API -->
-	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
 	function execDaumPostcode() {
         new daum.Postcode({
@@ -20,9 +20,9 @@
                     addr = data.jibunAddress;
                 }
 
-                document.getElementById("user_post").value = data.zonecode;
-                document.getElementById("user_address").value = addr;
-                document.getElementById("user_detail_address").focus();
+                document.getElementById('postNumber').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                document.getElementById("detailAddress").focus();
             }
         }).open();
     }
