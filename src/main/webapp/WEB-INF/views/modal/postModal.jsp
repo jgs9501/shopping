@@ -20,9 +20,9 @@
                     addr = data.jibunAddress;
                 }
 
-                document.getElementById("user_postNum").value = data.zonecode;
-                document.getElementById("user_post").value = addr;
-                document.getElementById("user_postDetail").focus();
+                document.getElementById("user_post").value = data.zonecode;
+                document.getElementById("user_address").value = addr;
+                document.getElementById("user_detail_address").focus();
             }
         }).open();
     }

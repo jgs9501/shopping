@@ -1,4 +1,4 @@
-package com.junsoo.shopping.common.controller.regist;
+package com.junsoo.shopping.common.controller.register;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -11,36 +11,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.junsoo.shopping.common.service.reigst.UserService;
-import com.junsoo.shopping.common.vo.regist.UserVO;
+import com.junsoo.shopping.common.service.reigster.RegisterService;
+import com.junsoo.shopping.common.vo.UserVO;
 
 @Controller
 @RequestMapping(value = "/contents")
-public class RegistController {
+public class RegisterController {
 
-	private static final Logger logger = LoggerFactory.getLogger(RegistController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 	
 	@Inject
-	UserService userService;
+	RegisterService userService;
 	
 	@RequestMapping(value = "/regist/registPage", method = RequestMethod.GET)
-	public String getRegist(){
+	public String getRegister(){
 		
-		logger.info(RegistController.class + " getRegist() method called");
+		logger.info(RegisterController.class + " getRegist() method called");
 		return "contents/regist/registPage";
 	}
 
 	@RequestMapping(value = "/regist/registPage", method = RequestMethod.POST)
-	public String postRegist(UserVO vo, HttpServletRequest request){
+	public String postRegister(UserVO vo, HttpServletRequest request) throws Exception{
 		
+		String page = "contents/regist/registComplete";
 		try {
+			logger.info("postRegist() method called");
 			userService.insertUser(vo, request);
-			logger.info(" postRegist() method called");
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			page = "redirect:/regist/registPage";
 		}
 		
-		return "contents/regist/registComplete";
+		return page;
 	}
 	
 	@RequestMapping(value = "/regist/checkId", method = RequestMethod.POST)

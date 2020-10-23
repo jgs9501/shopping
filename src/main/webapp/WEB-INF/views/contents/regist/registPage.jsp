@@ -205,6 +205,16 @@
 					$('#user_phone').focus();
 					return false;
 				}
+				// 성별 체크 확인
+				var gender = $(":input:radio[name=user_gender]:checked").val();
+				if(gender == "") {
+					$('#spanGender').text("성별을 입력해주세요.").css("color","red");
+					$('#spanGender').focus();
+					return false;
+				}
+				else {
+					$('#user_gender').val(gender);
+				}
 				// 전화번호 형식 확인
 				if(!phoneCheck.test($('#user_phone').val())) {
 					$('#spanPhone').text("전화번호 형식을 확인해주세요.").css("color","red");
@@ -212,21 +222,21 @@
 					return false;
 				}
 				// 우편번호 공백 확인
-				if($('#user_postNum').val() == "") {
-					$('#spanPost').text("우편번호를 입력해주세요.").css("color","red");
-					$('#user_postNum').focus();
-					return false;
-				}
-				// 주소 공백 확인
 				if($('#user_post').val() == "") {
-					$('#spanPost').text("주소를 입력해주세요.").css("color","red");
+					$('#spanPost').text("우편번호를 입력해주세요.").css("color","red");
 					$('#user_post').focus();
 					return false;
 				}
+				// 주소 공백 확인
+				if($('#user_address').val() == "") {
+					$('#spanPost').text("주소를 입력해주세요.").css("color","red");
+					$('#user_address').focus();
+					return false;
+				}
 				// 상세주소 공백 확인
-				if($('#user_postDetail').val() == "") {
+				if($('#user_detail_address').val() == "") {
 					$('#spanPost').text("상세주소를 입력해주세요.").css("color","red");
-					$('#user_postDetail').focus();
+					$('#user_detail_address').focus();
 					return false;
 				}
 			return true;
@@ -315,11 +325,13 @@
 	  		<div class="form-group">
 	    		<label for="inputGender" class="col-sm-2 control-label">성 별</label>
 	    		<label class="radio-inline padding-left">
-					<input type="radio" name="inlineRadioOptions" id="user_gender" name="user_gender" checked="checked" value="M"> 남자
+					<input type="radio" name="user_gender" checked="checked" value="M"> 남자
 				</label>
 				<label class="radio-inline padding-left">
-					<input type="radio" name="inlineRadioOptions" id="user_gender" name="user_gender" value="G"> 여자
+					<input type="radio" name="user_gender" value="G"> 여자
 				</label>
+				<input type="hidden" id="user_gender">
+				<span id="spanGender"></span>
 	  		</div><hr>
 	  		<!-- 전화번호 -->
 	  		<div class="form-group">
@@ -334,7 +346,7 @@
 	  		<div class="form-group">
 	    		<label class="col-sm-2 control-label">우편번호</label>
 	    		<div class="col-sm-5">
-	      			<input type="number" class="form-control" id="user_postNum" name="user_postNum" readonly="readonly">
+	      			<input type="number" class="form-control" id="user_post" name="user_post" readonly="readonly">
 	    		</div>
 	    		<div>
 	    			<jsp:include page="/WEB-INF/views/modal/postModal.jsp"></jsp:include>
@@ -345,14 +357,14 @@
 	  		<div class="form-group">
 	    		<label for="inputPassword3" class="col-sm-2 control-label">주 소</label>
 	    		<div class="col-sm-10">
-	      			<input type="text" class="form-control" id="user_post" name="user_post" readonly="readonly">
+	      			<input type="text" class="form-control" id="user_address" name="user_address" readonly="readonly">
 	    		</div>
 	  		</div>
 	  		<!-- 상세주소 -->
 	  		<div class="form-group">
 	    		<label for="inputPassword3" class="col-sm-2 control-label">상세주소</label>
 	    		<div class="col-sm-10">
-	      			<input type="text" class="form-control" id="user_postDetail" name="user_postDetail">
+	      			<input type="text" class="form-control" id="user_detail_address" name="user_detail_address">
 	    		</div>
 	  		<span id="spanPost"></span>
 	  		</div><hr>
