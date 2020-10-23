@@ -1,2 +1,4 @@
 # ignore properties file
 pom.properties
+target/*
+.springBeans
