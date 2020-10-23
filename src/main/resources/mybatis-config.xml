@@ -8,6 +8,6 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases>
-		<package name="com.junsoo.shopping.common.vo.regist"/>
+		<package name="com.junsoo.shopping.common.vo"/>
 	</typeAliases>
 </configuration>
