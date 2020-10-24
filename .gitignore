@@ -5,3 +5,4 @@ pom.properties
 .project
 .settings/
 .springBeans
+*.class
