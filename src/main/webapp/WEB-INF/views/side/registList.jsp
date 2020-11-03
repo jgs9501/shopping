@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,9 +21,9 @@
 <body>
 	<div class="list-group">
         <a href="#" class="list-group-item list-group-item-text list-header disabled">회원관리</a>
-        <a href="#" class="list-group-item list-group-item-action">회원가입</a>
-        <a href="#" class="list-group-item list-group-item-action">로그인</a>
-        <a href="#" class="list-group-item list-group-item-action">비밀번호 찾기</a>
+        <a href="${contextPage}/contents/modify/modifyForm" class="list-group-item list-group-item-action">회원정보수정</a>
+        <a href="${contextPage}/contents/modify/modifyPassword" class="list-group-item list-group-item-action">비밀번호수정</a>
+        <a href="#" class="list-group-item list-group-item-action">회원탈퇴</a>
     </div>
 </body>
 </html>
