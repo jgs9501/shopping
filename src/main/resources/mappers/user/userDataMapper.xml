@@ -57,4 +57,26 @@
 				#{user_ipaddress})
 	</insert>
 	
+	<!-- 비밀번호를 제외한 회원정보수정 쿼리-->
+	<update id="updateUser" parameterType="UserVO">
+		UPDATE user_data 
+		SET		mod_date = NOW(),
+				user_email = #{user_email},
+				user_domain = #{user_domain},
+				user_phone = #{user_phone},
+				user_post = #{user_post},
+				user_address = #{user_address},
+				user_detail_address = #{user_detail_address}
+		WHERE 
+		        user_id = #{user_id}
+	
+	</update>
+	<!-- 비밀번호 수정 -->
+	<update id="updatePassword" parameterType="UserVO">
+		UPDATE	user_data
+		SET		mod_date = NOW(),
+				password = #{password}
+		WHERE	user_id = #{user_id}
+	</update>
+	
 </mapper>

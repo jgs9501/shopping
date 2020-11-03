@@ -367,9 +367,9 @@
 	  		</div>
 		</form>
 	</section>
+	</div>
 	
 	<!--바닥글-->
-	</div>
     <footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
     </footer>

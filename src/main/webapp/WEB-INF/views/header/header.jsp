@@ -59,7 +59,7 @@
 					<li><a href="${contextPage}/contents/login/loginPage">로그인</a></li>
 					<li><a href="${contextPage}/contents/regist/registPage">회원가입</a></li>
 				<% }else{ %>
-					<li><a href="#"><%=session.getAttribute("user") %></a></li>
+					<li><a href="${contextPage}/contents/modify/modifyForm"><%=session.getAttribute("user") %></a></li>
 					<li><a href="${contextPage}/contents/logout">로그아웃</a></li>
 			    <% } %>
 				</ul>
