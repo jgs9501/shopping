@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -76,7 +78,7 @@ public class UserController {
 	/**
 	 * 로그아웃 이벤트 발생시 세션해제
 	 * @param session
-	 * @return
+	 * @return redirect:/
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -84,6 +86,51 @@ public class UserController {
 		logger.info("logout");
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	/**
+	 *  회원가입 페이지 이동
+	 * @return
+	 */
+	@RequestMapping(value = "/regist/registPage", method = RequestMethod.GET)
+	public String getRegister(){
+		
+		logger.info("getRegist method called");
+		return "contents/regist/registPage";
+	}
+
+	/**
+	 * 회원가입 기능
+	 * @param userVO
+	 * @param request
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/regist/registPage", method = RequestMethod.POST)
+	public String postRegister(UserVO userVO, HttpServletRequest request) throws Exception{
+		
+		String page = "contents/regist/registComplete";
+		try {
+			logger.info("postRegist() method called");
+			userService.insertUser(userVO, request);
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			page = "redirect:/regist/registPage";
+		}
+		
+		return page;
+	}
+	
+	/**
+	 * 회원가입시 아이디 존재 체크
+	 * @param user_id
+	 * @return int
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/regist/checkId", method = RequestMethod.POST)
+	public @ResponseBody int checkId(@RequestParam("user_id") String user_id) throws Exception {
+		
+		return userService.selectCheckId(user_id);
 	}
 	
 	/**
