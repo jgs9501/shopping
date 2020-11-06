@@ -19,15 +19,51 @@ public class UserDAOImpl implements UserDAO {
 	SqlSession sqlSession;
 	
 	@Override
-	public void signOut(UserVO userVO) throws Exception {
-		logger.info("signOut method called");
-		sqlSession.update(namespace + ".signOutUser", userVO);
+	public String selectPassword(String userId) throws Exception {
+		logger.info("selectPassword called");
+		return sqlSession.selectOne(namespace + ".selectPassword", userId);
+	}
+
+	@Override
+	public UserVO selectOneUser(UserVO userVO) throws Exception {
+		logger.info("selectOneUser called");
+		return sqlSession.selectOne(namespace + ".selectOneUser", userVO);
 	}
 	
 	@Override
 	public UserVO selectOneUser(String userId) throws Exception {
-		logger.info("selectOneUser called");
+		logger.info("selectOneUser method called");
 		return sqlSession.selectOne(namespace + ".selectOneUser", userId);
+	}
+
+	@Override
+	public void updateUser(UserVO userVO) throws Exception {
+		logger.info("updateUser method called");
+		sqlSession.update(namespace + ".updateUser", userVO);
+	}
+
+	@Override
+	public void updatePassword(UserVO userVO) throws Exception {
+		logger.info("updatePassword method called");
+		sqlSession.update(namespace + ".updatePassword", userVO);
+	}
+	
+	@Override
+	public void insertUser(UserVO userVO) throws Exception {
+		logger.info("insertUser called");
+		sqlSession.insert(namespace + ".insertUser", userVO);
+	}
+
+	@Override
+	public int selectCheckId(String userId) throws Exception {
+		logger.info("selectCheckId called");
+		return sqlSession.selectOne(namespace + ".selectCheckId", userId);
+	}
+	
+	@Override
+	public void signOut(UserVO userVO) throws Exception {
+		logger.info("signOut method called");
+		sqlSession.update(namespace + ".signOutUser", userVO);
 	}
 
 }
