@@ -23,13 +23,13 @@
 		SELECT  password
 		FROM    user_data
 		WHERE   user_id = #{user_id}
+		AND		del_flg = 'N'
 	</select>
 	
 	<!-- INSERT 회원가입 시, 특정 유저의 모든 데이터를 추가 -->
 	<insert id="insertUser" parameterType="UserVO">
 		INSERT INTO	user_data
-			(	
-				user_id,
+			(	user_id,
 				password,
 				user_name,
 				user_email,
@@ -40,10 +40,8 @@
 				user_post,
 				user_address,
 				user_detail_address,
-				user_ipaddress
-            )
-		VALUES(	
-				#{user_id},
+				user_ipaddress)
+		VALUES(	#{user_id},
 				#{password},
 				#{user_name},
 				#{user_email},
@@ -57,9 +55,9 @@
 				#{user_ipaddress})
 	</insert>
 	
-	<!-- 비밀번호를 제외한 회원정보수정 쿼리-->
+	<!-- 비밀번호를 제외한 회원정보수정 -->
 	<update id="updateUser" parameterType="UserVO">
-		UPDATE user_data 
+		UPDATE  user_data 
 		SET		mod_date = NOW(),
 				user_email = #{user_email},
 				user_domain = #{user_domain},
@@ -67,16 +65,24 @@
 				user_post = #{user_post},
 				user_address = #{user_address},
 				user_detail_address = #{user_detail_address}
-		WHERE 
-		        user_id = #{user_id}
-	
+		WHERE   user_id = #{user_id}
 	</update>
+	
 	<!-- 비밀번호 수정 -->
 	<update id="updatePassword" parameterType="UserVO">
 		UPDATE	user_data
 		SET		mod_date = NOW(),
 				password = #{password}
 		WHERE	user_id = #{user_id}
+	</update>
+	
+	<!-- 회원탈퇴 유저 수정 -->
+	<update id="signOutUser" parameterType="UserVO">
+		UPDATE	user_data
+		SET		mod_date = NOW(),
+				del_flg = 'Y'
+		WHERE	seq_user_id = #{seq_user_id}
+		AND		user_id = #{user_id}
 	</update>
 	
 </mapper>
