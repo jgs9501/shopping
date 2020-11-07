@@ -219,7 +219,7 @@
 	</c:when>
 	<%-- 비로그인일 경우 로그인 페이지 --%>	
 	<c:otherwise>
-		<%response.sendRedirect("${contextPage}/contents/login/loginPage.jsp"); %>
+		<%response.sendRedirect("${contextPage}/contents/user/login.jsp"); %>
 	</c:otherwise>
 	</c:choose>
 	<!--바닥글-->

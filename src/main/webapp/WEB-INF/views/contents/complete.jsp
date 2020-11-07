@@ -12,8 +12,39 @@
 	<script src="${contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<style type="text/css">
+		.center-auto{
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: auto;
+			margin-bottom: auto;
+			width: 500px;
+		}
+		.span-style{
+			display: inline-block;
+			font-size: 70px;
+		}
+	</style>
 </head>
 <body>
-${result} 완료
+	<!-- 머릿글 -->
+	<header>
+		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
+	</header>
+	<div class="container">
+		<aside>
+			<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
+		</aside>
+		<section class="center-auto">
+			<span class="glyphicon glyphicon-user span-style"></span>
+			<h2>${result} 완료되었습니다</h2>
+			<br><p><a class="btn btn-primary btn-lg" href="${ContextPath}/index" role="button">홈으로</a></p>
+		</section>
+	</div>
+	<!--바닥글-->
+    <footer class="footer">
+		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
+    </footer>
+
 </body>
 </html>
