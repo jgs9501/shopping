@@ -67,6 +67,13 @@
 	<section>
 		<form action="loginPost" class="center-sort center-padding" method="post">
 	 		<fieldset class="well well-lg center-padding width-limit">
+		 		<c:if test="${result ne null}">
+			 		<div class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						<span class="sr-only">Error:</span>
+						${result}가 잘못되었습니다
+					</div>
+		 		</c:if>
 				<h1 class="text-center">JS Shop</h1><br>
 		    	<div class="form-group">
 		    		<label for="TextInput">아이디</label>
@@ -87,7 +94,7 @@
 			    </div>
 			    <h6 style="float: right;"><a href="">비밀번호를 잊으셨나요?</a></h6>
  			    <hr class="my-4">
-				<h6 style="float: right;">회원가입을 원하실 경우는 <a href="${contextPage}/contents/regist/registPage">여기</a></h6>
+				<h6 style="float: right;">회원가입을 원하실 경우는 <a href="${contextPage}/contents/user/regist">여기</a></h6>
 		    </fieldset>
 		</form>
 	</section>

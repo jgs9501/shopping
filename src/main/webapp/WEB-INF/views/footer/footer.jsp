@@ -8,7 +8,8 @@
 	.footer {
 		float: left;
 		position: relative;
-		width: 100%
+		width: 100%;
+		margin-bottom: 5px;
 	}
 </style>
 </head>
@@ -24,7 +25,6 @@
     <div class="container" style="font-size: x-small;">
     	<ul style="list-style-type: none; text-align: right;">
     		<li>TEL. KakaoTalk : voicefam | LINE : sosojs | jgs950130@gmail.com</li>
-    		<li>Copyright ⓒ 2019. JANG JUNSOO. All rights reserved.</li>
     	</ul>
     </div>
 </body>

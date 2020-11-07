@@ -21,8 +21,8 @@
 <body>
 	<div class="list-group">
         <a href="#" class="list-group-item list-group-item-text list-header disabled">회원관리</a>
-        <a href="${contextPage}/contents/modify/modifyForm" class="list-group-item list-group-item-action">회원정보수정</a>
-        <a href="${contextPage}/contents/modify/modifyPassword" class="list-group-item list-group-item-action">비밀번호수정</a>
+        <a href="${contextPage}/contents/user/modify" class="list-group-item list-group-item-action">회원정보수정</a>
+        <a href="${contextPage}/contents/user/modifyPassword" class="list-group-item list-group-item-action">비밀번호수정</a>
         <a href="${contextPage}/contents/user/signOut" class="list-group-item list-group-item-action">회원탈퇴</a>
     </div>
 </body>
