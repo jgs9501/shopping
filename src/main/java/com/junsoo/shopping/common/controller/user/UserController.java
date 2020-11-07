@@ -224,7 +224,7 @@ public class UserController {
 			}
 			else {
 				mv.addObject("userVO", userService.selectOneUser(user));
-				mv.setViewName("contents/user/modify");
+				mv.setViewName("contents/user/modifyPassword");
 			}
 		} catch (NullPointerException npe) {
 			logger.warn(npe.getMessage());
