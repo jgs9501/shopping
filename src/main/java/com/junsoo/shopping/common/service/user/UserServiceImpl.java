@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserService{
 		RegexChecker regexChecker = new RegexChecker();
 		
 	    String error = "";
+	    System.out.println(userVO);
 		try {
 			// 유저 ID 정규식 확인
 			if(!regexChecker.isUserId(userVO.getUser_id())) {

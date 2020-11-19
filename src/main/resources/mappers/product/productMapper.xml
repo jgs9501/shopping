@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.productMapper">
+	<insert id="insertProduct" parameterType="ProductVO">
+		INSERT INTO product(
+ 			seq_user_id,
+			product_name,
+			product_cnt,
+			product_price,
+			product_desc,
+			product_img,
+			product_thumbImg,
+			category,
+			sale,
+			discount
+		) VALUES (
+			#{seq_user_id},
+			#{product_name},
+			#{product_cnt},
+			#{product_price},
+			#{product_desc},
+			#{product_img},
+			#{product_thumbImg},
+			#{category},
+			#{sale},
+			#{discount}
+		)
+	</insert>
+</mapper>

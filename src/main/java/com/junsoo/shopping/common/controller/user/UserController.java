@@ -33,11 +33,11 @@ public class UserController {
 	 * @return ModelAndView
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/login/loginPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public ModelAndView loginGet() throws Exception{
 		logger.info("login get");
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("contents/login/loginPage");
+		mv.setViewName("contents/user/login");
 		return mv;
 	}
 
@@ -49,30 +49,44 @@ public class UserController {
 	 * @return String
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/login/loginPost", method = RequestMethod.POST)
-	public String loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception{
+	@RequestMapping(value="/user/loginPost", method = RequestMethod.POST)
+	public ModelAndView loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception{
 		logger.info("login post");
 		HttpSession session = req.getSession();
-		UserVO login = userService.selectOneUser(vo);
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		
+		ModelAndView mv = new ModelAndView();
+		String page = "redirect:/index";
 		try {
-			boolean passMatch = passwordEncoder.matches(vo.getPassword(), userService.selectPassword(vo.getUser_id()));
-			if(login != null && passMatch) {
-				session.setAttribute("user", login.getUser_id());
-				return "redirect:/";
-			}
-			else {
+			UserVO login = userService.selectOneUser(vo);
+			boolean passMatch = passwordEncoder.matches(vo.getPassword(), 
+								userService.selectPassword(vo.getUser_id()));
+			if(login == null) {
 				session.setAttribute("user", null);
 				rttr.addFlashAttribute("msg", false);
-				return "contents/login/loginPage";
+				mv.addObject("result", "아이디");
+				page = "contents/user/login";
 			}
-		}
-		catch (NullPointerException npe) {
+			
+			else if(!passMatch) {
+				session.setAttribute("user", null);
+				rttr.addFlashAttribute("msg", false);
+				mv.addObject("result", "비밀번호");
+				page = "contents/user/login";
+			}
+			else {
+				session.setAttribute("userVO", login);
+				session.setAttribute("user", login.getUser_id());
+			}
+		} catch (NullPointerException npe) {
 			logger.warn(npe.getMessage());
 			vo=null;
-			return "redirect:/";
+		} catch (Exception e) {
+			logger.warn(e.getMessage());
+			vo=null;
+		} finally {
+			mv.setViewName(page);
 		}
+		return mv;
 	}
 	
 	/**
@@ -92,33 +106,37 @@ public class UserController {
 	 *  회원가입 페이지 이동
 	 * @return
 	 */
-	@RequestMapping(value = "/regist/registPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/regist", method = RequestMethod.GET)
 	public String getRegister(){
 		
 		logger.info("getRegist method called");
-		return "contents/regist/registPage";
+		return "contents/user/regist";
 	}
 
 	/**
 	 * 회원가입 기능
 	 * @param userVO
 	 * @param request
-	 * @return String
+	 * @return ModelAndView
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/regist/registPage", method = RequestMethod.POST)
-	public String postRegister(UserVO userVO, HttpServletRequest request) throws Exception{
+	@RequestMapping(value = "/user/regist", method = RequestMethod.POST)
+	public ModelAndView postRegister(UserVO userVO, HttpServletRequest request) throws Exception{
 		
-		String page = "contents/regist/registComplete";
+		String page = "contents/complete";
+		ModelAndView mv = new ModelAndView();
 		try {
 			logger.info("postRegist() method called");
+			mv.setViewName(page);
+			mv.addObject("result", "회원가입");
 			userService.insertUser(userVO, request);
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
-			page = "redirect:/regist/registPage";
+			page = "redirect:/user/regist";
+			mv.setViewName(page);
 		}
 		
-		return page;
+		return mv;
 	}
 	
 	/**
@@ -127,7 +145,7 @@ public class UserController {
 	 * @return int
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/regist/checkId", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/checkId", method = RequestMethod.POST)
 	public @ResponseBody int checkId(@RequestParam("user_id") String user_id) throws Exception {
 		
 		return userService.selectCheckId(user_id);
@@ -139,27 +157,28 @@ public class UserController {
 	 * @return ModelAndView
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/modify/modifyForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/modify", method = RequestMethod.GET)
 	public ModelAndView getModify(HttpServletRequest request) throws Exception{
 		
 		logger.info("getModify called");
 		ModelAndView mv = new ModelAndView();
-		String user = (String)request.getSession().getAttribute("user");
+		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
 		
 		try {
-			if(user == null) {
-				mv.setViewName("contents/errorForm");
+			if(userVO == null) {
+				mv.addObject("result", "로그인 정보를 다시 확인해주세요");
+				mv.setViewName("contents/error");
 			}
 			else {
-				mv.addObject("userVO", userService.selectOneUser(user));
-				mv.setViewName("contents/modify/modifyForm");
+				mv.addObject("userVO", userVO);
+				mv.setViewName("contents/user/modify");
 			}
 		} catch (NullPointerException npe) {
-			logger.warn(npe.getMessage());
-			mv.setViewName("/:redirect/contents/errorForm");
+			logger.error(npe.getMessage());
+			mv.setViewName("contents/error");
 		} catch (Exception e) {
-			logger.warn(e.getMessage());
-			mv.setViewName("/:redirect/contents/errorForm");
+			logger.error(e.getMessage());
+			mv.setViewName("contents/error");
 		}
 		
 		return mv;
@@ -168,15 +187,17 @@ public class UserController {
 	/**
 	 * 회원수정기능
 	 * @param userVO
-	 * @return String
+	 * @return ModelAndView
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/modify/modifyForm", method = RequestMethod.POST)
-	public String postModify(UserVO userVO) throws Exception{
+	@RequestMapping(value = "/user/modify", method = RequestMethod.POST)
+	public ModelAndView postModify(UserVO userVO) throws Exception{
 		
-		String page = "contents/modify/modifyComplete";
+		String page = "contents/complete";
+		ModelAndView mv = new ModelAndView();
 		try {
 			logger.info("postModify method called");
+			mv.addObject("result", "회원수정");
 			userService.updateUser(userVO);
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
@@ -184,9 +205,11 @@ public class UserController {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			page = "redirect:/";
+		} finally {
+			mv.setViewName(page);
 		}
 		
-		return page;
+		return mv;
 	}
 	
 	/**
@@ -195,7 +218,7 @@ public class UserController {
 	 * @return ModelAndView
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/modify/modifyPassword", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/modifyPassword", method = RequestMethod.GET)
 	public ModelAndView getModifyPassword(HttpServletRequest request) throws Exception{
 		
 		logger.info("getModifyPassword called");
@@ -203,18 +226,18 @@ public class UserController {
 		String user = (String)request.getSession().getAttribute("user");
 		try {
 			if(user == null) {
-				mv.setViewName("contents/errorForm");
+				mv.setViewName("contents/error");
 			}
 			else {
 				mv.addObject("userVO", userService.selectOneUser(user));
-				mv.setViewName("contents/modify/modifyPassword");
+				mv.setViewName("contents/user/modifyPassword");
 			}
 		} catch (NullPointerException npe) {
 			logger.warn(npe.getMessage());
-			mv.setViewName("/:redirect/contents/errorForm");
+			mv.setViewName("/:redirect/contents/error");
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
-			mv.setViewName("/:redirect/contents/errorForm");
+			mv.setViewName("/:redirect/contents/error");
 		}
 		return mv;
 	}
@@ -223,15 +246,17 @@ public class UserController {
 	 * 비밀번호 수정기능
 	 * @param userVO
 	 * @param request
-	 * @return String
+	 * @return ModelAndView
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/modify/modifyPassword", method = RequestMethod.POST)
-	public String postModifyPassword(UserVO userVO, HttpServletRequest request) throws Exception{
+	@RequestMapping(value = "/user/modifyPassword", method = RequestMethod.POST)
+	public ModelAndView postModifyPassword(UserVO userVO, HttpServletRequest request) throws Exception{
 		
-		String page = "contents/modify/modifyComplete";
+		String page = "contents/complete";
+		ModelAndView mv = new ModelAndView();
 		try {
 			logger.info("postModifyPassword method called");
+			mv.addObject("result", "비밀번호 수정");
 			userService.updatePassword(userVO, request);
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
@@ -239,9 +264,11 @@ public class UserController {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			page = "redirect:/";
+		} finally {
+			mv.setViewName(page);
 		}
 		
-		return page;
+		return mv;
 	}
 	
 	/**
@@ -262,7 +289,7 @@ public class UserController {
 			mv.addObject("userVO", userService.selectOneUser(user));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			mv.setViewName("contents/errorForm");
+			mv.setViewName("contents/error");
 		}
 		return mv;
 	}
@@ -294,10 +321,10 @@ public class UserController {
 			}
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
-			mv.setViewName("contents/errorForm");
+			mv.setViewName("contents/error");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			mv.setViewName("contents/errorForm");
+			mv.setViewName("contents/error");
 		}
 		return mv;
 	}

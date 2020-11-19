@@ -21,8 +21,6 @@
 		}
 		
 		.form-width{
-			float: left;
-			padding-left: 100px;
 			min-width: 600px;
 			max-width: 800px;
 			width: 600px;
@@ -138,6 +136,7 @@
 			})
 		})
 		function checkInfo() {
+			$('span').empty();
 				// 아이디 확인 : Ajax에서 idFlag의 값을 불러옴 (정상치 : true)
 				if(!idFlag) {
 					$('#spanId').text("아이디를 확인해주세요.").css("color","red");
@@ -246,16 +245,11 @@
 	</header>
 	
 	<ol class="breadcrumb container">
-		<li><a href="#">Home</a></li>
-		<li><a href="#">Library</a></li>
-		<li class="active">Data</li>
+		<li><a href="${contextPath}/index">메인</a></li>
+		<li class="active">회원가입</li>
 	</ol>
 	<!-- 회원관리 사이드바 리스트 -->
 	<div class="container">
-		<aside>
-			<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
-		</aside>
-	
 	<!-- 회원가입 폼 -->
 	<section>
 		<form class="form-horizontal form-width center-auto" method="post" onsubmit="return checkInfo()">
