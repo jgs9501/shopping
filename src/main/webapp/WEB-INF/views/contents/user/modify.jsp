@@ -40,7 +40,6 @@
 		var birthdayCheck = RegExp(/^([0-9]{4})-?([0-9]{2})-?([0-9]{2})$/);
 		var phoneCheck = RegExp(/^[0-9]{11}$/);
 		var postCheck = RegExp(/^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]$/);
-		// 아이디 유효성 체크 
 		
 		function checkInfo() {
 				// 아이디 확인
@@ -138,7 +137,7 @@
 	</ol>
 	<!-- 로그인한 상태일 경우, 회원정보수정 페이지 -->
 	<c:choose>
-	<c:when test="${not empty sessionScope.user}">
+	<c:when test="${not empty sessionScope.userVO}">
 		<div class="container">
 			<aside>
 				<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>

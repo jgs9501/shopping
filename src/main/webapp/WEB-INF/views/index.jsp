@@ -68,7 +68,7 @@
 	    	<article>
 				<jsp:include page="contents/mainContent.jsp"></jsp:include>
 	    	</article>
-			<article><p class="lead">최근 본 상품</p>
+			<article>
 				<jsp:include page="contents/mainViewedItems.jsp"></jsp:include>
 			</article>
 	    </section>

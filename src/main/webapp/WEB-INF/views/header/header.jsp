@@ -47,21 +47,33 @@
 				</div>
 							
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Link <span class="sr-only">소개</span></a></li>
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
-					<li><a href="#">Link</a></li>
+					<c:choose>
+						<c:when test="${userVO.auth ne 2}">
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+						</c:when>
+						<c:when test="${userVO.auth eq 2}">
+							<li><a href="${contextPath}/contents/product/release">상품등록</a></li>
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+							<li><a href="#">Link</a></li>
+						</c:when>
+					</c:choose>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-				<% if(session.getAttribute("user")==null){ %>
+				<% if(session.getAttribute("userVO")==null){ %>
 					<li><a href="${contextPage}/contents/user/login">로그인</a></li>
 					<li><a href="${contextPage}/contents/user/regist">회원가입</a></li>
 				<% }else{ %>
 					<li><a href="${contextPage}/contents/user/modify"><%=session.getAttribute("user") %></a></li>
 					<li><a href="${contextPage}/contents/logout">로그아웃</a></li>
-			    <% } %>
+				<%} %>
 				</ul>
 			</div>
 		</div>

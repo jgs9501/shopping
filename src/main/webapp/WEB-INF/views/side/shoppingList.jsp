@@ -22,8 +22,6 @@
      	<a href="#" class="list-group-item list-group-item-action">사무용품</a>
         <a href="#" class="list-group-item list-group-item-action">주방용품</a>
         <a href="#" class="list-group-item list-group-item-action">음반 / DVD</a>
-        <a href="#" class="list-group-item list-group-item-action">인형 / 장난감</a>
-        <a href="#" class="list-group-item list-group-item-action">주방용품</a>
         <a href="#" class="list-group-item list-group-item-action">기타</a>
     </div>
 </body>

@@ -77,11 +77,11 @@
 				<h1 class="text-center">JS Shop</h1><br>
 		    	<div class="form-group">
 		    		<label for="TextInput">아이디</label>
-			    	<input type="text" id="user_id" name="user_id" class="form-control" placeholder="아이디를 입력하세요">
+			    	<input type="text" id="user_id" name="user_id" class="form-control">
 			    </div>
 				<div class="form-group">
 		    		<label for="TextInput">비밀번호</label>
-			    	<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호 6자리 이상 입력하세요">
+			    	<input type="password" id="password" name="password" class="form-control">
 			    </div>
 			    <div class="checkbox">
 				    <label>

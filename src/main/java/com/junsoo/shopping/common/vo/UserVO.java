@@ -8,11 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@EqualsAndHashCode
+
 /**
 	CREATE TABLE `USER_DATA`(							
 		`seq_user_id` int(10) NOT NULL auto_increment primary key ,						
@@ -29,12 +25,18 @@ import lombok.ToString;
 		`user_post` int(7) NOT NULL,
 		`user_address` varchar(100) NOT NULL,
 		`user_detail_address` varchar(100) NOT NULL,						
-		`user_ipaddress` char(15) 					
+		`user_ipaddress` char(15),
+		`auth` int(1) DEFAULT 1				
 	)
  *
  * @author jjsoo
  *
  */
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@EqualsAndHashCode
 public class UserVO {
 	
 	@NonNull
@@ -69,4 +71,6 @@ public class UserVO {
 	private String user_detail_address;
 	@NonNull
 	private String user_ipaddress;
+	@NonNull
+	private int	   auth;
 }

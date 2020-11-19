@@ -136,6 +136,7 @@
 			})
 		})
 		function checkInfo() {
+			$('span').empty();
 				// 아이디 확인 : Ajax에서 idFlag의 값을 불러옴 (정상치 : true)
 				if(!idFlag) {
 					$('#spanId').text("아이디를 확인해주세요.").css("color","red");
