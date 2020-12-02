@@ -12,28 +12,10 @@
 	<script src="${contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-		});
-	</script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	<style type="text/css">
 		body {
 			background-color: #eee;
-		}
-		
-		.center-sort {
-			margin-left: auto;
-			margin-right: auto;
-		}
-		.width-limit {
-			max-width: 700px;
-			min-width: 400px;
-		}
-		.center-padding {
-			padding-top: 100px;
-			padding-left: 25%;
-			padding-right: 25%;
-			padding-bottom: 100px;
 		}
 	</style>
 </head>

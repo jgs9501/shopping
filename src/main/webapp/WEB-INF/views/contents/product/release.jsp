@@ -11,39 +11,7 @@
 	<script src="${contextPath}/resources/js/bootstrap-select.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-	<script type="text/javascript">
-		var checkNumber = RegExp(/^[0-9]{1,10}$/);
-		
-		function checkInfo() {
-			$('span').empty();
-			if($('#product_name').val() == "") {
-				$('#spanProductName').text("상품 이름을 입력해주세요").css("color", "red");
-				$('#product_name').focus();
-				return false;
-			}
-			if(!checkNumber.test($('#product_cnt').val())) {
-				$('#spanProductCnt').text("상품 개수를 입력해주세요").css("color", "red");
-				$('#product_cnt').focus();
-				return false;
-			}
-			if(!checkNumber.test($('#product_price').val())) {
-				$('#spanProductPrice').text("상품 가격을 입력해주세요").css("color", "red");
-				$('#product_price').focus();
-				return false;
-			}
-			if($('#product_desc').val() == "") {
-				$('#spanProductDesc').text("상품 설명을 입력해주세요").css("color", "red");
-				$('#product_desc').focus();
-				return false;
-			}
-			if($('#discount').val() == "") {
-				$('#spanDiscount').text("할인 가격을 입력해주세요.").css("color", "red");
-				$('#discount').focus();
-				return false;
-			}
-			return true;
-		}
-	</script>
+	
 </head>
 <body>
 	<!-- 머릿글 -->
@@ -58,7 +26,7 @@
 	
 	<div class="container">
 		<section>
-			<form class="form-horizontal form-width center-auto" method="post" onsubmit="return checkInfo()" enctype="multipart/form-data">
+			<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()" enctype="multipart/form-data">
 				<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}"> 
 				<!-- 상품이름 -->
 		    	<div id="productName" class="form-group has-feedback">
@@ -111,16 +79,16 @@
 		    		<label class="col-sm-2 control-label">카테고리</label>
 		    		<div class="col-sm-10">
 		    			<select id="category" name="category">
-		    				<option value="1">전기/전자제품</option>
-							<option value="2">화장품/향수</option>
-						    <option value="3">식료품</option>
-						    <option value="4">의류</option>
-						    <option value="5">신발류</option>
-						    <option value="6">악세서리</option>
-						    <option value="7">사무용품</option>
-						    <option value="8">주방용품</option>
-						    <option value="9">음반/DVD</option>
-						    <option value="10">기타</option>
+		    				<option value="100">전기/전자제품</option>
+							<option value="200">화장품/향수</option>
+						    <option value="300">식료품</option>
+						    <option value="400">의류</option>
+						    <option value="500">신발류</option>
+						    <option value="600">악세서리</option>
+						    <option value="700">사무용품</option>
+						    <option value="800">주방용품</option>
+						    <option value="900">음반/DVD</option>
+						    <option value="1000">기타</option>
 		    			</select>
 		    		</div>
 		    		<span id="spanCategory"></span>
@@ -155,4 +123,36 @@
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
     </footer>
 </body>
+<script type="text/javascript">
+	var checkNumber = RegExp(/^[0-9]{1,10}$/);
+	function checkInfo() {
+		$('span').empty();
+		if($('#product_name').val() == "") {
+			$('#spanProductName').text("상품 이름을 입력해주세요").css("color", "red");
+			$('#product_name').focus();
+			return false;
+		}
+		if(!checkNumber.test($('#product_cnt').val())) {
+			$('#spanProductCnt').text("상품 개수를 입력해주세요").css("color", "red");
+			$('#product_cnt').focus();
+			return false;
+		}
+		if(!checkNumber.test($('#product_price').val())) {
+			$('#spanProductPrice').text("상품 가격을 입력해주세요").css("color", "red");
+			$('#product_price').focus();
+			return false;
+		}
+		if($('#product_desc').val() == "") {
+			$('#spanProductDesc').text("상품 설명을 입력해주세요").css("color", "red");
+			$('#product_desc').focus();
+			return false;
+		}
+		if($('#discount').val() == "") {
+			$('#spanDiscount').text("할인 가격을 입력해주세요.").css("color", "red");
+			$('#discount').focus();
+			return false;
+		}
+		return true;
+	}
+</script>
 </html>

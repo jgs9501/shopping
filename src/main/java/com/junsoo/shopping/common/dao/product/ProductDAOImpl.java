@@ -1,5 +1,7 @@
 package com.junsoo.shopping.common.dao.product;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,6 +24,13 @@ public class ProductDAOImpl implements ProductDAO {
 	public void insertProduct(ProductVO productVO) throws Exception {
 		logger.info("insertProduct method called");
 		sqlSession.insert(namespace + ".insertProduct", productVO);
+	}
+
+	@Override
+	public List<ProductVO> selectRecentlyProduct(int category) throws Exception {
+		
+		logger.info("selectCategoryProduct method called");
+		return sqlSession.selectList(namespace + ".selectRecentlyProduct", category);
 	}
 
 }

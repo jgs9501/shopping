@@ -12,6 +12,7 @@
 	<script src="${contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	<script type="text/javascript">
 		$(document).ready(function(){
 			var user_id = $.cookie('key');
@@ -36,28 +37,8 @@
 			});
 		});
 	</script>
-	<style type="text/css">
-		body {
-			background-color: #eee;
-		}
-		
-		.center-sort {
-			margin-left: auto;
-			margin-right: auto;
-		}
-		.width-limit {
-			max-width: 700px;
-			min-width: 400px;
-		}
-		.center-padding {
-			padding-top: 100px;
-			padding-left: 25%;
-			padding-right: 25%;
-			padding-bottom: 100px;
-		}
-	</style>
 </head>
-<body>
+<body style="background: #eee">
 	<!-- 머릿글 -->
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>

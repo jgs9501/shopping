@@ -1,6 +1,7 @@
 package com.junsoo.shopping.common.service.product;
 
 import java.io.File;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.junsoo.shopping.common.dao.product.ProductDAO;
 import com.junsoo.shopping.common.vo.ProductVO;
 import com.junsoo.shopping.utils.UploadFileUtils;
+import com.junsoo.shopping.utils.checker.ValueChecker;
 
 @Service
 @Transactional
@@ -26,6 +28,8 @@ public class ProductServiceImpl implements ProductService{
 
 	@Resource(name = "uploadPath")
 	private String uploadPath;
+	
+	ValueChecker vc = new ValueChecker();
 	
 	@Override
 	public int insertProduct(ProductVO productVO, MultipartFile file) throws Exception {
@@ -47,14 +51,15 @@ public class ProductServiceImpl implements ProductService{
 			productVO.setProduct_img(File.separator + "images" + ymdPath + File.separator + fileName);
 			productVO.setProduct_thumbImg(File.separator + "images" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
-			if(productVO.getSeq_user_id() < 1 ||
+			
+			if(productVO.getSeq_user_id() < 1 		||
 				productVO.getProduct_name() == null ||
-				productVO.getProduct_cnt() < 0 ||
+				productVO.getProduct_cnt() < 0 		||
 				productVO.getProduct_desc() == null ||
-				productVO.getProduct_price() < 0 ||
-				productVO.getSale() == '\u0000' ||
-				productVO.getDiscount() < 0 ||
-				productVO.getCategory() < 1) {
+				productVO.getProduct_price() < 0 	||
+				productVO.getSale() == '\u0000' 	||
+				productVO.getDiscount() < 0 		||
+				!vc.isCheckCategory(productVO.getCategory())) {
 				logger.error("Invalid args " + productVO);
 				return 0;
 			}
@@ -67,6 +72,14 @@ public class ProductServiceImpl implements ProductService{
 			logger.error(e.getMessage());
 		}
 		return 1;
+	}
+
+
+	@Override
+	public List<ProductVO> selectRecentlyProduct(int category) throws Exception {
+		
+		logger.info("selectCategoryProduct method called");
+		return productDAO.selectRecentlyProduct(category);
 	}
 	
 

@@ -29,4 +29,13 @@
 			#{discount}
 		)
 	</insert>
+	
+	<select id="selectRecentlyProduct" parameterType="int" resultType="ProductVO">
+		SELECT *
+		FROM   product
+		WHERE  category = #{category}
+		AND    sale = 'Y'
+		AND	   product_cnt != 0
+		ORDER BY reg_date DESC LIMIT 4
+	</select>
 </mapper>

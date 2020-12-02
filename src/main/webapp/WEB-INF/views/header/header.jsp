@@ -5,20 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<style type="text/css">
-		.myMenu {
-			position: static;
-			font-size: x-small;
-			list-style-type: none;
-			float: right;
-		}
-		
-		.myMenu-li {
-			width: 80px;
-			float: right;
-		}
-		</style>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 </head>
 <body>
 	<nav class="navbar navbar-default">
