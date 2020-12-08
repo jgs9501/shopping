@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.maven.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -96,10 +95,10 @@ public class ProductController {
 			productVO.setSale(multiReq.getParameter("sale"));
 			productVO.setDiscount(Integer.parseInt(multiReq.getParameter("discount")));
 			productVO.setProduct_desc(multiReq.getParameter("weight"));
-			productVO.setProduct_desc(multiReq.getParameter("attention"));
-			productVO.setProduct_desc(multiReq.getParameter("valid_date"));
-			productVO.setProduct_desc(multiReq.getParameter("use"));
-			productVO.setProduct_desc(multiReq.getParameter("country"));
+			productVO.setAttention(multiReq.getParameter("attention"));
+			productVO.setValid_date(multiReq.getParameter("valid_date"));
+			productVO.setUse_info(multiReq.getParameter("use_info"));
+			productVO.setCountry(multiReq.getParameter("country"));
 
 			if(productService.insertProduct(productVO, uploadFile) == 1) {
 				mv.setViewName("contents/complete");
@@ -178,29 +177,17 @@ public class ProductController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "product/release/{seq_user_id}/{product_id}", method = RequestMethod.POST)
-	public ModelAndView postProductRelease(HttpServletRequest request,
+	public ModelAndView postProductModify(HttpServletRequest request,
 										 @RequestPart("uploadFile") MultipartFile uploadFile,
 										 @ModelAttribute ProductVO productVO,
 										 @PathVariable("seq_user_id") int seq_user_id, 
 										 @PathVariable("product_id") int product_id) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
-		MultipartHttpServletRequest multiReq = (MultipartHttpServletRequest) request;
 		
 		try {
-			productVO.setProduct_name(multiReq.getParameter("product_name"));
-			productVO.setProduct_cnt(Integer.parseInt(multiReq.getParameter("product_cnt")));
-			productVO.setProduct_price(Integer.parseInt(multiReq.getParameter("product_price")));
-			productVO.setProduct_desc(multiReq.getParameter("product_desc"));
-			productVO.setCategory(Integer.parseInt(multiReq.getParameter("category")));
-			productVO.setSale(multiReq.getParameter("sale"));
-			productVO.setDiscount(Integer.parseInt(multiReq.getParameter("discount")));
-			productVO.setProduct_desc(multiReq.getParameter("weight"));
-			productVO.setProduct_desc(multiReq.getParameter("attention"));
-			productVO.setProduct_desc(multiReq.getParameter("valid_date"));
-			productVO.setProduct_desc(multiReq.getParameter("use_info"));
-			productVO.setProduct_desc(multiReq.getParameter("country"));
 			
+			System.out.println(productVO.getProduct_desc());
 			if(productService.updateProduct(productVO, uploadFile) == 1) {
 				logger.info(productVO.toString());
 				mv.setViewName("contents/complete");

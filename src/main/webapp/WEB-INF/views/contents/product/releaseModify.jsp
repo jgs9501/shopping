@@ -97,7 +97,7 @@
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label"><span class="emphasis">*</span>상세정보</label>
 		    		<div class="col-sm-10">
-		      			<textarea class="form-control" rows="4" id="product_desc" name="product_desc">${product.product_desc}</textarea>
+		      			<textarea class="form-control" rows="4" id="product_desc" name="product_desc"><c:out value="${product.product_desc}"></c:out></textarea>
 		    		</div>
 		      		<span id="spanProductDesc"></span>
 		  		</div><hr>

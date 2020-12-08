@@ -153,6 +153,8 @@
 					</tbody>
 				</table>
 		  	</div>
+		  	<hr>
+		  	
 		  	<div class="tab-pane fade" id="product_rating">
 		    	<p>Nunc vitae turpis id nibh sodales commodo et non augue. Proin fringilla ex nunc. Integer tincidunt risus ut facilisis tristique.</p>
 		  	</div>
