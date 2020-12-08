@@ -44,8 +44,8 @@
 							<li><a href="#">Link</a></li>
 						</c:when>
 						<c:when test="${userVO.auth eq 2}">
-							<li><a href="${contextPath}/contents/product/release">상품등록</a></li>
-							<li><a href="#">Link</a></li>
+							<li><a href="${contextPath}/product/release">상품등록</a></li>
+							<li><a href="${contextPath}/product/release/${userVO.seq_user_id}">상품조회</a></li>
 							<li><a href="#">Link</a></li>
 							<li><a href="#">Link</a></li>
 							<li><a href="#">Link</a></li>

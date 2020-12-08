@@ -23,6 +23,11 @@ import lombok.ToString;
     category int(10) NOT NULL,
     sale char(1) DEFAULT 'Y',
     discount int(10) DEFAULT 0 NOT NULL,
+    weight varchar(10),
+    attention varchar(1000),
+    valid_date varchar(20),
+    use varchar(1000),
+    country varchar(50),
     PRIMARY KEY(product_id),
     FOREIGN KEY(seq_user_id) REFERENCES user_data(seq_user_id)
     );
@@ -59,7 +64,17 @@ public class ProductVO {
 	@NonNull
 	private int category;
 	@NonNull
-	private char sale;
+	private String sale;
 	@NonNull
 	private int discount;
+	@NonNull
+	private String weight;
+	@NonNull
+	private String attention;
+	@NonNull
+	private String valid_date;
+	@NonNull
+	private String use_info;
+	@NonNull
+	private String country;
 }

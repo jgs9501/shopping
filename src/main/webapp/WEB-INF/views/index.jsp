@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
 	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	<title>JS Shop</title>
 	<!-- <script>

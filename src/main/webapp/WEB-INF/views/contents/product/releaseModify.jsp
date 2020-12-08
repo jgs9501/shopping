@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,39 @@
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	
+	<script type="text/javascript">
+	var checkNumber = RegExp(/^[0-9]{1,10}$/);
+	function checkInfo() {
+		$('span').empty();
+		if($('#product_name').val() == "") {
+			$('#spanProductName').text("상품 이름을 입력해주세요").css("color", "red");
+			$('#product_name').focus();
+			return false;
+		}
+		if(!checkNumber.test($('#product_cnt').val())) {
+			$('#spanProductCnt').text("상품 개수를 입력해주세요").css("color", "red");
+			$('#product_cnt').focus();
+			return false;
+		}
+		if(!checkNumber.test($('#product_price').val())) {
+			$('#spanProductPrice').text("상품 가격을 입력해주세요").css("color", "red");
+			$('#product_price').focus();
+			return false;
+		}
+		if($('#product_desc').val() == "") {
+			$('#spanProductDesc').text("상품 설명을 입력해주세요").css("color", "red");
+			$('#product_desc').focus();
+			return false;
+		}
+		if($('#discount').val() == "") {
+			$('#spanDiscount').text("할인 가격을 입력해주세요.").css("color", "red");
+			$('#discount').focus();
+			return false;
+		}
+		return true;
+	}
+	</script>
 </head>
 <body>
 	<header>
@@ -20,7 +55,8 @@
 	
 	<ol class="breadcrumb container">
 		<li><a href="${contextPath}/index">메인</a></li>
-		<li class="active">상품등록</li>
+		<li><a href="${contextPath}/product/release/${product.seq_user_id}">상품조회</a></li>
+		<li class="active">${product.product_name}</li>
 	</ol>
 	
 	<section>
@@ -31,7 +67,7 @@
 		    	<div id="productName" class="form-group has-feedback">
 			    	<label class="col-sm-2 control-label"><span class="emphasis">*</span>상품이름</label>
 		    		<div class="col-sm-10">
-			    		<input type="text" class="form-control" id="product_name" name="product_name" placeholder="상품이름을 입력하세요" maxlength="13">
+			    		<input type="text" class="form-control" id="product_name" name="product_name" value="${product.product_name}" placeholder="상품이름을 입력하세요" maxlength="50">
 			    		<span id="productNameIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 	      				<span id="productNameStatus" class="sr-only"></span>
 			    	</div>
@@ -41,7 +77,7 @@
 		  		<div id="productCnt" class="form-group has-feedback">
 		    		<label class="col-sm-2 control-label">상품개수</label>
 		    		<div class="col-sm-10">
-		      			<input type="number" class="form-control" id="product_cnt" name="product_cnt" placeholder="상품개수를 입력하세요" maxlength="13">
+		      			<input type="number" class="form-control" id="product_cnt" name="product_cnt" value="${product.product_cnt}" placeholder="상품개수를 입력하세요" maxlength="13">
 		      			<span id="productCntIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 	      				<span id="productCntStatus" class="sr-only"></span>
 		    		</div>
@@ -51,7 +87,7 @@
 		  		<div id="productPrice" class="form-group has-feedback">
 		    		<label class="col-sm-2 control-label"><span class="emphasis">*</span>상품가격</label>
 		    		<div class="col-sm-10">
-		      			<input type="number" class="form-control" id="product_price" name="product_price" placeholder="상품가격을 입력하세요" maxlength="10">
+		      			<input type="number" class="form-control" id="product_price" name="product_price" value="${product.product_price }" placeholder="상품가격을 입력하세요" maxlength="10">
 		      			<span id="productPriceIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 	      				<span id="productPriceStatus" class="sr-only"></span>
 		    		</div>
@@ -61,7 +97,7 @@
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label"><span class="emphasis">*</span>상세정보</label>
 		    		<div class="col-sm-10">
-		      			<textarea class="form-control" rows="4" id="product_desc" name="product_desc"></textarea>
+		      			<textarea class="form-control" rows="4" id="product_desc" name="product_desc">${product.product_desc}</textarea>
 		    		</div>
 		      		<span id="spanProductDesc"></span>
 		  		</div><hr>
@@ -69,9 +105,9 @@
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label"><span class="emphasis">*</span>상품사진</label>
 		    		<div class="col-sm-4">
-		      			<input type="file" class="form-control" id="uploadFile" name="uploadFile" accept=".jpg, .png">
+		      			<input type="file" class="form-control" id="uploadFile" name="uploadFile" accept=".jpg, .png" value="${product.product_img}">
+						<span id="spanProductImg">현재 이미지 <img src="${product.product_thumbImg}" style="width:100px;height:100px;margin-top:20px;"></span>
 		    		</div>
-					<span id="spanProductImg"></span>
 		  		</div><hr>
 		  		<!-- 카테고리 -->
 		  		<div class="form-group">
@@ -107,42 +143,42 @@
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label"><span class="emphasis">*</span>할인가격</label>
 		    		<div class="col-sm-10">
-		      			<input type="number" class="form-control" id="discount" name="discount" placeholder="할인이 없을경우 '0'을 입력해주세요" maxlength="10">
+		      			<input type="number" class="form-control" id="discount" name="discount" value="${product.discount}" placeholder="할인이 없을경우 '0'을 입력해주세요" maxlength="10">
 		    		</div>
 		    		<span id="spanDiscount"></span>
 		  		</div><hr>
 	  			<div class="form-group">
 		    		<label class="col-sm-2 control-label">제품 중량</label>
 		    		<div class="col-sm-10">
-		      			<input type="text" class="form-control" id="weight" name="weight" maxlength="10">
+		      			<input type="text" class="form-control" id="weight" name="weight" value="${product.weight}" maxlength="10">
 		    		</div>
 		  		</div><hr>
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label">제품 주요 사항</label>
 		    		<div class="col-sm-10">
-		      			<input type="text" class="form-control" id="attention" name="attention" maxlength="1000">
+		      			<input type="text" class="form-control" id="attention" name="attention" value="${product.attention}" maxlength="1000">
 		    		</div>
 		  		</div><hr>
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label">제품 유효기간</label>
 		    		<div class="col-sm-10">
-		      			<input type="text" class="form-control" id="valid_date" name="valid_date" maxlength="20">
+		      			<input type="text" class="form-control" id="valid_date" name="valid_date" value="${product.valid_date}" maxlength="20">
 		    		</div>
 		  		</div><hr>
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label">제품 사용방법</label>
 		    		<div class="col-sm-10">
-		      			<input type="text" class="form-control" id="use" name="use" maxlength="1000">
+		      			<input type="text" class="form-control" id="use_info" name="use_info" value="${product.use_info}" maxlength="1000">
 		    		</div>
 		  		</div><hr>
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label">제조국</label>
 		    		<div class="col-sm-10">
-		      			<input type="text" class="form-control" id="country" name="country" maxlength="20">
+		      			<input type="text" class="form-control" id="country" name="country" value="${product.country}" maxlength="20">
 		    		</div>
 		  		</div><hr>
 		  		<div class="form-group" align="center">
-	      			<button type="submit" class="btn btn-primary btn-lg">상품 등록</button>
+	      			<button type="submit" class="btn btn-primary btn-lg">상품 수정</button>
 	  			</div>
 			</form>
 		</div>
@@ -151,37 +187,6 @@
     <footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
     </footer>
+	
 </body>
-<script type="text/javascript">
-	var checkNumber = RegExp(/^[0-9]{1,10}$/);
-	function checkInfo() {
-		$('span').empty();
-		if($('#product_name').val() == "") {
-			$('#spanProductName').text("상품 이름을 입력해주세요").css("color", "red");
-			$('#product_name').focus();
-			return false;
-		}
-		if(!checkNumber.test($('#product_cnt').val())) {
-			$('#spanProductCnt').text("상품 개수를 입력해주세요").css("color", "red");
-			$('#product_cnt').focus();
-			return false;
-		}
-		if(!checkNumber.test($('#product_price').val())) {
-			$('#spanProductPrice').text("상품 가격을 입력해주세요").css("color", "red");
-			$('#product_price').focus();
-			return false;
-		}
-		if($('#product_desc').val() == "") {
-			$('#spanProductDesc').text("상품 설명을 입력해주세요").css("color", "red");
-			$('#product_desc').focus();
-			return false;
-		}
-		if($('#discount').val() == "") {
-			$('#spanDiscount').text("할인 가격을 입력해주세요.").css("color", "red");
-			$('#discount').focus();
-			return false;
-		}
-		return true;
-	}
-</script>
 </html>

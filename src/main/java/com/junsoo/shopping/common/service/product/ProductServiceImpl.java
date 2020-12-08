@@ -34,7 +34,6 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int insertProduct(ProductVO productVO, MultipartFile file) throws Exception {
 		
-		logger.info("insertProduct method called");
 		String imgUploadPath = uploadPath + File.separator + "images";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
@@ -57,7 +56,6 @@ public class ProductServiceImpl implements ProductService{
 				productVO.getProduct_cnt() < 0 		||
 				productVO.getProduct_desc() == null ||
 				productVO.getProduct_price() < 0 	||
-				productVO.getSale() == '\u0000' 	||
 				productVO.getDiscount() < 0 		||
 				!vc.isCheckCategory(productVO.getCategory())) {
 				logger.error("Invalid args " + productVO);
@@ -78,9 +76,49 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<ProductVO> selectRecentlyProduct(int category) throws Exception {
 		
-		logger.info("selectCategoryProduct method called");
 		return productDAO.selectRecentlyProduct(category);
 	}
-	
+
+
+	@Override
+	public int updateProduct(ProductVO productVO, MultipartFile file) throws Exception {
+		
+		String imgUploadPath = uploadPath + File.separator + "images";
+		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+		String fileName = file.getOriginalFilename();
+		
+		try {
+			
+			if(file != null && !fileName.equals("")) {
+				fileName = UploadFileUtils.fileUpload(imgUploadPath, 
+						file.getOriginalFilename(), 
+						file.getBytes(),
+						ymdPath);
+				productVO.setProduct_img(File.separator + "images" + ymdPath + File.separator + fileName);
+				productVO.setProduct_thumbImg(File.separator + "images" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+			}		
+			
+			if(productVO.getSeq_user_id() < 1 		||
+				productVO.getProduct_name() == null ||
+				productVO.getProduct_cnt() < 0 		||
+				productVO.getProduct_desc() == null ||
+				productVO.getProduct_price() < 0 	||
+				productVO.getDiscount() < 0 		||
+				!vc.isCheckCategory(productVO.getCategory())) {
+				logger.error("Invalid args " + productVO);
+				return 0;
+			}
+			productDAO.updateProduct(productVO);
+		}
+		catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+		}
+		catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return 1;
+	}
+
+
 
 }

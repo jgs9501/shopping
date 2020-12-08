@@ -4,6 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mapper.productMapper">
+	
+	<!-- 상품등록 -->
 	<insert id="insertProduct" parameterType="ProductVO">
 		INSERT INTO product(
  			seq_user_id,
@@ -15,7 +17,12 @@
 			product_thumbImg,
 			category,
 			sale,
-			discount
+			discount,
+			weight,
+			attention,
+			valid_date,
+			use,
+			country
 		) VALUES (
 			#{seq_user_id},
 			#{product_name},
@@ -26,16 +33,122 @@
 			#{product_thumbImg},
 			#{category},
 			#{sale},
-			#{discount}
+			#{discount},
+			#{weight},
+			#{attention},
+			#{valid_date},
+			#{use},
+			#{country}
 		)
 	</insert>
 	
+	<!-- 최근 출품된 상품 조회 -->
 	<select id="selectRecentlyProduct" parameterType="int" resultType="ProductVO">
 		SELECT *
 		FROM   product
 		WHERE  category = #{category}
 		AND    sale = 'Y'
-		AND	   product_cnt != 0
+		AND	   product_cnt > 0
 		ORDER BY reg_date DESC LIMIT 4
 	</select>
+	
+	<!-- 상품테이블과 점포테이블 조회 -->
+	<resultMap type="com.junsoo.shopping.common.vo.ProductVO" id="productVO">
+		<result property="seq_user_id" column="seq_user_id"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="mod_date" column="mod_date"/>
+		<result property="product_id" column="product_id"/>
+		<result property="product_name" column="product_name"/>
+		<result property="product_cnt" column="product_cnt"/>
+		<result property="product_price" column="product_price"/>
+		<result property="product_desc" column="product_desc"/>
+		<result property="product_img" column="product_img"/>
+		<result property="product_thumbImg" column="product_thumbImg"/>
+		<result property="category" column="category"/>
+		<result property="sale" column="sale"/>
+		<result property="discount" column="discount"/>
+		<result property="weight" column="weight"/>
+		<result property="attention" column="attention"/>
+		<result property="valid_date" column="valid_date"/>
+		<result property="use_info" column="use_info"/>
+		<result property="country" column="country"/>
+	</resultMap>
+	<resultMap type="com.junsoo.shopping.common.vo.StoreVO" id="storeVO">
+		<result property="seq_user_id" column="seq_user_id"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="mod_date" column="mod_date"/>
+		<result property="del_flg" column="del_flg"/>
+		<result property="store_name" column="store_name"/>
+		<result property="store_phone" column="store_phone"/>
+		<result property="ratio" column="ratio"/>
+	</resultMap>
+	<resultMap type="com.junsoo.shopping.common.vo.ProductDetailVO" id="productDetailVO">
+		<collection property="productVO" resultMap="productVO"/>
+		<collection property="storeVO" resultMap="storeVO"/>
+	</resultMap>
+	<select id="selectProductDetail" resultMap="productDetailVO">
+		SELECT *
+		FROM   product p, store s
+		WHERE  p.product_id = #{product_id}
+		AND    s.seq_user_id = p.seq_user_id
+	</select>
+	
+	<!-- 고객들에게 보여지는 점포별 추천 아이템 조회 -->
+	<select id="selectSameStoreProduct" resultType="ProductVO">
+		SELECT *
+		FROM   product
+		WHERE  seq_user_id = #{seq_user_id}
+		AND    product_id != #{product_id}
+		AND	   sale = 'Y'
+		AND    product_cnt > 0
+	</select>
+
+	
+	<!-- 카테고리별 모든 상품 조회 -->
+	<select id="selectAllProduct" resultType="ProductVO">
+		SELECT *
+		FROM   product
+		WHERE  category = #{category}
+		AND    sale = 'Y'
+	</select>
+	
+<!-- =============================점포용===================== -->
+	<!-- 자신이 출품한 상품 조회 (점포)  -->
+	<select id="selectStoreProducts" resultType="ProductVO">
+		SELECT *
+		FROM   product
+		WHERE  seq_user_id = #{seq_user_id}
+	</select>
+	
+	<!-- 출품한 상품의 상세정보 조회 (점포)-->
+	<select id="selectStoreProduct" resultType="ProductVO">
+		SELECT *
+		FROM   product
+		WHERE  seq_user_id = #{seq_user_id}
+		AND    product_id = #{product_id}
+	</select>
+	
+	<!-- 출품한 상품 수정  (점포) -->
+	<update id="updateProduct" parameterType="ProductVO">
+		UPDATE  product
+		SET   	mod_date = NOW(),
+				product_name = #{product_name},
+				product_cnt = #{product_cnt},
+				product_price = #{product_price},
+				product_desc = #{product_desc},
+				<if test='product_img neq null'>
+				product_img = #{product_img},
+				product_thumbImg = #{product_thumbImg},
+				</if>
+				category = #{category},
+				sale = #{sale},
+				discount = #{discount},
+				weight = #{weight},
+				attention = #{attention},
+				valid_date = #{valid_date},
+				use_info = #{use_info},
+				country = #{country}
+		WHERE   seq_user_id = #{seq_user_id}
+		AND     product_id = #{product_id}
+	</update>
 </mapper>

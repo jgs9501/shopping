@@ -12,4 +12,5 @@ public interface ProductService {
 
 	public int insertProduct(ProductVO productVO, MultipartFile file) throws Exception;
 	public List<ProductVO> selectRecentlyProduct(int category) throws Exception;
+	public int updateProduct(ProductVO productVO, MultipartFile file) throws Exception;
 }
