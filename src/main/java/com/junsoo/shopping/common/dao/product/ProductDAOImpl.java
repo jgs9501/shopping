@@ -1,6 +1,8 @@
 package com.junsoo.shopping.common.dao.product;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.junsoo.shopping.common.vo.ProductDetailVO;
 import com.junsoo.shopping.common.vo.ProductVO;
+import com.junsoo.shopping.common.vo.PurchaseInfoVO;
 
 @Repository
 public class ProductDAOImpl implements ProductDAO {
@@ -59,6 +62,16 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public void updateProduct(ProductVO productVO) throws Exception {
 		sqlSession.update(namespace + ".updateProduct", productVO);
+	}
+	
+	@Override
+	public int selectBuyProduct(Map<String, Integer> map) throws Exception {
+		return sqlSession.selectOne(namespace + ".selectBuyProduct", map);
+	}
+
+	@Override
+	public List<PurchaseInfoVO> selectBuyProducts(int seq_user_id) throws Exception {
+		return sqlSession.selectList(namespace + ".selectBuyProducts", seq_user_id);
 	}
 
 }

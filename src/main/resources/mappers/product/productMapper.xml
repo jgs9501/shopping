@@ -5,43 +5,6 @@
 
 <mapper namespace="com.mapper.productMapper">
 	
-	<!-- 상품등록 -->
-	<insert id="insertProduct" parameterType="ProductVO">
-		INSERT INTO product(
- 			seq_user_id,
-			product_name,
-			product_cnt,
-			product_price,
-			product_desc,
-			product_img,
-			product_thumbImg,
-			category,
-			sale,
-			discount,
-			weight,
-			attention,
-			valid_date,
-			use,
-			country
-		) VALUES (
-			#{seq_user_id},
-			#{product_name},
-			#{product_cnt},
-			#{product_price},
-			#{product_desc},
-			#{product_img},
-			#{product_thumbImg},
-			#{category},
-			#{sale},
-			#{discount},
-			#{weight},
-			#{attention},
-			#{valid_date},
-			#{use},
-			#{country}
-		)
-	</insert>
-	
 	<!-- 최근 출품된 상품 조회 -->
 	<select id="selectRecentlyProduct" parameterType="int" resultType="ProductVO">
 		SELECT *
@@ -112,6 +75,20 @@
 		AND    sale = 'Y'
 	</select>
 	
+	<!-- 고객이 특정 상품을 구매했는지 조회-->
+	<select id="selectBuyProduct" parameterType="Map" resultType="int">
+		SELECT COUNT(*)
+		FROM   purchase_info
+		WHERE  seq_user_id = #{seq_user_id}
+		AND    product_id = #{product_id}
+	</select>
+	<!-- 고객이 구매한 상품들 조회 -->
+	<select id="selectBuyProducts">
+		SELECT *
+		FROM   purchase_info
+		WHERE  seq_user_id = #{seq_user_id}
+	</select>
+	
 <!-- =============================점포용===================== -->
 	<!-- 자신이 출품한 상품 조회 (점포)  -->
 	<select id="selectStoreProducts" resultType="ProductVO">
@@ -151,4 +128,41 @@
 		WHERE   seq_user_id = #{seq_user_id}
 		AND     product_id = #{product_id}
 	</update>
+	
+	<!-- 상품등록 -->
+	<insert id="insertProduct" parameterType="ProductVO">
+		INSERT INTO product(
+ 			seq_user_id,
+			product_name,
+			product_cnt,
+			product_price,
+			product_desc,
+			product_img,
+			product_thumbImg,
+			category,
+			sale,
+			discount,
+			weight,
+			attention,
+			valid_date,
+			use_info,
+			country
+		) VALUES (
+			#{seq_user_id},
+			#{product_name},
+			#{product_cnt},
+			#{product_price},
+			#{product_desc},
+			#{product_img},
+			#{product_thumbImg},
+			#{category},
+			#{sale},
+			#{discount},
+			#{weight},
+			#{attention},
+			#{valid_date},
+			#{use_info},
+			#{country}
+		)
+	</insert>
 </mapper>

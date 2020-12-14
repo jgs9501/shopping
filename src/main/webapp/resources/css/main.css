@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
 a {color: black;}
+input {color: transparent; text-shadow: 0 0 0 black;} 
+span {color: transparent; text-shadow: 0 0 0 black;} 
 /* index.jsp */
 .header {width: 100%;position: static;list-style-type: none;float: left;height:auto;}
 .nav-main{margin-left: auto;margin-right: auto;width: 1518px;height:auto;}
@@ -118,3 +120,4 @@ a {color: black;}
 <!--  -->
 .emphasis {font-weight: bolder; color:red;}
 .table td {margin-bottom: auto; margin-top: auto;}
+.fate {margin-top: 100px;}

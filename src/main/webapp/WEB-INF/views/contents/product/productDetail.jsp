@@ -13,10 +13,11 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/product-detail.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/product-detail.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/reply.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 <body>
 	<header>
@@ -152,17 +153,87 @@
 						</tr>
 					</tbody>
 				</table>
+			  	<hr>
 		  	</div>
-		  	<hr>
-		  	
+		  	<!-- 상품평 -->
 		  	<div class="tab-pane fade" id="product_rating">
-		    	<p>Nunc vitae turpis id nibh sodales commodo et non augue. Proin fringilla ex nunc. Integer tincidunt risus ut facilisis tristique.</p>
+		  		<div class="col">
+                    <div class="panel-body">
+                        <form role="form">
+                        	<input type="hidden" id="seq_user_id" value="${userVO.seq_user_id}"/>
+                        	<input type="hidden" id="user_name" value="${userVO.user_id}">
+                            <fieldset>
+                                <div class="form-group">
+						  			<div id="star">
+								        <span class="star">★</span>
+									    <span class="star">★</span>
+									    <span class="star">★</span>
+									    <span class="star">★</span>
+									    <span class="star">★</span>
+									</div>
+    								<textarea class="form-control" id="content" name="content" rows="3" placeholder="댓글을 작성해주세요" autofocus="autofocus"></textarea>
+                                </div>
+                        		<button id="btnReply" type="button" class="btn btn-success" data-loading-text="Loading...">댓글 작성</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card" id="reply_card">
+					<c:forEach var="reply" items="${listReply}" varStatus="status">
+					    <div class="card-body">
+						    <div class="row">
+					        	<div class="col-md-12" style="margin-top: 20px;">
+					        	    <p>
+					        	        <a class="float-left" href="#"><strong>${reply.user_name}</strong></a>
+					        	        <c:forEach begin="1" end="${reply.rating}" >
+							                <span><i class="fa fa-star checked"></i></span>
+					        	        </c:forEach>
+					        	        <c:forEach begin="1" end="${5 - reply.rating}">
+							                <span><i class="fa fa-star-o"></i></span>
+					        	        </c:forEach>
+					        	        <span>${reply.reg_date}</span>
+					        	    </p>
+					        	    <p>${reply.content}</p>
+					        	    <div id="">
+					        	    <c:set var="pId" value="${pdVO.productVO.seq_user_id}"/>
+					        	    <c:set var="uId" value="${userVO.seq_user_id }"></c:set>
+					        	    <c:if test="${(uId eq pId) and (reply.answer eq null)}">
+						        	    <p>
+						        	    	<input type="hidden" id="store_name" value="${pdVO.storeVO.store_name}">
+						        	      	<a class="float-left btn btn-default ml-2" id="answerBtn${status.index}" onclick="answer(${reply.seq_user_id}, ${reply.product_id}, ${status.index})"><i class="fa fa-reply"></i> 답글</a>
+						        	    </p>
+						        	   	<div id="form-answer${status.index}" class="form-group"></div>
+					        	    </c:if>
+					        	    </div>
+					        	</div>
+						    </div>
+						    <div id="answer_inner${status.index}">
+						    <c:if test="${(reply.answer ne null)}">
+						        <div class="card card-inner">
+					            	<div class="card-body">
+					            	    <div class="row">
+					                    	<div class="col-md-12">
+					                    	    <p><strong>${pdVO.storeVO.store_name}</strong></p>
+					                    	    <div id="p_answer${status.index}"><p>${reply.answer}</p></div>
+					                    	    <c:if test="${uId eq pId}">
+					                    	    	<a class="float-right btn btn-default ml-2" onclick="answerUpdate(${reply.seq_user_id}, ${reply.product_id}, ${status.index})">수정</a>
+					                    	    	<a class="float-right btn btn-default ml-2" onclick="answerDelete(${reply.seq_user_id}, ${reply.product_id}, ${status.index})">삭제</a>
+					                    	    </c:if>
+					                    	</div>
+					            	    </div>
+					            	</div>
+						        </div>
+						    </c:if>
+						    </div>
+					    </div>
+					</c:forEach>
+				</div>
 		  	</div>
 			<div class="tab-pane fade" id="product_qa">
 		    	<p>Curabitur dignissim quis nunc vitae laoreet. Etiam ut mattis leo, vel fermentum tellus. Sed sagittis rhoncus venenatis. Quisque commodo consectetur faucibus. Aenean eget ultricies justo.</p>
 			</div>
 		</div>
-		
 	</div>
 	</section>
 	<footer>
@@ -183,6 +254,199 @@
         prevEl: '.swiper-button-prev',
         },
 	});
+    
+    var rate = 0;
+    (function () {
+        var starEls = document.querySelectorAll('#star span.star');
+        loop(starEls, function (el, index) {
+            el.addEventListener('click', function () {
+                rating(index + 1);
+            });
+        });
+
+        function loop(list, func) {
+            Array.prototype.forEach.call(list, func);
+        }
+
+        function rating(score) {
+            loop(starEls, function (el, index) {
+                if (index < score) {
+                    el.classList.add('on');
+                } else {
+                    el.classList.remove('on');
+                }
+            });
+            rate = score;
+        }
+    })();
+    
+    $(document).on('click', '#btnReply', function(e) {
+		let form = {
+			seq_user_id : $('#seq_user_id').val(),
+			product_id : "${pdVO.productVO.product_id}",
+			user_name : $('#user_name').val(),
+			content : $('#content').val(),
+			rating : rate
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: "${contextPath}/postProductReply",
+			dataType: "json",
+			contentType: "application/json",
+			data: JSON.stringify(form),
+			success: function (data) {
+				if(data != null) {
+					let rating_flg = Number(data.rating);
+					var html = "<div class='card-body'>";
+						html += "<div class='row'>";
+						html += "<div class='col-md-12'><p>";
+						html += "<span class='float-left'><strong>"+data.user_name+"</strong></span>";
+						html += getStar(rating_flg);
+						html += "<span style='margin-left:5px;'>"+data.reg_date+"</span></p>"
+						html += "<div class='clearfix'>";
+						html += "<p>"+data.content+"</p>";
+						html += "</div>";
+						html += "</div>";
+						html += "</div>";
+						html += "</div>";
+					$('#reply_card').prepend(html);
+				}
+			},
+			error: function () {
+				alert("중복된 댓글이거나 구입하지않은 상품은 댓글을 작성할 수 없습니다.");
+			}
+		});
+		
+		function getStar(cnt) {
+			var html = "";
+			for(var i=0; i<cnt; i++) {
+				html += "<span><i class='fa fa-star checked' style='margin-left:5px;'></i></span>";
+			} 
+			for(var i=cnt; i<5; i++) {
+				html += "<span><i class='fa fa-star-o' style='margin-left:5px;'></i></span>";
+			}
+			return html;
+		}
+	})
+	
+	// seq : seq_user_id의 값, idx : foreach의 index값
+	function answer(uId, pId, idx) {
+		
+    	$('#answerBtn'+idx).hide();
+    	let str = "<textarea class='form-control' id='answer_content"+idx+"' name='answer_content"+idx+"' rows='3' placeholder='댓글을 작성해주세요' autofocus='autofocus'></textarea>";
+		str += "<button id='answerSubmitBtn"+idx+"' type='button' class='btn btn-success'>댓글 작성</button>";
+		str += "<button id='answerCancelBtn"+idx+"' type='button' class='btn btn-default'>취소</button>";
+		$('#form-answer'+idx).append(str);
+		
+		$('#answerSubmitBtn'+idx).click(function (){
+			const store_name = $('#store_name').val();
+			var form = {
+				seq_user_id : uId,
+				product_id : pId,
+				answer : $('#answer_content'+idx).val()
+			};
+			$.ajax({
+				type: "POST",
+				url: "${contextPath}/postProductReplyAnswer",
+				dataType: "json",
+				contentType: "application/json",
+				data: JSON.stringify(form),
+				success: function (data) {
+					let html ="";
+					html +=	'<div class="card card-inner">';
+	            	html += '<div class="card-body">';
+	            	html += '<div class="row">';
+	                html += '<div class="col-md-12">';
+	                html += '<p><strong>'+store_name+'</strong></p>';
+	                html += '<p>'+data.answer+'</p>';
+	                html += '</div></div></div></div>';
+	                $('#form-answer'+idx).empty();
+	                $('#answer_inner'+idx).append(html);
+				},
+				error: function (request, error, data) {
+					alert("댓글을 달지 못하였습니다.");
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+				}
+			})
+		}) 
+		$('#answerCancelBtn'+idx).click(function (){
+			$('#form-answer'+idx).empty();
+			$('#answerBtn'+idx).show();
+		})
+	}
+
+	function answerUpdate(uId, pId, idx) {
+		var text = $('#p_answer'+idx).text();
+		$('#p_answer'+idx).html("<div class='form-group'><textarea class='form-control' id='answer_content"+idx+"' name='answer_content"+idx+"' rows='3' placeholder='댓글을 작성해주세요' autofocus='autofocus'>"+text+"</textarea></div>");
+		
+		$('#answerSubmitBtn'+idx).click(function (){
+			var form = {
+				seq_user_id : uId,
+				product_id : pId,
+				answer : $('#answer_content'+idx).val()
+			};
+			$.ajax({
+				type: "POST",
+				url: "${contextPath}/postProductReplyAnswer",
+				dataType: "json",
+				contentType: "application/json",
+				data: JSON.stringify(form),
+				success: function (data) {
+					let html ="";
+					html +=	'<div class="card card-inner">';
+	            	html += '<div class="card-body">';
+	            	html += '<div class="row">';
+	                html += '<div class="col-md-12">';
+	                html += '<p><strong>'+store_name+'</strong></p>';
+	                html += '<div id="p_answer'+idx+'"><p>'+data.answer+'</p></div>';
+	                html += '<a class="float-right btn btn-default ml-2" onclick="answerUpdate('+data.seq_user_id+','+data.product_id+', '+idx+'">수정</a>';
+        	    	html += '<a class="float-right btn btn-default ml-2" onclick="answerDelete('+data.seq_user_id+','+data.product_id+', '+idx+'">삭제</a>';
+	                html += '</div></div></div></div>';
+	                $('#answer_inner'+idx).empty();
+	                $('#answer_inner'+idx).append(html);
+				},
+				error: function (request, error, data) {
+					alert("댓글을 달지 못하였습니다.");
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			})
+		}) 
+		$('#answerCancelBtn'+idx).click(function (){
+			$('#answer_inner'+idx).show();
+		})
+	}
+	
+	function answerDelete(uId, pId, idx) {
+		
+		var form = {
+			seq_user_id : uId,
+			product_id : pId
+		};
+		
+		$.ajax({
+			type : "POST",
+			url : "${contextPath}/postProductReplyAnswerDelete",
+			dataType : "json",
+			contentType : "application/json",
+			data : JSON.stringify(form),
+			success: function (data) {
+				if(data){
+					$('#answer_inner'+idx).remove();
+					$('#answerBtn'+idx).show();
+				}
+				else {
+					alert("삭제를 실패했습니다.")
+				}
+			},
+			error: function (request, error, data) {
+				alert("답글 삭제를 실패했습니다.");
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		})
+	}
+		
+	
 </script>
 </body>
 </html>

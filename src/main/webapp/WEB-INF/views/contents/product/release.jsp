@@ -132,7 +132,7 @@
 		  		<div class="form-group">
 		    		<label class="col-sm-2 control-label">제품 사용방법</label>
 		    		<div class="col-sm-10">
-		      			<input type="text" class="form-control" id="use" name="use" maxlength="1000">
+		      			<input type="text" class="form-control" id="use_info" name="use_info" maxlength="1000">
 		    		</div>
 		  		</div><hr>
 		  		<div class="form-group">

@@ -21,8 +21,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.junsoo.shopping.common.dao.product.ProductDAO;
+import com.junsoo.shopping.common.dao.reply.ReplyDAO;
 import com.junsoo.shopping.common.service.product.ProductService;
+import com.junsoo.shopping.common.service.reply.ReplyService;
 import com.junsoo.shopping.common.vo.ProductDetailVO;
+import com.junsoo.shopping.common.vo.ProductReplyVO;
 import com.junsoo.shopping.common.vo.ProductVO;
 import com.junsoo.shopping.common.vo.UserVO;
 import com.junsoo.shopping.utils.checker.ValueChecker;
@@ -36,6 +39,9 @@ public class ProductController {
 	ProductService productService;
 	@Inject
 	ProductDAO productDAO;
+	
+	@Inject
+	ReplyDAO replyDAO;
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
@@ -323,10 +329,13 @@ public class ProductController {
 			ProductDetailVO pdVO = productDAO.selectProductDetail(product_id);
 			// 선택한 상품의 점포 관련 물품들 조회
 			List<ProductVO> listProduct = productDAO.selectSameStoreProduct(pdVO.getProductVO());
-			
+			// 해당 상품의 댓글 정보 조회
+			List<ProductReplyVO> listReply = replyDAO.selectProductReplies(pdVO.getProductVO().getProduct_id());
+			//카테고리 이름 치환
 			categoryName = vc.getCategoryName(pdVO.getProductVO().getCategory());
 			
 			mv.addObject("listProduct", listProduct);
+			mv.addObject("listReply", listReply);
 			mv.addObject("pdVO", pdVO);
 			mv.addObject("categoryName", categoryName);
 			mv.setViewName("contents/product/productDetail");

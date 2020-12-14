@@ -26,7 +26,7 @@ import lombok.ToString;
     weight varchar(10),
     attention varchar(1000),
     valid_date varchar(20),
-    use varchar(1000),
+    use_info varchar(1000),
     country varchar(50),
     PRIMARY KEY(product_id),
     FOREIGN KEY(seq_user_id) REFERENCES user_data(seq_user_id)
