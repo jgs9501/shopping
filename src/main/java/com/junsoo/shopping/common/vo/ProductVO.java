@@ -2,9 +2,9 @@ package com.junsoo.shopping.common.vo;
 
 import org.springframework.lang.NonNull;
 
-import lombok.EqualsAndHashCode;
+import com.junsoo.shopping.common.vo.paging.PaginationInfo;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -23,6 +23,11 @@ import lombok.ToString;
     category int(10) NOT NULL,
     sale char(1) DEFAULT 'Y',
     discount int(10) DEFAULT 0 NOT NULL,
+    weight varchar(10),
+    attention varchar(1000),
+    valid_date varchar(20),
+    use_info varchar(1000),
+    country varchar(50),
     PRIMARY KEY(product_id),
     FOREIGN KEY(seq_user_id) REFERENCES user_data(seq_user_id)
     );
@@ -32,10 +37,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@EqualsAndHashCode
 public class ProductVO {
 
+	private PaginationInfo paginationInfo;
+	
 	@NonNull
 	private int seq_user_id;
 	@NonNull
@@ -59,7 +64,21 @@ public class ProductVO {
 	@NonNull
 	private int category;
 	@NonNull
-	private char sale;
+	private String sale;
 	@NonNull
 	private int discount;
+	@NonNull
+	private String weight;
+	@NonNull
+	private String attention;
+	@NonNull
+	private String valid_date;
+	@NonNull
+	private String use_info;
+	@NonNull
+	private String country;
+	
+	// 댓글 테이블과 LEFT JOIN 으로 인해 선언 (product 테이블의 컬럼은 존재안함)
+	private float rating;
+	
 }

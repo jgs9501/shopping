@@ -13,25 +13,7 @@
 	<script src="${contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-	<style type="text/css">
-		.center-auto{
-			margin-left: auto;
-			margin-right: auto;
-			width: 100%;
-		}
-		
-		.form-width{
-			float: left;
-			padding-left: 100px;
-			min-width: 600px;
-			max-width: 800px;
-			width: 600px;
-			position: relative;
-		}
-		.padding-left{
-			padding-left: 50px;
-		}
-	</style>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	<script type="text/javascript">
 		// 문자 유효성 검사 선언
 		var nameCheck = RegExp(/^[가-힣]{2,10}$/);

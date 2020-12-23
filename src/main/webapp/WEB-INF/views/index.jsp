@@ -11,56 +11,44 @@
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
 	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 	<title>JS Shop</title>
-	<style type="text/css">
-		.header {
-			width: 100%;
-			position: static;
-			list-style-type: none;
-			float: left;
+	<!-- <script>
+	$(window).scroll(function(){
+		var $fixed = $('.fixed-aside'); 
+		var $footer = $('.footer');
+		startPoint = parseInt($('.nav-main').outerHeight()),
+		scrollPoint = $(window).scrollTop() + $(window).height(),
+		limit = 0;
+		if($footer.length) {
+			limit = $('.footer').offset().top;
 		}
-		.nav-main {
-			margin-left: auto;
-			margin-right: auto;
-			width: 100%;
-			min-width: 1000px;
-			max-width: 1400px;
+		console.log ( 'startPoint : ' + startPoint );
+		  console.log ( 'scrollPoint : ' + scrollPoint );
+		    console.log ( 'limit : ' + limit );
+		    console.log ( 'limit3 : ' + (limit - $footer.height()) );
+
+		if(parseInt(startPoint) < parseInt(scrollPoint) && parseInt(scrollPoint) < parseInt(limit-200)) {
+			$fixed.addClass('fixed').css('top', startPoint);
+			$fixed.removeClass('abs');
+		} else {
+			$fixed.removeClass('fixed');
+			$fixed.addClass('abs').css('top', 800);
 		}
-		.set {
-		    margin-left: auto;
-			margin-right: auto;
-			width: 1518px;
-		}
-		.aside-main {
-			width: 170px;
-		}
-		.section-main {
-			float: left;
-			width: 1348px;
-			overflow: hidden;
-		}
-		.article-viewed-items {
-			padding-left: 20px;
-		}
-		.footer {
-			width: 100%;
-			clear: both;
-			position: relative;
-		}
-	</style>
+	});
+	</script> -->
 </head>
 <body>
-	<!-- 머릿말 -->
     <header class="header">
 		<jsp:include page="header/header.jsp"></jsp:include>
     </header>
-    <!-- 광고차트 -->
     <nav class="nav-main">
     	<jsp:include page="contents/mainChartImage.jsp"></jsp:include>
     </nav>
-	<div class="set">
-		<!-- 상품목록 -->
-	    <aside class="aside-main">
+	<div class="main-container">
+	    <aside class="aside-list fixed-aside">
 	    	<jsp:include page="side/shoppingList.jsp"></jsp:include>
 	    </aside>
 		<!-- 콘텐츠 -->
@@ -74,7 +62,7 @@
 	    </section>
 	</div>
 	<!--바닥글-->
-    <footer class="footer">
+    <footer class="footer" id="footer">
 		<jsp:include page="footer/footer.jsp"></jsp:include>
     </footer>
 </body>
