@@ -47,12 +47,23 @@
 						</div>
 						<div class="rating">
 							<div class="stars">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star-half-o"></span>
-								<span class="fa fa-star-o"></span>
-								<span class="review-no">41개 상품평</span>
+								<fmt:formatNumber var="avg" value="${rating_avg*10}"/>
+								<c:forEach begin="10" end="50" step="10" varStatus="idx">
+									<c:choose>
+										<c:when test="${avg >= idx.current}">
+											<span class="fa fa-star checked"></span>
+										</c:when>
+										<c:otherwise>
+											<c:if test="${(avg - idx.current) > 0}">
+												<span class="fa fa-star-half-o"></span>
+											</c:if>
+											<c:if test="${(avg - idx.current) <= 0}">
+												<span class="fa fa-star-o"></span>
+											</c:if>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<span class="review-no">${replyCount}개 상품평</span>
 							</div>
 						</div>
 						<p class="product-description">${pdVO.productVO.product_desc}</p>
@@ -72,17 +83,6 @@
 							</h4>
 						</c:if>
 						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-						<h5 class="sizes">sizes:
-							<span class="size" data-toggle="tooltip" title="small">s</span>
-							<span class="size" data-toggle="tooltip" title="medium">m</span>
-							<span class="size" data-toggle="tooltip" title="large">l</span>
-							<span class="size" data-toggle="tooltip" title="xtra large">xl</span>
-						</h5>
-						<h5 class="colors">colors:
-							<span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-							<span class="color green"></span>
-							<span class="color blue"></span>
-						</h5>
 						<div class="action">
 							<button class="add-to-cart btn btn-default" type="button">장바구니 담기</button>
 							<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
@@ -179,13 +179,13 @@
                     </div>
                 </div>
                 
-                <div class="card" id="reply_card">
+                <div class="container card" id="reply_card">
 					<c:forEach var="reply" items="${listReply}" varStatus="status">
 					    <div class="card-body">
 						    <div class="row">
-					        	<div class="col-md-12" style="margin-top: 20px;">
+					        	<div class="col-xs-12" style="padding-top: 20px;">
 					        	    <p>
-					        	        <a class="float-left" href="#"><strong>${reply.user_name}</strong></a>
+					        	        <span class="float-left"><strong>${reply.user_name}</strong></span>
 					        	        <c:forEach begin="1" end="${reply.rating}" >
 							                <span><i class="fa fa-star checked"></i></span>
 					        	        </c:forEach>
@@ -213,7 +213,7 @@
 						        <div class="card card-inner">
 					            	<div class="card-body">
 					            	    <div class="row">
-					                    	<div class="col-md-12">
+					                    	<div class="col-xs-12">
 					                    	    <p><strong>${pdVO.storeVO.store_name}</strong></p>
 					                    	    <div id="p_answer${status.index}"><p>${reply.answer}</p></div>
 					                    	    <c:if test="${uId eq pId}">
@@ -229,9 +229,38 @@
 					    </div>
 					</c:forEach>
 				</div>
+				<nav style="text-align: center;">
+					<c:set var="info" value="${pagination}" />
+					<input type="hidden" id="productId" value="${productVO.product_id}">
+					<ul class="pagination">
+						<c:if test="${info.curPage ne 1}">
+							<li><a href="javascript:void(0);" onclick="fn_paging(${info.prevPage})" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+						</c:if>
+						<c:forEach var="pageNum" begin="${info.startPage}" end="${info.endPage}">
+						    <c:choose>
+					            <c:when test="${pageNum eq info.curPage}">
+								    <li class="active"><a href=javascript:void(0); onclick="fn_paging(${pageNum})">${pageNum} <span class="sr-only">(current)</span></a></li>
+							 	</c:when>
+							  	<c:otherwise>
+									<li><a href="javascript:void(0);" onclick="fn_paging(${pageNum})">${pageNum}</a></li>
+							  	</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${info.curPage ne info.pageCnt && info.pageCnt > 0}">
+							<li><a href="javascript:void(0);" onclick="fn_paging(${info.nextPage})" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+						</c:if>
+					</ul> 
+				</nav>
 		  	</div>
 			<div class="tab-pane fade" id="product_qa">
-		    	<p>Curabitur dignissim quis nunc vitae laoreet. Etiam ut mattis leo, vel fermentum tellus. Sed sagittis rhoncus venenatis. Quisque commodo consectetur faucibus. Aenean eget ultricies justo.</p>
+				<p class="table-title">상품문의</p>
+		    	<ul>
+		    		<li>구매한 상품의 취소/반품은 마이쿠팡 구매내역에서 신청 가능합니다.</li>
+		    		<li>상품문의 및 후기게시판을 통해 취소나 환불, 반품 등은 처리되지 않습니다.</li>
+		    		<li>가격, 판매자, 교환/환불 및 배송 등 해당 상품 자체와 관련 없는 문의는 고객센터 내 1:1 문의하기를 이용해주세요.</li>
+		    		<li>"해당 상품 자체"와 관계없는 글, 양도, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 이동, 노출제한, 삭제 등의 조치가 취해질 수 있습니다.</li>
+		    		<li>공개 게시판이므로 전화번호, 메일 주소 등 고객님의 소중한 개인정보는 절대 남기지 말아주세요.</li>
+		    	</ul>
 			</div>
 		</div>
 	</div>
@@ -444,6 +473,24 @@
 				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		})
+	}
+	
+	// 나중에 ajax 댓글 추가하자
+	function fn_paging(curPage) {
+		var product_id = $('#productId').val();
+		location.href = "/products/" + product_id + "?curPage=" + curPage;
+		
+/* 		$.ajax({
+			type: "POST",
+			url: "${contextPath}/postProductReplies",
+			dataType: "json",
+			contentType: "aplication/json",
+			data: {product_id: $('#productId').val(),
+				   curPage: curPage},
+			success: function (data) {
+				
+			}
+		}) */
 	}
 		
 	

@@ -121,3 +121,4 @@ span {color: transparent; text-shadow: 0 0 0 black;}
 .emphasis {font-weight: bolder; color:red;}
 .table td {margin-bottom: auto; margin-top: auto;}
 .fate {margin-top: 100px;}
+.title {border: thin; font-size: large;}

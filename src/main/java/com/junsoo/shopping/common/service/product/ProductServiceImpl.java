@@ -1,6 +1,8 @@
 package com.junsoo.shopping.common.service.product;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.junsoo.shopping.common.dao.product.ProductDAO;
 import com.junsoo.shopping.common.vo.ProductVO;
+import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 import com.junsoo.shopping.utils.UploadFileUtils;
 import com.junsoo.shopping.utils.checker.ValueChecker;
 
@@ -117,6 +120,25 @@ public class ProductServiceImpl implements ProductService{
 			logger.error(e.getMessage());
 		}
 		return 1;
+	}
+
+
+	@Override
+	public List<ProductVO> selectCategoryProducts(ProductVO productVO, PaginationInfo paginationInfo) throws Exception {
+		
+		List<ProductVO> productList = Collections.emptyList();
+		
+		int productTotalCount = productDAO.selectCategoryProductCount(productVO.getCategory());
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("category", productVO.getCategory());
+		map.put("startIndex", paginationInfo.getStartIndex());
+		map.put("pageSize", paginationInfo.getPageSize());
+		if(productTotalCount > 0) {
+			productList = productDAO.selectCategoryProducts(map);
+		}
+		
+		return productList;
 	}
 
 

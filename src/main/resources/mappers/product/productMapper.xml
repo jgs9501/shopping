@@ -7,12 +7,32 @@
 	
 	<!-- 최근 출품된 상품 조회 -->
 	<select id="selectRecentlyProduct" parameterType="int" resultType="ProductVO">
-		SELECT *
-		FROM   product
-		WHERE  category = #{category}
-		AND    sale = 'Y'
-		AND	   product_cnt > 0
-		ORDER BY reg_date DESC LIMIT 4
+		SELECT p.seq_user_id, 
+			   p.reg_date, 
+			   p.mod_date, 
+		       p.product_id, 
+		       p.product_name, 
+		       p.product_cnt, 
+		       p.product_price, 
+		       p.product_desc, 
+		       p.product_img, 
+		       p.product_thumbImg, 
+		       p.category, 
+		       p.sale, 
+		       p.discount, 
+		       p.weight, 
+		       p.attention, 
+		       p.valid_date, 
+		       p.use_info, 
+		       p.country,
+		       rating 
+		FROM product p 
+		LEFT JOIN (SELECT product_id, AVG(rating) as rating FROM product_reply group by product_id) pr 
+		ON p.product_id = pr.product_id 
+		WHERE p.category = #{category}
+		AND p.sale = 'Y'
+		ORDER BY p.reg_date DESC
+		LIMIT 0, 4
 	</select>
 	
 	<!-- 상품테이블과 점포테이블 조회 -->
@@ -64,15 +84,44 @@
 		AND    product_id != #{product_id}
 		AND	   sale = 'Y'
 		AND    product_cnt > 0
+		LIMIT 8
 	</select>
 
-	
-	<!-- 카테고리별 모든 상품 조회 -->
-	<select id="selectAllProduct" resultType="ProductVO">
-		SELECT *
+	<!-- 카테고리 별 상품 개수조회 -->
+	<select id="selectCategoryProductCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
 		FROM   product
 		WHERE  category = #{category}
 		AND    sale = 'Y'
+	</select>	
+	<!-- 카테고리별 모든 상품 조회 -->
+	<select id="selectCategoryProducts" parameterType="hashMap" resultType="ProductVO">
+		SELECT p.seq_user_id, 
+			   p.reg_date, 
+			   p.mod_date, 
+		       p.product_id, 
+		       p.product_name, 
+		       p.product_cnt, 
+		       p.product_price, 
+		       p.product_desc, 
+		       p.product_img, 
+		       p.product_thumbImg, 
+		       p.category, 
+		       p.sale, 
+		       p.discount, 
+		       p.weight, 
+		       p.attention, 
+		       p.valid_date, 
+		       p.use_info, 
+		       p.country,
+		       rating 
+		FROM product p 
+		LEFT JOIN (SELECT product_id, AVG(rating) as rating FROM product_reply group by product_id) pr 
+		ON p.product_id = pr.product_id 
+		WHERE p.category = #{category}
+		AND p.sale = 'Y'
+		ORDER BY rating DESC, reg_date DESC
+		LIMIT #{startIndex}, #{pageSize}
 	</select>
 	
 	<!-- 고객이 특정 상품을 구매했는지 조회-->

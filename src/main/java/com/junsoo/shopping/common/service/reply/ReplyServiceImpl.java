@@ -1,6 +1,7 @@
 package com.junsoo.shopping.common.service.reply;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.junsoo.shopping.common.dao.product.ProductDAO;
 import com.junsoo.shopping.common.dao.reply.ReplyDAO;
 import com.junsoo.shopping.common.vo.ProductReplyVO;
+import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 
 @Service
 @Transactional
@@ -69,6 +71,35 @@ public class ReplyServiceImpl implements ReplyService{
 			return 0;
 		}
 		return 1;
+	}
+
+	@Override
+	public List<ProductReplyVO> selectProductReplies(int product_id, 
+													 PaginationInfo paginationInfo) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("product_id", product_id);
+		map.put("startIndex", paginationInfo.getStartIndex());
+		map.put("pageSize", paginationInfo.getPageSize());
+		try {
+			return replyDAO.selectProductReplies(map);
+		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public float selectProductAvgRating(int product_id) throws Exception {
+		
+		try {
+			if(replyDAO.selectProductReplyCount(product_id) > 0) {
+				return replyDAO.selectProductAvgRating(product_id);
+			}
+		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage());
+		}
+		return 0.0f;
 	}
 
 }

@@ -61,11 +61,32 @@
 							                    </c:if>
 						   	     	        </div>
 						                    <ul class="rating">
-						                        <li class="fa fa-star"></li>
-						                        <li class="fa fa-star"></li>
-						                        <li class="fa fa-star"></li>
-						                        <li class="fa fa-star-half-o"></li>
-						                        <li class="fa fa-star disable"></li>
+						                    	<c:choose>
+						                    		<c:when test="${product.rating ne null}">
+						                    			<fmt:formatNumber var="rating" value="${product.rating}" pattern=".0"/>
+						                    			<fmt:formatNumber var="avg" value="${rating*10}"/>
+						                    			<c:forEach begin="10" end="50" step="10" varStatus="idx">
+															<c:choose>
+																<c:when test="${avg >= idx.current}">
+																	<li class="fa fa-star"></li>
+																</c:when>
+																<c:otherwise>
+																	<c:if test="${(avg - idx.current) > 0}">
+																		<li class="fa fa-star-half-o"></li>
+																	</c:if>
+																	<c:if test="${(avg - idx.current) <= 0}">
+																		<li class="fa fa-star disable"></li>
+																	</c:if>
+																</c:otherwise>
+															</c:choose>
+														</c:forEach>
+						                    		</c:when>
+						                    		<c:otherwise>
+						                    			<c:forEach begin="0" end="5">
+							                    			<li class="fa fa-star disable"></li>
+						                    			</c:forEach>
+						                    		</c:otherwise>
+						                    	</c:choose>
 						                    </ul>
 						                </div>
 					                </div>
@@ -81,10 +102,11 @@
 					</div>
 				
 				<hr>
-				<h3 class="h3">${categoryName} <em class="total-product-count">(<c:out value="${fn:length(totalProducts)}"></c:out>)</em></h3>
+				<h3 class="h3">${categoryName} <em class="total-product-count">(<c:out value="${categoryProductCount}"></c:out>)</em></h3>
 				<div class="row">
-				    	<c:if test="${fn:length(totalProducts) > 0}">
-					    	<c:forEach items="${totalProducts}" var="product">
+				    	<c:if test="${fn:length(productList) > 0}">
+					    	<c:forEach items="${productList}" var="product">
+					    		<c:set var="category_id" value="${product.category}"/>
 						        <div class="col-xs-3 col-xs-6">
 						            <div class="product-grid">
 						                <div class="product-image">
@@ -105,25 +127,68 @@
 							   	     	           <span><fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price}"></fmt:formatNumber>원</span>
 							                    </c:if>
 						   	     	        </div>
-						                    <ul class="rating">
-						                        <li class="fa fa-star"></li>
-						                        <li class="fa fa-star"></li>
-						                        <li class="fa fa-star"></li>
-						                        <li class="fa fa-star-half-o"></li>
-						                        <li class="fa fa-star disable"></li>
+						   	     	        <ul class="rating">
+						                    	<c:choose>
+						                    		<c:when test="${product.rating ne null}">
+						                    			<fmt:formatNumber var="rating" value="${product.rating}" pattern="0.0"/>
+						                    			<fmt:formatNumber var="avg" value="${rating*10}"/>
+						                    			<c:forEach begin="10" end="50" step="10" varStatus="idx">
+															<c:choose>
+																<c:when test="${avg >= idx.current}">
+																	<li class="fa fa-star"></li>
+																</c:when>
+																<c:otherwise>
+																	<c:if test="${(avg - idx.current) > 0}">
+																		<li class="fa fa-star-half-o"></li>
+																	</c:if>
+																	<c:if test="${(avg - idx.current) <= 0}">
+																		<li class="fa fa-star disable"></li>
+																	</c:if>
+																</c:otherwise>
+															</c:choose>
+														</c:forEach>
+						                    		</c:when>
+						                    		<c:otherwise>
+						                    			<c:forEach begin="0" end="5">
+							                    			<li class="fa fa-star disable"></li>
+						                    			</c:forEach>
+						                    		</c:otherwise>
+						                    	</c:choose>
 						                    </ul>
 						                </div>
 					                </div>
 					            </div>
 					       	</c:forEach>
+					       	
 				    	</c:if>
-				    	<c:if test="${fn:length(totalProducts) < 1}">
+				    	<c:if test="${fn:length(productList) < 1}">
 				    		<br>
 				    		<div>
 				    			<h4 class="h4" style="margin-left: 30px;">${totalProductResult}</h4>
 				    		</div>
 				    	</c:if>
 					</div>
+					<nav style="text-align: center;">
+						<c:set var="info" value="${pagination}" />
+					  	<ul class="pagination">
+						  	<c:if test="${info.curPage ne 1}">
+							    <li><a href="javascript:void(0);" onclick="fn_paging(${category_id},${info.prevPage})" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+						  	</c:if>
+						  	<c:forEach var="pageNum" begin="${info.startPage}" end="${info.endPage}">
+						  		<c:choose>
+						  			<c:when test="${pageNum eq info.curPage}">
+									    <li class="active"><a href=javascript:void(0); onclick="fn_paging(${category_id},${pageNum})">${pageNum} <span class="sr-only">(current)</span></a></li>
+						  			</c:when>
+						  			<c:otherwise>
+									    <li><a href="javascript:void(0);" onclick="fn_paging(${category_id},${pageNum})">${pageNum}</a></li>
+						  			</c:otherwise>
+						  		</c:choose>
+						  	</c:forEach>
+						  	<c:if test="${info.curPage ne info.pageCnt && info.pageCnt > 0}">
+							    <li><a href="javascript:void(0);" onclick="fn_paging(${category_id},${info.nextPage})" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+						  	</c:if>
+					 	</ul> 
+					</nav>
 				</div>
 			</article>
 		</section>
@@ -132,5 +197,11 @@
 	<footer>
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
 	</footer>
+	
+	<script>
+		function fn_paging(category, curPage) {
+			location.href = "/categories/"+category+"?curPage="+curPage;
+		}
+	</script>
 </body>
 </html>

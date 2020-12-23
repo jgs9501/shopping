@@ -1,5 +1,6 @@
 package com.junsoo.shopping.common.dao.reply;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,8 +24,13 @@ public class ReplyDAOImpl implements ReplyDAO {
 	}
 
 	@Override
-	public List<ProductReplyVO> selectProductReplies(int product_id) throws Exception {
-		return sqlSession.selectList(namespace + ".selectProductReplies", product_id);
+	public List<ProductReplyVO> selectProductReplies(HashMap<String, Object> map) throws Exception {
+		return sqlSession.selectList(namespace + ".selectProductReplies", map);
+	}
+	
+	@Override
+	public int selectProductReplyCount(int product_id) throws Exception {
+		return sqlSession.selectOne(namespace + ".selectProductReplyCount", product_id);
 	}
 
 	@Override
@@ -40,6 +46,11 @@ public class ReplyDAOImpl implements ReplyDAO {
 	@Override
 	public void deleteProductReplyAnswer(ProductReplyVO prVO) throws Exception {
 		sqlSession.delete(namespace + ".deleteProductReplyAnswer", prVO);
+	}
+
+	@Override
+	public float selectProductAvgRating(int product_id) throws Exception {
+		return sqlSession.selectOne(namespace + ".selectProductAvgRating", product_id);
 	}
 
 }

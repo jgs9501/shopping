@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -28,6 +29,7 @@ import com.junsoo.shopping.common.vo.ProductDetailVO;
 import com.junsoo.shopping.common.vo.ProductReplyVO;
 import com.junsoo.shopping.common.vo.ProductVO;
 import com.junsoo.shopping.common.vo.UserVO;
+import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 import com.junsoo.shopping.utils.checker.ValueChecker;
 
 @Controller
@@ -42,6 +44,8 @@ public class ProductController {
 	
 	@Inject
 	ReplyDAO replyDAO;
+	@Inject
+	ReplyService replyService;
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
@@ -259,36 +263,39 @@ public class ProductController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "categories/{category}", method = RequestMethod.GET)
-	public ModelAndView getCategory(ProductVO productVO, @PathVariable("category") int category) throws Exception {
+	public ModelAndView getCategory(ProductVO productVO, 
+									@RequestParam(defaultValue = "1") int curPage,
+									@PathVariable("category") int category) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
 		ValueChecker vc = new ValueChecker();
 		try {
-			
+			// 카테고리 이름 구별
 			String categoryName = vc.getCategoryName(category);
-			
+			// 카테고리 상품 개수 조회
+			int count = productDAO.selectCategoryProductCount(category);
+			// 최근 해당 카테고리에 등록한 상품 4개를 조회한 데이터
 			List<ProductVO> recentlyProducts = productService.selectRecentlyProduct(category);
-			int productCount = recentlyProducts.size();
+			// 페이징 정보 입력
+			PaginationInfo paginationInfo = new PaginationInfo(count, curPage);
+			// 해당 카테고리에 등록한 모든 상품 조회 데이터
+			List<ProductVO> productList = productService.selectCategoryProducts(productVO, paginationInfo);
 			
-			List<ProductVO> totalProducts = productDAO.selectAllProduct(category);
-			int totalCount = totalProducts.size();
-			
-			if(productCount < 1) {
+			if(recentlyProducts.size() < 1) {
 				mv.addObject("recentlyProductResult", "해당 카테고리에 최근 출시된 상품이 없습니다");
 			}
-			if(totalCount < 1) {
+			if(count < 1) {
 				mv.addObject("totalProductResult", "해당 카테고리에 출시된 상품이 없습니다.");
 			}
 			mv.setViewName("contents/product/categories");
-			// 카테고리 이름 구별
 			mv.addObject("categoryName", categoryName);
-			// 최근 해당 카테고리에 등록한 상품 4개를 조회한 데이터
+			mv.addObject("categoryProductCount",count);
 			mv.addObject("recentlyProducts", recentlyProducts);
-			// 해당 카테고리에 등록한 모든 상품 조회 데이터
-			mv.addObject("totalProducts", totalProducts);
+			mv.addObject("productList", productList);
+			mv.addObject("pagination", paginationInfo);
 			
 		} catch (NullPointerException npe) {
-			logger.error(npe.getLocalizedMessage());
+			logger.error("NullPointerException " + npe.getLocalizedMessage());
 			mv.setViewName("contents/error");
 		} catch (IllegalArgumentException iae) {
 			logger.error(iae.getLocalizedMessage());
@@ -304,14 +311,16 @@ public class ProductController {
 	
 	/**
 	 * productDetail.jsp 
-	 * 특정 상품 조회
+	 * 특정 상품 상세 조회
 	 * @param productVO
 	 * @param product_id
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "products/{product_id}", method = RequestMethod.GET)
-	public ModelAndView getProductDetail(ProductVO productVO, @PathVariable("product_id") int product_id) throws Exception{
+	public ModelAndView getProductDetail(ProductVO productVO, 
+										@RequestParam(defaultValue = "1") int curPage,
+										@PathVariable("product_id") int product_id) throws Exception{
 		
 		ModelAndView mv = new ModelAndView();
 		ValueChecker vc = new ValueChecker();
@@ -329,16 +338,24 @@ public class ProductController {
 			ProductDetailVO pdVO = productDAO.selectProductDetail(product_id);
 			// 선택한 상품의 점포 관련 물품들 조회
 			List<ProductVO> listProduct = productDAO.selectSameStoreProduct(pdVO.getProductVO());
-			// 해당 상품의 댓글 정보 조회
-			List<ProductReplyVO> listReply = replyDAO.selectProductReplies(pdVO.getProductVO().getProduct_id());
+			// 선택한 상품의 댓글 수 조회
+			int reply_count = replyDAO.selectProductReplyCount(product_id);
+			// 상품의 평가 평균 점수 조회 (소수점 첫째 자리수 계산)
+			float rating_avg = (Math.round(replyService.selectProductAvgRating(product_id)*10)/10.0f);
+			// 해당 상품의 댓글 정보 조회 (페이징 적용)
+			PaginationInfo paginationInfo = new PaginationInfo(reply_count, curPage);
+			List<ProductReplyVO> listReply = replyService.selectProductReplies(product_id, paginationInfo);
 			//카테고리 이름 치환
 			categoryName = vc.getCategoryName(pdVO.getProductVO().getCategory());
 			
+			mv.setViewName("contents/product/productDetail");
 			mv.addObject("listProduct", listProduct);
+			mv.addObject("replyCount", reply_count);
+			mv.addObject("rating_avg", rating_avg);
 			mv.addObject("listReply", listReply);
 			mv.addObject("pdVO", pdVO);
 			mv.addObject("categoryName", categoryName);
-			mv.setViewName("contents/product/productDetail");
+			mv.addObject("pagination", paginationInfo);
 			
 		} catch (Exception e) {
 			logger.error(e.getLocalizedMessage());

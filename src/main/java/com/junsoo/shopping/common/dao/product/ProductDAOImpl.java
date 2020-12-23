@@ -45,10 +45,15 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 
 	@Override
-	public List<ProductVO> selectAllProduct(int category) throws Exception {
-		return sqlSession.selectList(namespace + ".selectAllProduct", category);
+	public List<ProductVO> selectCategoryProducts(HashMap<String, Object> map) throws Exception {
+		return sqlSession.selectList(namespace + ".selectCategoryProducts", map);
 	}
 
+	@Override
+	public int selectCategoryProductCount(int category) throws Exception {
+		return sqlSession.selectOne(namespace + ".selectCategoryProductCount", category);
+	}
+	
 	@Override
 	public List<ProductVO> selectStoreProducts(int seq_user_id) throws Exception {
 		return sqlSession.selectList(namespace + ".selectStoreProducts", seq_user_id);
@@ -73,5 +78,6 @@ public class ProductDAOImpl implements ProductDAO {
 	public List<PurchaseInfoVO> selectBuyProducts(int seq_user_id) throws Exception {
 		return sqlSession.selectList(namespace + ".selectBuyProducts", seq_user_id);
 	}
+
 
 }

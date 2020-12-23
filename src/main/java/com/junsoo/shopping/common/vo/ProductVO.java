@@ -2,9 +2,9 @@ package com.junsoo.shopping.common.vo;
 
 import org.springframework.lang.NonNull;
 
-import lombok.EqualsAndHashCode;
+import com.junsoo.shopping.common.vo.paging.PaginationInfo;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -37,10 +37,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@EqualsAndHashCode
 public class ProductVO {
 
+	private PaginationInfo paginationInfo;
+	
 	@NonNull
 	private int seq_user_id;
 	@NonNull
@@ -77,4 +77,8 @@ public class ProductVO {
 	private String use_info;
 	@NonNull
 	private String country;
+	
+	// 댓글 테이블과 LEFT JOIN 으로 인해 선언 (product 테이블의 컬럼은 존재안함)
+	private float rating;
+	
 }
