@@ -4,28 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style type="text/css">
-		.card {
-			float: left;
-			overflow: hidden;
-			margin-left: 10px;
-			margin-top: 10px;
-			margin-right: 10px;
-			margin-bottom: 10px;
-		}
-		.swiper-per-group {
-			float: left;
-			width: 1200px;
-			height: 300px;
-		}
-		.swiper-margin {
-			margin-left: 100px;
-			margin-top: 10px;
-			margin-right: 100px;
-			margin-bottom: 10px;
-		}
-    
-	</style>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 </head>
 <body>
 	<div class="card">

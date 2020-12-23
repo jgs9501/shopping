@@ -9,30 +9,7 @@
 	<!-- Swiper JS -->
 	<script src="./resources/js/jquery.min.js"></script> 
 	<script src="./resources/js/swiper.min.js"></script>
-	<!-- Demo styles -->
-    <style type="text/css">
-	    .swiper-container {
-	        height: 500px;
-	        width: 100%;
-	    }
-	    .swiper-slide {
-	        text-align: center;
-	        /* Center slide text vertically */
-	        display: -webkit-box;
-	        display: -ms-flexbox;
-	        display: -webkit-flex;
-	        display: flex;
-	        -webkit-box-pack: center;
-	        -ms-flex-pack: center;
-	        -webkit-justify-content: center;
-	        justify-content: center;
-	        -webkit-box-align: center;
-	        -ms-flex-align: center;
-	        -webkit-align-items: center;
-	        align-items: center;
-	        overflow: hidden;
-	    }
-     </style>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 </head>
 <body>
 	<!-- Swiper -->

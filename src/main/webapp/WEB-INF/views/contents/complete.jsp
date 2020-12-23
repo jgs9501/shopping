@@ -12,19 +12,7 @@
 	<script src="${contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-	<style type="text/css">
-		.center-auto{
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: auto;
-			margin-bottom: auto;
-			width: 500px;
-		}
-		.span-style{
-			display: inline-block;
-			font-size: 70px;
-		}
-	</style>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 </head>
 <body>
 	<!-- 머릿글 -->

@@ -4,47 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Link Swiper's CSS -->
 	<link rel="stylesheet" href="./resources/css/swiper.css">
 	<script src="./resources/js/jquery.min.js"></script> 
-	<!-- Swiper JS -->
 	<script src="./resources/js/swiper.min.js"></script>
-	<!-- Demo styles -->
-	<style type="text/css">
-	    .viewed-items-containers {
-	    	float: left;
-	    	padding-bottom: 50px;
-	    	padding-left: 100px;
-	    	padding-right: 100px;
-	        width: 1200px;
-	        height: 100%;
-	    }
-	    .swiper-slide {
-	        text-align: center;
-	        font-size: 18px;
-	        background: #fff;
-	        /* Center slide text vertically */
-	        display: -webkit-box;
-	        display: -ms-flexbox;
-	        display: -webkit-flex;
-	        display: flex;
-	        -webkit-box-pack: center;
-	        -ms-flex-pack: center;
-	        -webkit-justify-content: center;
-	        justify-content: center;
-	        -webkit-box-align: center;
-	        -ms-flex-align: center;
-	        -webkit-align-items: center;
-	        align-items: center;
-	    }
-	    
-	    .swiper-margin {
-			margin-left: 100px;
-			margin-top: 10px;
-			margin-right: 100px;
-			margin-bottom: 10px;
-		}
-	</style>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 </head>
 <body>
 <!-- Swiper -->

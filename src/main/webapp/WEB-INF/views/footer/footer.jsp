@@ -4,14 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<style type="text/css">
-	.footer {
-		float: left;
-		position: relative;
-		width: 100%;
-		margin-bottom: 5px;
-	}
-</style>
+<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 </head>
 <body>
 	<div class="jumbotron footer">
@@ -22,7 +15,7 @@
         <p class="lead">
         </p>
     </div>
-    <div class="container" style="font-size: x-small;">
+    <div class="footer">
     	<ul style="list-style-type: none; text-align: right;">
     		<li>TEL. KakaoTalk : voicefam | LINE : sosojs | jgs950130@gmail.com</li>
     	</ul>
