@@ -1,5 +1,5 @@
 # ignore properties file
-pom.properties
+*.properties
 target/
 .classpath
 .project
