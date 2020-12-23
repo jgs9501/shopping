@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+a {color: black;}
+input {color: transparent; text-shadow: 0 0 0 black;} 
+span {color: transparent; text-shadow: 0 0 0 black;} 
+/* index.jsp */
+.header {width: 100%;position: static;list-style-type: none;float: left;height:auto;}
+.nav-main{margin-left: auto;margin-right: auto;width: 1518px;height:auto;}
+.main-container {margin-left: auto;margin-right: auto;width: 1518px; min-height: 500px;}
+.aside-list {width: 170px; height:100%; float:left;z-index:999; position: absolute;}
+.section-main {float: left;width: 1348px;overflow: hidden;padding-left:170px;}
+.article-viewed-items {padding-left: 20px;}
+.footer {width: 100%;clear: both;position: relative; z-index:999;}
+.fixed{position:fixed;}
+.abs{position:absolute;}
+/* shoppingList.jsp */
+.list-group{position:absolute; float: left; width: 170px; font-size: x-small; height:auto;}
+
+/* registList.jsp */
+.list-group{float: left;width: 170px;font-size: x-small;}
+.list-header{font-size: small;font-weight: bolder;background-color: #eee;}
+
+/* header.jsp */
+.myMenu {font-size: x-small;list-style-type: none;float: right;}
+.myMenu-li{width: 80px;float: right;}
+
+/* footer.jsp */
+.footer {float: left;position: relative;width: 100%;margin-bottom: 5px;}
+
+/* mainViewdItems.jsp */
+.viewed-items-containers {float: left;padding-bottom: 50px;padding-left: 100px;padding-right: 100px;width: 1200px;height: 100%;}
+.swiper-slide {text-align: center;font-size: 18px;background: #fff;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+.swiper-margin {margin-left: 100px;margin-top: 10px;margin-right: 100px;margin-bottom: 10px;}
+.thumbnail a img {height: 240px; width: 100%; display: block;}
+.text-left {text-align: left; margin-left: 20px;}
+.text-right {text-align: right; margin-right: 20px;}
+/* mainContent.jsp */
+.card {float: left;overflow: hidden;margin-left: 10px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;}
+.swiper-per-group {float: left;width: 1200px;height:300px;}
+.swiper-margin {margin-left: 100px;margin-top: 10px;margin-right: 100px;margin-bottom: 10px;}
+
+/* mainChartImage.jsp */
+.swiper-chart {height: 500px;width: 100%;}
+.swiper-slide {
+	text-align: center;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+/* error.jsp */
+.center-auto{margin-left: auto;margin-right: auto;margin-top: auto;margin-bottom: auto;width: 300px;}
+
+/* confirm.jsp */
+.center-sort {margin-left: auto;margin-right: auto;}
+.width-limit {max-width: 700px;min-width: 400px;}
+.center-padding {padding-top: 100px;padding-left: 25%;padding-right: 25%;padding-bottom: 100px;}
+
+/* complete.jsp */
+/* .center-auto{margin-left: auto;margin-right: auto;margin-top: auto;margin-bottom: auto;width: 500px;} */
+.span-style{display: inline-block;font-size: 70px;}
+
+/* categories.jsp */
+.total-product-count{color: gray; font-size: medium;}
+
+.product-grid{font-family:Roboto,sans-serif;text-align:center;position:relative;z-index:1;width:260px;height:400px;}
+.product-grid:before{content:"";height:350px;width:260px;background:#fff;border:1px solid rgba(0,0,0,.1);opacity:0;position:absolute;top:0;left:0;z-index:-1;transition:all .5s ease 0s;}
+.product-grid:hover:before{opacity:1;height:400px;}
+.product-grid .product-image{position:relative}
+.product-grid .product-image a{display:block}
+.product-grid .product-image img{width:250px;height:330px;}
+/* z.product-grid .pic-1{opacity:1;transition:all .5s ease-out 0s}
+.product-grid:hover .pic-1{opacity:0}
+.product-grid .pic-2{position:absolute;top:0;left:0;opacity:0;transition:all .5s ease-out 0s}
+.product-grid:hover .pic-2{opacity:1} */
+.product-grid .social{width:120px;padding:0;margin:0 auto;list-style:none;opacity:0;position:absolute;right:0;left:0;bottom:-23px;transform:scale(0);transition:all .3s ease 0s}
+.product-grid:hover .social{opacity:1;transform:scale(1)}
+.product-grid:hover .product-discount-label,.product-grid:hover .product-new-label,.product-grid:hover .title{opacity:0}
+.product-grid .social li{display:inline-block}
+.product-grid .social li a{color:#e67e22;background:#fff;font-size:18px;line-height:50px;width:50px;height:50px;border:1px solid rgba(0,0,0,.1);border-radius:50%;margin:0 2px;display:block;transition:all .3s ease 0s}
+.product-grid .social li a:hover{background:#e67e22;color:#fff}
+.product-grid .product-discount-label,.product-grid .product-new-label{background-color:#e67e22;color:#fff;font-size:17px;padding:2px 10px;position:absolute;right:10px;top:10px;transition:all .3s}
+.product-grid .product-content{z-index:-1;padding:15px;text-align:left}
+.product-grid .title{font-size:14px;text-transform:capitalize;margin:0 0 7px;transition:all .3s ease 0s}
+.product-grid .title a{color:#414141}
+.product-grid .price{color:#000;font-size:16px;letter-spacing:1px;font-weight:600;margin-right:2px;display:inline-block}
+.product-grid .price span{color:#909090;font-size:14px;font-weight:500;letter-spacing:0;text-decoration:line-through;text-align:left;display:inline-block;margin-top:-2px}
+.product-grid .rating{padding:0;margin:-22px 0 0;list-style:none;text-align:right;display:block}
+.product-grid .rating li{color:#ffd200;font-size:13px;display:inline-block}
+.product-grid .rating li.disable{color:#dcdcdc}
+.product-container{width:1400px; min-width:1190px; margin-left:20px; display:inline-block; padding-left: 170px; min-height:300px; }
+.product-container .h3{margin-left: 20px;}
+
+
+<!--  -->
+.emphasis {font-weight: bolder; color:red;}
+.table td {margin-bottom: auto; margin-top: auto;}
+.fate {margin-top: 100px;}
+.title {border: thin; font-size: large;}

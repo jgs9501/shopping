@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.replyMapper">
+	<!-- 상품 댓글 등록 -->
+	<insert id="insertProductReply">
+		INSERT INTO product_reply
+			(seq_user_id,
+			 product_id,
+			 user_name,
+			 content,
+			 rating)
+		VALUES
+			(#{seq_user_id},
+			 #{product_id},
+			 #{user_name},
+			 #{content},
+			 #{rating})
+	</insert>
+	
+	<!-- 특정 상품의 모든 댓글 조회 -->
+	<select id="selectProductReplyCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*)
+		FROM   product_reply
+		WHERE  product_id = #{product_id}
+	</select>
+	
+	<!-- 특정 상품의 모든 댓글 조회 -->
+	<select id="selectProductReplies" parameterType="HashMap" resultType="ProductReplyVO">
+		SELECT *
+		FROM   product_reply
+		WHERE  product_id = #{product_id}
+		ORDER BY reg_date DESC
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+	
+	<!-- 특정 상품에서의 특정 댓글 조회 -->
+	<select id="selectProductReply" resultType="ProductReplyVO">
+		SELECT *
+		FROM   product_reply
+		WHERE  product_id = #{product_id}
+		AND    seq_user_id = #{seq_user_id}
+	</select>
+	
+	<!-- 특정 상품 댓글의 답글을 달 경우 수정 -->
+	<update id="updateProductReplyAnswer">
+		UPDATE product_reply
+		SET    answer = #{answer}
+		WHERE  seq_user_id = #{seq_user_id}
+		AND    product_id = #{product_id}
+	</update>
+	
+	<!-- 특정 상품 댓글의 답글 삭제(answer column : null) -->
+	<delete id="deleteProductReplyAnswer">
+		UPDATE product_reply
+		SET    answer = null
+		WHERE  seq_user_id = #{seq_user_id}
+		AND    product_id = #{product_id}
+	</delete>
+	
+	<!-- 상품의 평균 평가점수 조회 -->
+	<select id="selectProductAvgRating" resultType="float">
+		SELECT AVG(rating) AS avg_rating
+		FROM   product_reply
+		WHERE  product_id = #{product_id}
+		AND    rating >= 1
+	</select>
+	
+</mapper>

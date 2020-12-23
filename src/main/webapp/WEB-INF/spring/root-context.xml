@@ -46,4 +46,12 @@
 	
 	<!-- Mapper 패키지 -->
 	<context:component-scan base-package="com.junsoo"></context:component-scan>
+	
+	<!-- 이미지 업로드 패스 설정 --> 
+	<bean class="java.lang.String" id="uploadPath">
+		<constructor-arg value="D:\STS_workspace\shopping\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\shopping" />
+	</bean>
+	
+	
+
 </beans>

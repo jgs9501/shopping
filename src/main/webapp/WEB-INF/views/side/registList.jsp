@@ -4,19 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<style type="text/css">
-		.list-group{
-			float: left;
-		    width: 170px;
-		    font-size: x-small;
-		}
-		.list-header{
-			font-size: small;
-			font-weight: bolder;
-			background-color: #eee;
-		}
-	</style>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 </head>
 <body>
 	<div class="list-group">
