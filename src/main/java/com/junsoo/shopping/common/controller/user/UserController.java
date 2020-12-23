@@ -55,28 +55,33 @@ public class UserController {
 		HttpSession session = req.getSession();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		ModelAndView mv = new ModelAndView();
-		String page = "redirect:/";
+		String page = "redirect:/index";
 		try {
 			UserVO login = userService.selectOneUser(vo);
-			boolean passMatch = passwordEncoder.matches(vo.getPassword(), userService.selectPassword(vo.getUser_id()));
+			boolean passMatch = passwordEncoder.matches(vo.getPassword(), 
+								userService.selectPassword(vo.getUser_id()));
 			if(login == null) {
 				session.setAttribute("user", null);
 				rttr.addFlashAttribute("msg", false);
 				mv.addObject("result", "아이디");
 				page = "contents/user/login";
 			}
+			
 			else if(!passMatch) {
 				session.setAttribute("user", null);
 				rttr.addFlashAttribute("msg", false);
 				mv.addObject("result", "비밀번호");
 				page = "contents/user/login";
 			}
-			if(login != null && passMatch) {
+			else {
+				session.setAttribute("userVO", login);
 				session.setAttribute("user", login.getUser_id());
 			}
-		}
-		catch (NullPointerException npe) {
+		} catch (NullPointerException npe) {
 			logger.warn(npe.getMessage());
+			vo=null;
+		} catch (Exception e) {
+			logger.warn(e.getMessage());
 			vo=null;
 		} finally {
 			mv.setViewName(page);
@@ -157,22 +162,23 @@ public class UserController {
 		
 		logger.info("getModify called");
 		ModelAndView mv = new ModelAndView();
-		String user = (String)request.getSession().getAttribute("user");
+		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
 		
 		try {
-			if(user == null) {
+			if(userVO == null) {
+				mv.addObject("result", "로그인 정보를 다시 확인해주세요");
 				mv.setViewName("contents/error");
 			}
 			else {
-				mv.addObject("userVO", userService.selectOneUser(user));
+				mv.addObject("userVO", userVO);
 				mv.setViewName("contents/user/modify");
 			}
 		} catch (NullPointerException npe) {
-			logger.warn(npe.getMessage());
-			mv.setViewName("/:redirect/contents/error");
+			logger.error(npe.getMessage());
+			mv.setViewName("contents/error");
 		} catch (Exception e) {
-			logger.warn(e.getMessage());
-			mv.setViewName("/:redirect/contents/error");
+			logger.error(e.getMessage());
+			mv.setViewName("contents/error");
 		}
 		
 		return mv;

@@ -12,15 +12,7 @@
 	<script src="${contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-	<style type="text/css">
-		.center-auto{
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: auto;
-			margin-bottom: auto;
-			width: 300px;
-		}
-	</style>
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 </head>
 <body>
 	<!-- 머릿글 -->
@@ -28,12 +20,10 @@
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
 	<div class="container">
-		<aside>
-			<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
-		</aside>
 		<section class="center-auto">
 			<span class="glyphicon glyphicon-remove" style="width: 100px; height: 100px;"></span>
-			<br><h2>부적절한 오류가 발생하였습니다</h2>
+			<h3>부적절한 오류가 발생하였습니다</h3>
+			<br><h3>${result}</h3>
 			<br><p><a class="btn btn-primary btn-lg" href="${ContextPath}/index" role="button">홈으로</a></p>
 		</section>
 	</div>
