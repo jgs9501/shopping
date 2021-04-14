@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.cartMapper">
+	<!-- 현재 담긴 장바구니 개수 조회 -->
+	<select id="selectCountCart" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM   cart
+		WHERE  seq_user_id = #{seq_user_id}
+	</select>
+	
+	<!-- 현재 담긴 장바구니 정보 조회 -->
+	<select id="selectAllCart" parameterType="int" resultType="HashMap">
+		SELECT c.seq_user_id,
+			   c.cart_id,
+			   p.product_id, 
+			   p.product_name, 
+			   (p.product_price-p.discount) product_price, 
+			   p.product_thumbImg, 
+			   c.amount
+		FROM product p, cart c
+		WHERE c.seq_user_id = #{seq_user_id}
+		AND   p.product_id = c.product_id;
+	</select>
+	
+	<!-- 장바구니 추가  -->
+	<insert id="insertCart" parameterType="CartVO">
+		INSERT INTO cart(
+			seq_user_id,
+			product_id,
+			amount
+		) VALUES (
+			#{seq_user_id},
+			#{product_id},
+			#{amount}
+		)
+	</insert>
+	
+	<!-- 장바구니에 담긴 물건 수량 수정 -->
+	<update id="updateAmountCart" parameterType="Map">
+		UPDATE cart
+		SET
+			amount = #{amount}
+		WHERE
+			seq_user_id = #{seq_user_id} AND
+			cart_id = #{cart_id}
+	</update>
+	
+	<!-- 장바구니에 담긴 물건 삭제 -->
+	<delete id="deleteCart" parameterType="CartVO">
+		DELETE FROM
+			cart
+		WHERE 
+			seq_user_id = #{seq_user_id} AND
+			cart_id = #{cart_id}
+	</delete>
+</mapper>

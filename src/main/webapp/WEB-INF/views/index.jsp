@@ -44,6 +44,9 @@
     <header class="header">
 		<jsp:include page="header/header.jsp"></jsp:include>
     </header>
+    <nav>
+    	<jsp:include page="contents/search.jsp"></jsp:include>
+    </nav>
     <nav class="nav-main">
     	<jsp:include page="contents/mainChartImage.jsp"></jsp:include>
     </nav>
@@ -61,7 +64,7 @@
 			</article>
 	    </section>
 	</div>
-	<!--바닥글-->
+	
     <footer class="footer" id="footer">
 		<jsp:include page="footer/footer.jsp"></jsp:include>
     </footer>

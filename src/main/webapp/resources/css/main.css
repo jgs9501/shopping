@@ -3,16 +3,19 @@
 a {color: black;}
 input {color: transparent; text-shadow: 0 0 0 black;} 
 span {color: transparent; text-shadow: 0 0 0 black;} 
+html {min-height: 100%}
 /* index.jsp */
 .header {width: 100%;position: static;list-style-type: none;float: left;height:auto;}
+.main-search{width: 700px; position: relative; text-align: center; left: 30%;}
 .nav-main{margin-left: auto;margin-right: auto;width: 1518px;height:auto;}
 .main-container {margin-left: auto;margin-right: auto;width: 1518px; min-height: 500px;}
 .aside-list {width: 170px; height:100%; float:left;z-index:999; position: absolute;}
 .section-main {float: left;width: 1348px;overflow: hidden;padding-left:170px;}
 .article-viewed-items {padding-left: 20px;}
-.footer {width: 100%;clear: both;position: relative; z-index:999;}
+.footer {width: 100%;clear: both;position: relative; z-index:999; bottom: 0;}
 .fixed{position:fixed;}
 .abs{position:absolute;}
+.section{height: 100%; min-height: 500px;}
 /* shoppingList.jsp */
 .list-group{position:absolute; float: left; width: 170px; font-size: x-small; height:auto;}
 
@@ -122,3 +125,4 @@ span {color: transparent; text-shadow: 0 0 0 black;}
 .table td {margin-bottom: auto; margin-top: auto;}
 .fate {margin-top: 100px;}
 .title {border: thin; font-size: large;}
+.margin-6px {margin: 6px;}

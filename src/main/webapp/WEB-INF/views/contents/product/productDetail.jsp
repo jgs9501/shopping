@@ -29,6 +29,9 @@
 		<li class="active">${pdVO.productVO.product_name}</li>
 	</ol>
 	<section>
+		<input type="hidden" id="seq_user_id" name="seq_user_id" value="${userVO.seq_user_id}"/>
+	    <input type="hidden" id="user_name" name="user_name" value="${userVO.user_id}">
+	    <input type="hidden" id="product_id" name="product_id" value="${productVO.product_id}"/>
 		<div class="container">
 		<div class="card">
 			<div class="container-fliud">
@@ -82,11 +85,18 @@
 									원</span>
 							</h4>
 						</c:if>
-						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-						<div class="action">
-							<button class="add-to-cart btn btn-default" type="button">장바구니 담기</button>
-							<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
-						</div>
+						<form class="form-horizontal form-width" method="post" action="${contextPath}/insertCart">
+						    <input type="hidden" name="product_id" value="${productVO.product_id}"/>
+							<strong>상품개수  </strong>
+							<select name="amount">
+								<c:forEach begin="1" end="10" var="i">
+									<option value="${i}">${i}</option>
+								</c:forEach>
+							</select>
+							<div>
+								<button class="add-to-cart btn btn-default" style="margin-top: 10px;" onclick="javascript:cartBtn()">장바구니 담기</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -160,8 +170,7 @@
 		  		<div class="col">
                     <div class="panel-body">
                         <form role="form">
-                        	<input type="hidden" id="seq_user_id" value="${userVO.seq_user_id}"/>
-                        	<input type="hidden" id="user_name" value="${userVO.user_id}">
+                        	
                             <fieldset>
                                 <div class="form-group">
 						  			<div id="star">
@@ -255,7 +264,6 @@
 			<div class="tab-pane fade" id="product_qa">
 				<p class="table-title">상품문의</p>
 		    	<ul>
-		    		<li>구매한 상품의 취소/반품은 마이쿠팡 구매내역에서 신청 가능합니다.</li>
 		    		<li>상품문의 및 후기게시판을 통해 취소나 환불, 반품 등은 처리되지 않습니다.</li>
 		    		<li>가격, 판매자, 교환/환불 및 배송 등 해당 상품 자체와 관련 없는 문의는 고객센터 내 1:1 문의하기를 이용해주세요.</li>
 		    		<li>"해당 상품 자체"와 관계없는 글, 양도, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 이동, 노출제한, 삭제 등의 조치가 취해질 수 있습니다.</li>
@@ -269,7 +277,7 @@
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
 	</footer>
 
-    <script>
+<script>
     var swiper = new Swiper('.swiper-per-group', {
     	slidesPerView: 4,
         spaceBetween: 30,
@@ -493,7 +501,9 @@
 		}) */
 	}
 		
-	
+	function cartBtn(){
+		alert("장바구니에 추가되었습니다.");
+	}
 </script>
 </body>
 </html>
