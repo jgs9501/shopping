@@ -6,6 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -21,18 +22,6 @@
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<!-- 검색툴바 -->
-				<div class="navbar-form navbar-left">
-				    <div class="input-group">
-				    	<input type="text" class="form-control" placeholder="상품을 검색하세요">
-				      	<span class="input-group-btn">
-					        <button class="btn btn-default" type="button">
-					        	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					        </button>
-				      	</span>
-				  </div>
-				</div>
-							
 				<ul class="nav navbar-nav">
 					<c:choose>
 						<c:when test="${userVO.auth ne 2}">
@@ -54,13 +43,25 @@
 					</c:choose>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-				<% if(session.getAttribute("userVO")==null){ %>
-					<li><a href="${contextPage}/contents/user/login">로그인</a></li>
-					<li><a href="${contextPage}/contents/user/regist">회원가입</a></li>
-				<% }else{ %>
-					<li><a href="${contextPage}/contents/user/modify"><%=session.getAttribute("user") %></a></li>
-					<li><a href="${contextPage}/contents/logout">로그아웃</a></li>
-				<%} %>
+					<c:choose>
+						<c:when test="${userVO eq null}">
+							<li><a href="${contextPage}/contents/user/login">로그인</a></li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<div class="dropdown">
+									<a class="btn margin-6px" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">${user}</a>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+										<li><a href="${contextPage}/contents/user/modify">회원수정</a></li>
+										<li><a href="${contextPage}/contents/logout">로그아웃</a></li>
+									</ul>
+								</div>
+							</li>
+							<li>
+								<a href="${contextPage}/cart/${userVO.seq_user_id}" class="fas fa-shopping-cart"></a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 			</div>
 		</div>
