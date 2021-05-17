@@ -11,6 +11,12 @@
 		WHERE	user_id = #{user_id}
 	</select>
 	
+	<select id="selectSeqUser" parameterType="int">
+		SELECT *
+		FROM   user_data
+		WHERE  seq_user_id = #{seq_user_id}
+	</select>
+	
 	<!-- SELECT 아이디 존재 여부확인 (0: 미존재, 1: 존재)--> 
 	<select id="selectCheckId" parameterType="String" resultType="int">
 		SELECT	COUNT(*)

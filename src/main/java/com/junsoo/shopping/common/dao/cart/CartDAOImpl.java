@@ -35,5 +35,12 @@ public class CartDAOImpl implements CartDAO {
 	public void deleteCart(CartVO cartVO) throws Exception {
 		sqlSession.delete(namespace + ".deleteCart", cartVO);
 	}
+
+	@Override
+	public void deleteAllCart(int seq_user_id) throws Exception {
+		sqlSession.delete(namespace + ".deleteAllCart", seq_user_id);
+	}
+	
+	
 	
 }

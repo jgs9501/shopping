@@ -14,6 +14,7 @@ import lombok.ToString;
 	 	`reg_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 					
 		`mod_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,				
         `count` int(10) NOT NULL,
+        `pay_type` varchar(20),
         primary key(seq_user_id),
         foreign key(product_id) references product(product_id)
  * @author jjsoo
@@ -36,7 +37,7 @@ public class PurchaseInfoVO {
 	private String mod_date;
 	@NonNull
 	private int count;
-	
-	private UserVO userVO;
-	private ProductVO ProductVO;
+	@NonNull
+	private String pay_type;
+
 }

@@ -37,6 +37,11 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
+	public UserVO selectOneUser(int seq_user_id) throws Exception {
+		return sqlSession.selectOne(namespace + ".selectSeqUser", seq_user_id);
+	}
+	
+	@Override
 	public void updateUser(UserVO userVO) throws Exception {
 		logger.info("updateUser method called");
 		sqlSession.update(namespace + ".updateUser", userVO);

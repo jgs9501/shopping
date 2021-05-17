@@ -32,11 +32,12 @@ public class CartController {
 	CartDAO cartDAO;
 	
 	// 장바구니 화면 호출 메소드
-	@RequestMapping(value = "cart/{seq_user_id}", method = RequestMethod.GET)
-	public ModelAndView getCart(HttpServletRequest request,
-								@PathVariable("seq_user_id") int seq_user_id) throws Exception {
+	@RequestMapping(value = "cart", method = RequestMethod.GET)
+	public ModelAndView getCart(HttpServletRequest request) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
+		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		int seq_user_id = userVO.getSeq_user_id();
 		
 		List<HashMap<String, Object>> cartList = new ArrayList<>();
 		cartList = cartService.selectAllCart(seq_user_id);
@@ -74,6 +75,6 @@ public class CartController {
 		cartVO.setSeq_user_id(seq_user_id);
 		
 		cartService.deleteCart(cartVO);
-		return "redirect:/cart/"+seq_user_id;
+		return "redirect:/cart";
 	}
 }

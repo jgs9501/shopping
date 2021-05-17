@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.junsoo.shopping.common.dao.user.UserDAO;
+import com.junsoo.shopping.common.dao.user.UserpointDAO;
 import com.junsoo.shopping.common.vo.UserVO;
 import com.junsoo.shopping.utils.WebUtils;
 import com.junsoo.shopping.utils.checker.RegexChecker;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Inject
 	UserDAO dao;
+	
+	@Inject
+	UserpointDAO userPointDAO;
 
 	@Override
 	public String selectPassword(String userId) throws Exception {
@@ -45,6 +49,11 @@ public class UserServiceImpl implements UserService{
 		return dao.selectOneUser(userId);
 	}
 
+	@Override
+	public UserVO selectOneUser(int seq_user_id) throws Exception {
+		return dao.selectOneUser(seq_user_id);
+	}
+	
 	@Override
 	public void updateUser(UserVO userVO) throws Exception {
 		
@@ -89,7 +98,6 @@ public class UserServiceImpl implements UserService{
 		RegexChecker regexChecker = new RegexChecker();
 		
 	    String error = "";
-	    System.out.println(userVO);
 		try {
 			// 유저 ID 정규식 확인
 			if(!regexChecker.isUserId(userVO.getUser_id())) {
@@ -126,6 +134,7 @@ public class UserServiceImpl implements UserService{
 			userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
 			if(error == "") {
 				dao.insertUser(userVO);
+				userPointDAO.insertUserPoint(userVO);
 			}
 			else {
 				logger.warn(error);
@@ -156,4 +165,5 @@ public class UserServiceImpl implements UserService{
 		logger.info("signOut method called");
 		dao.signOut(userVO);
 	}
+
 }
