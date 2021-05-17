@@ -20,7 +20,8 @@
 	</header>
 	<section>
 		<div class="container section">
-			<h2>장 바 구 니</h2><hr>
+			<h2><strong>장바구니</strong></h2>
+			<hr>
 			<table id="table" class="table table-hover table-condensed">
     			<thead>
 					<tr>
@@ -62,7 +63,11 @@
 						<td><a href="${contextPath}/categories/100" class="btn btn-warning"><i class="fa fa-angle-left"></i> 계속 쇼핑하기</a></td>
 						<td colspan="2" class="hidden-xs text-right"><strong>총합</strong></td>
 						<td class="hidden-xs text-center" id="totalPriceId"><strong><fmt:formatNumber type="number" maxFractionDigits="3" value="${totalPrice}"/> 원</strong></td>
-						<td><a href="#" class="btn btn-success btn-block"> 구매하기 <i class="fa fa-angle-right"></i></a></td>
+						<td>
+							<a href="${contextPath}/payment">
+								<button class="btn btn-success btn-block">구 매 하 기<i class="fa fa-angle-right"></i></button>
+							</a>
+						</td>
 					</tr>
 				</tfoot>
 			</table>
