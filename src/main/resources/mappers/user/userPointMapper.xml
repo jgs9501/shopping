@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.userPointMapper">
+	
+	<!-- 유저 검색 -->
+	<select id="selectCountUserId" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM   user_point
+		WHERE  user_id = #{user_id}
+	</select>
+	<!-- 특정유저 포인트 검색 -->
+	<select id="selectUserPoint" parameterType="String" resultType="int">
+		SELECT point
+		FROM   user_point
+		WHERE  user_id = #{user_id}
+	</select>
+	
+	<!-- 회원가입시 포인트 테이블 삽입 -->
+	<insert id="insertUserPoint" parameterType="UserVO">
+		INSERT INTO user_point(
+			user_id,
+			user_name
+		)
+		VALUES (
+			#{user_id},
+			#{user_name}
+		)
+	</insert>
+	
+	<update id="updateUserPoint" parameterType="HashMap">
+		UPDATE user_point
+		SET	   point = #{point} 
+		WHERE  user_id = #{user_id}
+	</update>
+	
+	<delete id="deleteUserPoint" parameterType="int">
+		DELETE FROM user_point
+		WHERE user_id = #{user_id}
+	</delete>
+</mapper>

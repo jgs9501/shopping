@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.mapper.orderDetailMapper">
+  	<select id="selectOrderDetail" parameterType="OrderDetailVO" resultType="OrderDetailVO">
+  		SELECT *
+  		FROM   order_detail
+  		WHERE  seq_user_id = #{seq_user_id}
+  		AND    order_id = #{order_id}
+  	</select>
+  	
+  	<insert id="insertOrderDetail" parameterType="OrderDetailVO">
+  		INSERT INTO order_detail (
+  			order_detail_id,
+  			seq_user_id,
+  			product_id,
+  			amount,
+  			order_id,
+  			product_thumbImg,
+  			product_price,
+  			product_name
+  		) VALUES (
+  			#{order_detail_id},
+  			#{seq_user_id},
+  			#{product_id},
+  			#{amount},
+  			#{order_id},
+  			#{product_thumbImg},
+  			#{product_price},
+  			#{product_name}
+  		)
+  	</insert>
+  	
+  	<update id="updateOrderDetail" parameterType="OrderDetailVO">
+  		UPDATE order_detail 
+  		SET    mod_date = NOW(),
+  			   order_detail_id = #{order_detail_id}
+  		WHERE  seq_user_id = #{seq_user_id}
+  		AND    order_detail_id = #{order_detail_id}
+  	</update>
+  	
+  	<delete id="deleteAllOrderDetail" parameterType="OrderDetailVO">
+  		DELETE FROM order_detail
+  		FROM   seq_user_id = #{seq_user_id}
+  		AND    order_id = #{order_id}
+  	</delete>
+ 
+  	<delete id="deleteOrderDetail" parameterType="OrderDetailVO">
+  		DELETE FROM order_detail
+  		FROM   seq_user_id = #{seq_user_id}
+  		AND    order_detail_id = #{order_detail_id}
+  	</delete>
+  </mapper>

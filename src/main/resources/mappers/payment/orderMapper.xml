@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.mapper.orderMapper">
+	<select id="selectAllOrder" parameterType="int" resultType="List">
+		SELECT *
+		FROM   order_tbl
+		WHERE  seq_user_id = #{seq_user_id}
+		ORDER BY order_date DESC
+	</select>
+	
+	<select id="selectOrder" parameterType="OrderVO" resultType="OrderVO">
+		SELECT *
+		FROM   order_tbl
+		WHERE  seq_user_id = #{seq_user_id}
+		AND    order_id = #{order_id}
+	</select>
+	
+	<insert id="insertOrder" parameterType="OrderVO">
+		INSERT INTO order_tbl (
+			order_id,
+			seq_user_id,
+			request,
+			pay_type,
+			total_price
+		) VALUES (
+			#{order_id},
+			#{seq_user_id},
+			#{request},
+			#{pay_type},
+			#{total_price}
+		)
+	</insert>
+	
+	<update id="updateOrderStatus" parameterType="OrderVO">
+		UPDATE order_tbl
+		SET    mod_date = NOW(),
+	           order_status = #{order_status}
+	    WHERE  seq_user_id = #{seq_user_id}
+	    AND    order_id = #{order_id}
+	</update>
+	
+	<delete id="deleteOrder" parameterType="OrderVO">
+		DELETE FROM order_tbl
+		WHERE  seq_user_id = #{seq_user_id}
+		AND    order_id = #{order_id}
+	</delete>
+</mapper>

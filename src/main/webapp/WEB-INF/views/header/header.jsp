@@ -58,7 +58,7 @@
 								</div>
 							</li>
 							<li>
-								<a href="${contextPage}/cart/${userVO.seq_user_id}" class="fas fa-shopping-cart"></a>
+								<a href="${contextPage}/cart" class="fas fa-shopping-cart"></a>
 							</li>
 						</c:otherwise>
 					</c:choose>
