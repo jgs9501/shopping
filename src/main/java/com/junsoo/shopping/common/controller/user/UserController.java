@@ -51,6 +51,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/loginPost", method = RequestMethod.POST)
 	public ModelAndView loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception{
+		
 		logger.info("login post");
 		HttpSession session = req.getSession();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -60,19 +61,21 @@ public class UserController {
 			UserVO login = userService.selectOneUser(vo);
 			boolean passMatch = passwordEncoder.matches(vo.getPassword(), 
 								userService.selectPassword(vo.getUser_id()));
+			// 유저 아이디가 없을 경우
 			if(login == null) {
 				session.setAttribute("user", null);
 				rttr.addFlashAttribute("msg", false);
 				mv.addObject("result", "아이디");
 				page = "contents/user/login";
 			}
-			
+			// 비밀번호가 다를 경우
 			else if(!passMatch) {
 				session.setAttribute("user", null);
 				rttr.addFlashAttribute("msg", false);
 				mv.addObject("result", "비밀번호");
 				page = "contents/user/login";
 			}
+			// 로그인이 성공할 경우
 			else {
 				session.setAttribute("userVO", login);
 				session.setAttribute("user", login.getUser_id());
