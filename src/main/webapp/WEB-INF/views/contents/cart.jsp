@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -20,57 +21,70 @@
 	</header>
 	<section>
 		<div class="container section">
-			<h2><strong>장바구니</strong></h2>
+			<h2><i class="fas fa-shopping-cart"></i>&nbsp;<strong>장바구니</strong></h2>
 			<hr>
-			<table id="table" class="table table-hover table-condensed">
-    			<thead>
-					<tr>
-						<th style="width:50%">상품</th>
-						<th style="width:10%">가격</th>
-						<th style="width:8%">개수</th>
-						<th style="width:22%" class="text-center">총 가격</th>
-						<th style="width:10%">물품삭제</th>
-					</tr>
-				</thead>
-				<c:forEach var="cartList" items="${cartList}" varStatus="i">
-				<tbody>
-					<tr id="cartTr">
-						<td data-th="Product">
-							<div class="row">
-								<div class="col-sm-2 hidden-xs"><img src="${cartList.product_thumbImg}" alt="..." class="img-responsive"/></div>
-								<div class="col-sm-10">
-									<h4 class="nomargin"><a href="${contextPath}/products/${cartList.product_id}">${cartList.product_name}</a></h4>
-								</div>
-							</div>
-						</td>
-						<td data-th="Price" id="priceTd${i.index}">
-							<fmt:formatNumber type="number" maxFractionDigits="3" value="${cartList.product_price}"/> 원
-						</td>
-						<td data-th="Quantity" id="qtyTd${i.index}">
-							<input type="number" class="form-control text-center" id="selectAmountId" onchange="changeSelectAmount(this, ${i.index}, ${cartList.product_price})" value="${cartList.amount}" min="1" max="20">
-						</td>
-						<td data-th="Subtotal" class="text-center" id="subTotalTd${i.index}">
-							<fmt:formatNumber type="number" maxFractionDigits="3" value="${cartList.product_price*cartList.amount}"/> 원</td>
-						<td class="actions">
-							<button class="btn btn-danger btn-sm" onclick="deleteCartItem(${cartList.seq_user_id}, ${cartList.cart_id})"><i class="fas fa-trash-alt"></i></button>								
-						</td>
-						<c:set var="totalPrice" value="${totalPrice + (cartList.product_price*cartList.amount)}"/>
-					</tr>
-				</tbody>
-				</c:forEach>
-				<tfoot>
-					<tr>
-						<td><a href="${contextPath}/categories/100" class="btn btn-warning"><i class="fa fa-angle-left"></i> 계속 쇼핑하기</a></td>
-						<td colspan="2" class="hidden-xs text-right"><strong>총합</strong></td>
-						<td class="hidden-xs text-center" id="totalPriceId"><strong><fmt:formatNumber type="number" maxFractionDigits="3" value="${totalPrice}"/> 원</strong></td>
-						<td>
-							<a href="${contextPath}/payment">
-								<button class="btn btn-success btn-block">구 매 하 기<i class="fa fa-angle-right"></i></button>
-							</a>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
+			<c:choose>
+				<c:when test="${fn:length(cartList) < 1}">
+					<div style="text-align: center; padding-top: 100px;">
+						<strong>장바구니에 담은 물품이 존재하지 않습니다</strong>
+						<br>
+						<div style="padding-top: 50px;">
+							<a href="${contextPath}/categories/100" class="btn btn-warning"><i class="fa fa-angle-left"></i>&nbsp;쇼핑하기</a>
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<table id="table" class="table table-hover table-condensed">
+		    			<thead>
+							<tr>
+								<th style="width:50%">상품</th>
+								<th style="width:10%">가격</th>
+								<th style="width:8%">개수</th>
+								<th style="width:22%" class="text-center">총 가격</th>
+								<th style="width:10%">물품삭제</th>
+							</tr>
+						</thead>
+						<c:forEach var="cartList" items="${cartList}" varStatus="i">
+						<tbody>
+							<tr id="cartTr">
+								<td data-th="Product">
+									<div class="row">
+										<div class="col-sm-2 hidden-xs"><img src="${cartList.product_thumbImg}" alt="..." class="img-responsive"/></div>
+										<div class="col-sm-10">
+											<h4 class="nomargin"><a href="${contextPath}/products/${cartList.product_id}">${cartList.product_name}</a></h4>
+										</div>
+									</div>
+								</td>
+								<td data-th="Price" id="priceTd${i.index}">
+									<fmt:formatNumber type="number" maxFractionDigits="3" value="${cartList.product_price}"/> 원
+								</td>
+								<td data-th="Quantity" id="qtyTd${i.index}">
+									<input type="number" class="form-control text-center" id="selectAmountId" onchange="changeSelectAmount(this, ${i.index}, ${cartList.product_price})" value="${cartList.amount}" min="1" max="20">
+								</td>
+								<td data-th="Subtotal" class="text-center" id="subTotalTd${i.index}">
+									<fmt:formatNumber type="number" maxFractionDigits="3" value="${cartList.product_price*cartList.amount}"/> 원</td>
+								<td class="actions">
+									<button class="btn btn-danger btn-sm" onclick="deleteCartItem(${cartList.seq_user_id}, ${cartList.cart_id})"><i class="fas fa-trash-alt"></i></button>								
+								</td>
+								<c:set var="totalPrice" value="${totalPrice + (cartList.product_price*cartList.amount)}"/>
+							</tr>
+						</tbody>
+						</c:forEach>
+						<tfoot>
+							<tr>
+								<td><a href="${contextPath}/categories/100" class="btn btn-warning"><i class="fa fa-angle-left"></i> 계속 쇼핑하기</a></td>
+								<td colspan="2" class="hidden-xs text-right"><strong>총합</strong></td>
+								<td class="hidden-xs text-center" id="totalPriceId"><strong><fmt:formatNumber type="number" maxFractionDigits="3" value="${totalPrice}"/> 원</strong></td>
+								<td>
+									<a href="${contextPath}/payment">
+										<button class="btn btn-success btn-block">구 매 하 기<i class="fa fa-angle-right"></i></button>
+									</a>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					</c:otherwise>
+				</c:choose>
 		</div>
 	</section>
 	
