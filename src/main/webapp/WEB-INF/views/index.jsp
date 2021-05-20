@@ -65,7 +65,7 @@
 	    </section>
 	</div>
 	
-    <footer class="footer" id="footer">
+    <footer class="footer">
 		<jsp:include page="footer/footer.jsp"></jsp:include>
     </footer>
 </body>

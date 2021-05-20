@@ -19,16 +19,20 @@
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
-	<div class="container">
-		<aside>
-			<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
-		</aside>
-		<section class="center-auto">
-			<span class="glyphicon glyphicon-user span-style"></span>
-			<h2>${result} 완료되었습니다</h2>
-			<br><p><a class="btn btn-primary btn-lg" href="${ContextPath}/index" role="button">홈으로</a></p>
-		</section>
-	</div>
+	<section class="container">
+		<div style="padding-top: 30px;">
+			<h2><strong>${result}</strong></h2>
+			<hr>
+			<div style="text-align: center; margin-top: 30px;">
+				<h1><i class="fas fa-user-check"></i></h1>
+				<h2>${result}이 완료되었습니다.</h2>
+			</div>
+			<div style="text-align: center;">
+				<br>
+				<a class="btn btn-primary btn-lg" href="${ContextPath}/index" role="button">홈으로</a>
+			</div>
+		</div>
+	</section>
 	<!--바닥글-->
     <footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>

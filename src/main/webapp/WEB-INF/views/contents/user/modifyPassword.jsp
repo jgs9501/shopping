@@ -93,8 +93,8 @@
 					<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
 				</aside>
 				
-				<section>
-					<form class="form-horizontal form-width center-auto" method="post" onsubmit="return checkInfo()">
+				<section style="padding-left: 200px; padding-right: 200px;">
+					<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()">
 						<!-- 아이디 -->
 				    	<div id="inputId" class="form-group has-feedback">
 					    	<label class="col-sm-2 control-label">아이디</label>

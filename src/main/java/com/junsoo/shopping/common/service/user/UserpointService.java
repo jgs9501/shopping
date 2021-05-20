@@ -11,5 +11,7 @@ public interface UserpointService {
 	public void insertUserPoint(UserVO userVO) throws Exception;
 	public int updateUserPoint(HashMap<String, Object> userPointMap, String pay_type) throws Exception;
 	public int deleteUserPoint(String user_id) throws Exception;
+	// * 테스트용 보유포인트 추가 메소드
+	public int updateTestPoint(HashMap<String, Object> userPointMap) throws Exception;
 	
 }

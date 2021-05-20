@@ -131,5 +131,35 @@ public class UserpointServiceImpl implements UserpointService{
 		}
 		return 1;
 	}
+
+	/**
+	 * 테스트용 보유포인트 추가하는 메소드
+	 */
+	@Override
+	public int updateTestPoint(HashMap<String, Object> userPointMap) throws Exception {
+		
+		try {
+			String user_id = (String)userPointMap.get("user_id");
+			// 현재 포인트 값
+			int currentPoint = selectUserPoint(user_id);
+			// 최종 포인트
+			int updatePoint = currentPoint;
+			
+			// 유저의 아이디 존재 확인
+			if(userpointDAO.selectCountUserId(user_id) != 1) {
+				return -1;
+			}
+			updatePoint += (int)userPointMap.get("point");
+			userPointMap.replace("point", updatePoint);
+			userpointDAO.updateUserPoint(userPointMap);
+			} catch (NullPointerException npe) {
+				logger.error(npe.getMessage());
+				return -3;
+			} catch (Exception e) {
+				logger.error(e.getMessage());
+				return -4;
+			}
+			return 1;
+		}
 	
 }
