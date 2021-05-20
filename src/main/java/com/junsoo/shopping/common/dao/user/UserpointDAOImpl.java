@@ -37,7 +37,6 @@ public class UserpointDAOImpl implements UserpointDAO {
 
 	@Override
 	public int updateUserPoint(HashMap<String, Object> userPointMap) throws Exception {
-		logger.info("payment process...");
 		return sqlSession.update(namespace + ".updateUserPoint", userPointMap);
 	}
 

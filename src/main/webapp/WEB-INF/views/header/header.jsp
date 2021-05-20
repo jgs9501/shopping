@@ -6,12 +6,12 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 </head>
 <body>
 	<nav class="navbar navbar-default">
 		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
 					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -44,17 +44,42 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
-						<c:when test="${userVO eq null}">
+						<c:when test="${user eq null}">
 							<li><a href="${contextPage}/contents/user/login">로그인</a></li>
 						</c:when>
 						<c:otherwise>
 							<li>
 								<div class="dropdown">
-									<a class="btn margin-6px" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">${user}</a>
+									<a class="btn margin-6px" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><i class="fas fa-bars"></i>&nbsp;${user}</a>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 										<li><a href="${contextPage}/contents/user/modify">회원수정</a></li>
+										<li id="btn_point"><a href="#" data-toggle="modal" data-target="#pointModal">포인트추가</a></li>
 										<li><a href="${contextPage}/contents/logout">로그아웃</a></li>
 									</ul>
+									<!-- 포인트추가 modal -->
+									<div class="modal fade" id="pointModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">보유 포인트 추가</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">×</span>
+													</button>
+												</div>
+												<form action="${contextPath}/contents/user/point/get" method="post">
+										      		<div class="modal-body">
+											      		    물품을 결제하기 위해 사용하는 테스트용 보유포인트 추가하는 기능입니다.<br>
+											      		     추가할 포인트를 입력해주세요. (10자리까지 가능합니다.)<br><br>
+										      		     <input class="form-control" type="number" maxlength="10" id="point" name="point" value="0">
+												    </div>
+										      		<div class="modal-footer">
+										        		<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+										        		<button type="submit" class="btn btn-primary">추가하기</button>
+										      		</div>
+												</form>
+									    	</div>
+									  	</div>
+									</div>
 								</div>
 							</li>
 							<li>
@@ -65,7 +90,6 @@
 				</ul>
 			</div>
 		</div>
-		<!-- /.container-fluid -->
 	</nav>
 </body>
 </html>

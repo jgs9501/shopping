@@ -1,5 +1,7 @@
 package com.junsoo.shopping.common.controller.user;
 
+import java.util.HashMap;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.junsoo.shopping.common.service.user.UserService;
+import com.junsoo.shopping.common.service.user.UserpointService;
 import com.junsoo.shopping.common.vo.UserVO;
 
 @Controller
@@ -26,7 +30,8 @@ public class UserController {
 	
 	@Inject
 	UserService userService;
-	
+	@Inject
+	UserpointService userpointService;
 	/**
 	 * 로그인 페이지로 이동하는 메소드
 	 * @param remeberCookie
@@ -52,18 +57,18 @@ public class UserController {
 	@RequestMapping(value="/user/loginPost", method = RequestMethod.POST)
 	public ModelAndView loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception{
 		
-		logger.info("login post");
 		HttpSession session = req.getSession();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		ModelAndView mv = new ModelAndView();
 		String page = "redirect:/index";
 		try {
-			UserVO login = userService.selectOneUser(vo);
+			UserVO login = userService.selectOneUser(vo.getUser_id());
 			boolean passMatch = passwordEncoder.matches(vo.getPassword(), 
 								userService.selectPassword(vo.getUser_id()));
 			// 유저 아이디가 없을 경우
 			if(login == null) {
 				session.setAttribute("user", null);
+				session.setAttribute("userVO", null);
 				rttr.addFlashAttribute("msg", false);
 				mv.addObject("result", "아이디");
 				page = "contents/user/login";
@@ -71,6 +76,7 @@ public class UserController {
 			// 비밀번호가 다를 경우
 			else if(!passMatch) {
 				session.setAttribute("user", null);
+				session.setAttribute("userVO", null);
 				rttr.addFlashAttribute("msg", false);
 				mv.addObject("result", "비밀번호");
 				page = "contents/user/login";
@@ -82,10 +88,8 @@ public class UserController {
 			}
 		} catch (NullPointerException npe) {
 			logger.warn(npe.getMessage());
-			vo=null;
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
-			vo=null;
 		} finally {
 			mv.setViewName(page);
 		}
@@ -163,19 +167,16 @@ public class UserController {
 	@RequestMapping(value = "/user/modify", method = RequestMethod.GET)
 	public ModelAndView getModify(HttpServletRequest request) throws Exception{
 		
-		logger.info("getModify called");
 		ModelAndView mv = new ModelAndView();
 		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
-		
 		try {
-			if(userVO == null) {
-				mv.addObject("result", "로그인 정보를 다시 확인해주세요");
-				mv.setViewName("contents/error");
+			if(userVO.equals(null)) {
+				request.getSession().invalidate();
+				mv.setViewName("contents/user/login");
 			}
-			else {
-				mv.addObject("userVO", userVO);
-				mv.setViewName("contents/user/modify");
-			}
+			userVO = userService.selectOneUser(userVO);
+			mv.addObject("userVO", userVO);
+			mv.setViewName("contents/user/modify");
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
 			mv.setViewName("contents/error");
@@ -260,7 +261,7 @@ public class UserController {
 		try {
 			logger.info("postModifyPassword method called");
 			mv.addObject("result", "비밀번호 수정");
-			userService.updatePassword(userVO, request);
+			userService.updatePassword(userVO);
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
 			page = "redirect:/";
@@ -329,6 +330,93 @@ public class UserController {
 			logger.error(e.getMessage());
 			mv.setViewName("contents/error");
 		}
+		return mv;
+	}
+	
+	/**
+	 * 테스트용 보유포인트 추가
+	 * @param request
+	 * @param point
+	 * @param userVO
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/user/point/get", method = RequestMethod.POST)
+	public String getUserPoint(HttpServletRequest request,
+							   @RequestParam int point) throws Exception {
+		
+		String user_id = (String)request.getSession().getAttribute("user");
+		HashMap<String, Object> userpointMap = new HashMap<String, Object>();
+		if(user_id == "") {
+			return "/user/login";
+		}
+		
+		userpointMap.put("user_id", user_id);
+		userpointMap.put("point", point);
+		userpointService.updateTestPoint(userpointMap);
+		
+		return "redirect:/index";
+	}
+	
+	@RequestMapping(value = "/user/password", method = RequestMethod.GET)
+	public ModelAndView getFindPassword(HttpServletRequest request) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		try {
+			String user_id = (String)request.getSession().getAttribute("user");
+			if(user_id != null) {
+				mv.addObject("result", "이미 로그인이 되어있습니다");
+				mv.setViewName("contents/error");
+				return mv;
+			}
+			mv.setViewName("contents/user/find_password");
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			mv.setViewName("contents/error");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			mv.setViewName("contents/error");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "/user/password", method = RequestMethod.POST)
+	public ModelAndView postFindPassword(HttpServletRequest request,
+									    @ModelAttribute UserVO userVO) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		System.out.println(userVO);
+		try {
+			
+			mv.setViewName("contents/user/find_password");
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "/user/password/modify", method = RequestMethod.POST)
+	public ModelAndView getFindPasswordModify(HttpServletRequest request,
+									    @ModelAttribute UserVO userVO) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		try {
+			if(userVO.getUser_id() == "") {
+				mv.setViewName("contents/error");
+				return mv;
+			}
+			mv.addObject("user_id", userVO.getUser_id());
+			mv.setViewName("contents/user/find_password_modify");
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
 		return mv;
 	}
 }

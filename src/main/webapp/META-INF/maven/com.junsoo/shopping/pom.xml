@@ -23,6 +23,7 @@
 		<jackson-version>2.10.2</jackson-version>
 		<commons-fileupload>1.3.3</commons-fileupload>
 		<thumbnailator>0.4.8</thumbnailator>
+		<mail>1.4.7</mail>
 	</properties>
 	
 	<dependencies>
@@ -240,6 +241,24 @@
 		    <artifactId>commons-io</artifactId>
 		    <version>2.6</version>
 		</dependency>
+		
+		<dependency> 
+			<groupId>org.springframework</groupId> 
+			<artifactId>spring-context-support</artifactId> 
+			<version>${org.springframework-version}</version> 
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.6.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>${mail}</version>
+		</dependency>
+
+		
 	</dependencies>
 	
     <build>

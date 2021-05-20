@@ -28,7 +28,7 @@ html {min-height: 100%}
 .myMenu-li{width: 80px;float: right;}
 
 /* footer.jsp */
-.footer {float: left;position: relative;width: 100%;margin-bottom: 5px;}
+.footer {float: left;position: relative; width: 100%; padding-top: 200px;}
 
 /* mainViewdItems.jsp */
 .viewed-items-containers {float: left;padding-bottom: 50px;padding-left: 100px;padding-right: 100px;width: 1200px;height: 100%;}
@@ -126,3 +126,5 @@ html {min-height: 100%}
 .fate {margin-top: 100px;}
 .title {border: thin; font-size: large;}
 .margin-6px {margin: 6px;}
+
+.pt100{padding-top: 100px;}
