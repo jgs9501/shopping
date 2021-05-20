@@ -11,8 +11,9 @@ public interface UserService {
 	public UserVO selectOneUser(String userId) throws Exception;
 	public UserVO selectOneUser(int seq_user_id) throws Exception;
 	public void updateUser(UserVO userVO) throws Exception;
-	public void updatePassword(UserVO userVO, HttpServletRequest request) throws Exception;
+	public void updatePassword(UserVO userVO) throws Exception;
 	public void insertUser(UserVO vo, HttpServletRequest request) throws Exception;
 	public int selectCheckId(String user_id) throws Exception;
 	public void signOut(UserVO userVO) throws Exception;
+	
 }

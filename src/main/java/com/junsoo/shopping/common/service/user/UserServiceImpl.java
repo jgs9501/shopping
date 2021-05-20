@@ -32,25 +32,58 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String selectPassword(String userId) throws Exception {
-		logger.info("selectLogin called");
 		return dao.selectPassword(userId);
 	}
 
 	@Override
 	public UserVO selectOneUser(UserVO userVO) throws Exception {
-		logger.info("selectOneUser called");
+		try {
+			if(userVO.getUser_id() == "" || userVO.getSeq_user_id() < 1) {
+				logger.error("selectOneUser method : Session does not exist. Login confirmation required");
+				return null;
+			}
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
 		return dao.selectOneUser(userVO);
 	}
 	
 	@Override
 	public UserVO selectOneUser(String userId) throws Exception {
 		
-		logger.info("selectOneUser method called");
+		try {
+			if(userId == "") {
+				logger.error("selectOneUser : Session does not exist. Login confirmation required");
+				return null;
+			}
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
 		return dao.selectOneUser(userId);
 	}
 
 	@Override
 	public UserVO selectOneUser(int seq_user_id) throws Exception {
+		try {
+			if(seq_user_id < 1) {
+				logger.error("Session does not exist. Login confirmation required");
+				return null;
+			}
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
 		return dao.selectOneUser(seq_user_id);
 	}
 	
@@ -62,7 +95,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void updatePassword(UserVO userVO, HttpServletRequest request) throws Exception {
+	public void updatePassword(UserVO userVO) throws Exception {
 		
 		logger.info("updatePassword method called");
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
