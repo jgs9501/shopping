@@ -1,6 +1,8 @@
 package com.junsoo.shopping.common.dao.order;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -21,8 +23,8 @@ public class OrderDAOImpl implements OrderDAO{
 	SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<OrderVO> selectAllOrder(int seq_user_id) throws Exception {
-		return sqlSession.selectOne(namespace + ".selectAllOrder", seq_user_id);
+	public List<OrderVO> selectAllOrder(int seq_user_id) throws Exception {
+		return sqlSession.selectList(namespace + ".selectAllOrder", seq_user_id);
 	}
 	
 	@Override
@@ -36,14 +38,26 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 	
 	@Override
-	public void updateOrder(OrderVO orderVO) throws Exception {
-		sqlSession.update(namespace + ".updateOrder", orderVO);
+	public void updateOrderStatus(OrderVO orderVO) throws Exception {
+		sqlSession.update(namespace + ".updateOrderStatus", orderVO);
+	}
+	
+	@Override
+	public void updateOrderTotalPrice(HashMap<String, Object> map) throws Exception {
+		sqlSession.update(namespace + ".updateOrderTotalPrice", map);
 	}
 	
 	@Override
 	public void deleteOrder(OrderVO orderVO) throws Exception {
 		sqlSession.delete(namespace + ".deleteOrder", orderVO);
 	}
+
+	@Override
+	public void deleteOrder(HashMap<String, Object> map) throws Exception {
+		sqlSession.delete(namespace + ".deleteOrder", map);		
+	}
+
+	
 
 	
 	

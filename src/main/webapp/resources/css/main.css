@@ -128,3 +128,5 @@ html {min-height: 100%}
 .margin-6px {margin: 6px;}
 
 .pt100{padding-top: 100px;}
+.img-size{width: 100px; height: 100px;}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td { vertical-align: middle;}

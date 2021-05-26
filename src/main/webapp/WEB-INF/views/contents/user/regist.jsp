@@ -165,7 +165,7 @@
 		var userIdCheck = RegExp(/^[A-Za-z0-9]{5,20}$/);
 		var passwordCheck = RegExp(/^[A-Za-z0-9!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]{8,16}$/);
 		var nameCheck = RegExp(/^[가-힣]{2,10}$/);
-		var emailCheck = RegExp(/^[A-Za-z0-9]{5,20}$/);
+		var emailCheck = RegExp(/^[A-Za-z0-9_\.\-]{5,20}$/);
 		var domainCheck = RegExp(/^[A-Za-z0-9_\.\-]+\.[A-Za-z0-9\-]+/);
 		var birthdayCheck = RegExp(/^([0-9]{4})-?([0-9]{2})-?([0-9]{2})$/);
 		var phoneCheck = RegExp(/^[0-9]{11}$/);
