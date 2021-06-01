@@ -23,12 +23,16 @@
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
+	<nav>
+    	<jsp:include page="/WEB-INF/views/navbar/search_nav.jsp"></jsp:include>
+	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
+    </nav>
+	<section>
 	<ol class="breadcrumb container">
 		<li><a href="${contextPath}/index">메인</a></li>
 		<li><a href="${contextPath}/categories/${pdVO.productVO.category}">${categoryName}</a></li>
 		<li class="active">${pdVO.productVO.product_name}</li>
 	</ol>
-	<section>
 		<input type="hidden" id="seq_user_id" name="seq_user_id" value="${userVO.seq_user_id}"/>
 	    <input type="hidden" id="user_name" name="user_name" value="${userVO.user_id}">
 	    <input type="hidden" id="product_id" name="product_id" value="${productVO.product_id}"/>
