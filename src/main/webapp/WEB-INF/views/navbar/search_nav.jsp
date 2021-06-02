@@ -51,14 +51,14 @@
 		        </form>
         	</div>
 	            <div class="nav-right">
-	            	<a href="${contextPath}/cart"><i class="fas fa-shopping-cart" style="font-size: xx-large;"></i>
+	            	<a href="${contextPath}/cart"><i class="fas fa-shopping-cart" style="font-size: xx-large; color: black;"></i>
 	            		<br><span class="nav-span">장바구니</span>
 	            	</a>
 	            	
 	            </div>
 	            <div class="nav-right">
 	            	<a href="${contextPath}/order/history">
-		            	<i class="fas fa-user-alt" style="font-size: xx-large;"></i>
+		            	<i class="fas fa-user-alt" style="font-size: xx-large; color: black;"></i>
 		            	<br><span class="nav-span">주문내역</span>
 	            	</a>
 	            </div>
