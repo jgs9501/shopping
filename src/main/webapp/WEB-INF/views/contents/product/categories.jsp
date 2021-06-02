@@ -18,15 +18,16 @@
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
-	<ol class="breadcrumb container">
-		<li><a href="${contextPath}/index">메인</a></li>
-		<li class="active">${categoryName}</li>
-	</ol>
-	<div class="main-container">
-		<aside>
-			<jsp:include page="/WEB-INF/views/side/shoppingList.jsp"></jsp:include>
-		</aside>
-		<section>
+	<nav>
+    	<jsp:include page="/WEB-INF/views/navbar/search_nav.jsp"></jsp:include>
+	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
+    </nav>
+	<section>
+		<ol class="breadcrumb container">
+			<li><a href="${contextPath}/index">메인</a></li>
+			<li class="active">${categoryName}</li>
+		</ol>
+		<div class="main-container">
 			<article>
 				<div class="product-container">
 				    <h3 class="h3">최근 출시된 상품</h3>
@@ -191,8 +192,8 @@
 					</nav>
 				</div>
 			</article>
-		</section>
-	</div>
+		</div>
+	</section>
 	
 	<footer>
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>

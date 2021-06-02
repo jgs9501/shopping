@@ -257,7 +257,6 @@
 		    <artifactId>mail</artifactId>
 		    <version>${mail}</version>
 		</dependency>
-
 		
 	</dependencies>
 	

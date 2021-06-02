@@ -45,10 +45,12 @@ template {
 }
 a {
   background-color: transparent;
+  text-decoration: none !important
 }
 a:active,
 a:hover {
   outline: 0;
+  text-decoration: none !important
 }
 abbr[title] {
   border-bottom: 1px dotted;
@@ -4051,7 +4053,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar {
   position: relative;
   min-height: 50px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   border: 1px solid transparent;
 }
 @media (min-width: 768px) {
@@ -4366,7 +4368,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-left: 15px;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 800px) {
   .navbar-left {
     float: left !important;
   }
@@ -4378,6 +4380,16 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-right: 0;
   }
 }
+
+@media (min-width: 800px) {
+  .navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+  }
+}
+
+
 .navbar-default {
   background-color: #f8f8f8;
   border-color: #e7e7e7;
@@ -6563,4 +6575,9 @@ button.close {
     display: none !important;
   }
 }
+
+.ml-auto,
+.mx-auto {
+  margin-left: auto !important; }
+  
 /*# sourceMappingURL=bootstrap.css.map */

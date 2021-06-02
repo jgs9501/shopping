@@ -44,6 +44,13 @@ public class RegexChecker {
 		return matcher.find();
 	}
 	
+public boolean isUserEmail(String str) {
+		
+		String regex = "^[A-Za-z0-9_\\.\\-]{5,20}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(str);
+		return matcher.find();
+	}
 	/**
 	 * 
 	 * @param str

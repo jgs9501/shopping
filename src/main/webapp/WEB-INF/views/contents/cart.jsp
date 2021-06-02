@@ -7,18 +7,25 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
 	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
 	<script src="${contextPath}/resources/js/jquery.number.min.js"></script> 
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-	<link rel="stylesheet" href="${contextPath}/resources/css/cart.css">
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
 </head>
 <body>
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
+	<nav>
+    	<jsp:include page="/WEB-INF/views/navbar/search_nav.jsp"></jsp:include>
+	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
+    </nav>
 	<section>
 		<div class="container section">
 			<h2><i class="fas fa-shopping-cart"></i>&nbsp;<strong>장바구니</strong></h2>

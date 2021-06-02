@@ -1,9 +1,10 @@
 @charset "UTF-8";
 
-a {color: black;}
+a { color: black;}
 input {color: transparent; text-shadow: 0 0 0 black;} 
 span {color: transparent; text-shadow: 0 0 0 black;} 
 html {min-height: 100%}
+section {margin-top: 20px;}
 /* index.jsp */
 .header {width: 100%;position: static;list-style-type: none;float: left;height:auto;}
 .main-search{width: 700px; position: relative; text-align: center; left: 30%;}
@@ -26,7 +27,8 @@ html {min-height: 100%}
 /* header.jsp */
 .myMenu {font-size: x-small;list-style-type: none;float: right;}
 .myMenu-li{width: 80px;float: right;}
-
+.img-logo {width: 220px; height: 80px;}
+.navbar .navbar-search .dropdown-menu { min-width: 25px; }
 /* footer.jsp */
 .footer {float: left;position: relative; width: 100%; padding-top: 200px;}
 
@@ -47,7 +49,6 @@ html {min-height: 100%}
 	-webkit-align-items: center;
 	align-items: center;
 }
-.swiper-margin {margin-left: 100px;margin-top: 10px;margin-right: 100px;margin-bottom: 10px;}
 .thumbnail a img {height: 240px; width: 100%; display: block;}
 .text-left {text-align: left; margin-left: 20px;}
 .text-right {text-align: right; margin-right: 20px;}
@@ -128,3 +129,69 @@ html {min-height: 100%}
 .margin-6px {margin: 6px;}
 
 .pt100{padding-top: 100px;}
+.img-size{width: 100px; height: 100px;}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td { vertical-align: middle;}
+.ft-small {font-size: small;}
+.ft-medium {font-size: medium;}
+.nav-right {float: right; margin-left: 30px; width: 50px; height: 70px; margin-top: 20px; text-align: center;}
+.nav-span {font-size: 12px; margin-top: 10px;}
+
+<!-- 모달 -->
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+
+.table>tbody>tr>td, .table>tfoot>tr>td{
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 600px) {
+    table#cart tbody td .form-control{
+		width:20%;
+		display: inline !important;
+		vertical-align: middle !important;
+	}
+	.actions .btn{
+		width:36%;
+		margin:1.5em 0;
+	}
+	
+	.actions .btn-info{
+		float:left;
+	}
+	.actions .btn-danger{
+		float:right;
+	}
+	
+	table#cart thead { display: none; }
+	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
+	table#cart tbody tr td:first-child { background: #333; color: #fff; }
+	table#cart tbody td:before {
+		content: attr(data-th); font-weight: bold;
+		display: inline-block; width: 8rem;
+	}
+	
+	
+	
+	table#cart tfoot td{display:block; }
+	table#cart tfoot td .btn{display:block;}
+	
+}
+
