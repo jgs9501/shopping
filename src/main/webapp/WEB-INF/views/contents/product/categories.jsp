@@ -6,13 +6,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>JS SHOP</title>
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-<script src="${contextPath}/resources/js/jquery.min.js"></script> 
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
+	<script src="${contextPath}/resources/js/jquery.number.min.js"></script> 
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
 </head>
 <body>
 	<header>
@@ -117,7 +122,7 @@
 						                    </a>
 						                    <ul class="social">
 						                        <li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
-						                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+						                        <li><a href="#" onclick="cartBtn()"><i class="fa fa-shopping-cart"></i></a></li>
 						                    </ul>
 					                	</div>
 						                <div class="product-content">
@@ -202,6 +207,12 @@
 	<script>
 		function fn_paging(category, curPage) {
 			location.href = "/categories/"+category+"?curPage="+curPage;
+		}
+		function cartBtn() {
+			var flag = confirm("장바구니에 추가하시겠습니까?");
+			if(flag) {
+				location.replace("${contextPath}/cart");
+			}
 		}
 	</script>
 </body>

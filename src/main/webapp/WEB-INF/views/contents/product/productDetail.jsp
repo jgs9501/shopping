@@ -14,10 +14,10 @@
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/product-detail.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/reply.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/5.10.0/css/font-awesome.min.css"/>
 </head>
 <body>
 	<header>
