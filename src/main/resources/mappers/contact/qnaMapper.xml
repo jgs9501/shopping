@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.qnaMapper">
+	<select id="selectAllQnaCount" resultType="int">
+		SELECT COUNT(*)
+		FROM   qna_board
+	</select>
+	
+	<select id="selectTypeQnaCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM   qna_board
+		WHERE  type = #{type}
+	</select>
+	
+	<select id="selectAllQna" resultType="QnaVO">
+		SELECT *
+		FROM   qna_board
+		ORDER BY qna_id DESC
+	</select>
+	
+	<select id="selectTypeQna" parameterType="String" resultType="QnaVO">
+		SELECT *
+		FROM   qna_board
+		WHERE  type = #{type}
+		ORDER BY qna_id DESC
+	</select>
+	
+	<insert id="insertQna" parameterType="QnaVO">
+		INSERT INTO notice_board(
+			seq_user_id,
+			title,
+			answer,
+			reg_date,
+			mod_date,
+			type
+		) VALUES (
+			#{seq_user_id},
+			#{title},
+			#{answer},
+			NOW(),
+			NOW(),
+			#{type}
+		)
+	</insert>
+	
+	<update id="updateQna" parameterType="QnaVO">
+		UPDATE qna_board
+		SET    title = #{title},
+				answer = #{answer},
+				mod_date = NOW(),
+				type = #{type}
+		WHERE  qna_id = #{qna_id}
+	</update>
+	
+	<delete id="deleteQna" parameterType="int">
+		DELETE FROM qna_board
+		WHERE  qna_id = #{qna_id}
+	</delete>
+</mapper>

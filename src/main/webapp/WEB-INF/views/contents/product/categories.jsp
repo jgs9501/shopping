@@ -174,7 +174,7 @@
 				    		</div>
 				    	</c:if>
 					</div>
-					<nav style="text-align: center;">
+					<div style="text-align: center;">
 						<c:set var="info" value="${pagination}" />
 					  	<ul class="pagination">
 						  	<c:if test="${info.curPage ne 1}">
@@ -194,7 +194,7 @@
 							    <li><a href="javascript:void(0);" onclick="fn_paging(${category_id},${info.nextPage})" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 						  	</c:if>
 					 	</ul> 
-					</nav>
+					</div>
 				</div>
 			</article>
 		</div>
