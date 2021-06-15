@@ -2,9 +2,11 @@ package com.junsoo.shopping.common.vo.paging;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class PaginationInfo {
 
 	/** 한 페이지당 게시글 수 **/
@@ -56,6 +58,20 @@ public class PaginationInfo {
         setStartIndex(curPage);
     }
 
+	public PaginationInfo() {
+		setCurPage(curPage);
+        setListCnt(listCnt);
+        setPageCnt(listCnt);
+        setRangeCnt(pageCnt);
+        rangeSetting(curPage);
+        setStartIndex(curPage);
+	}
+
+	public void setPageSize(int size) {
+		this.pageSize = size;
+		this.pageCnt = (int) Math.ceil(listCnt*1.0/pageSize);
+		this.startIndex = (curPage-1) * pageSize;
+	}
 	public void setPageCnt(int listCnt) {
         this.pageCnt = (int) Math.ceil(listCnt*1.0/pageSize);
     }

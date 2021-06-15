@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-a { color: black;}
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: blue; text-decoration: underline;}
 input {color: transparent; text-shadow: 0 0 0 black;} 
 span {color: transparent; text-shadow: 0 0 0 black;} 
 html {min-height: 100%}
@@ -49,7 +51,7 @@ section {margin-top: 20px;}
 	-webkit-align-items: center;
 	align-items: center;
 }
-.thumbnail a img {height: 240px; width: 100%; display: block;}
+.thumbnail a img {height: 240px; width: 240px; display: block;}
 .text-left {text-align: left; margin-left: 20px;}
 .text-right {text-align: right; margin-right: 20px;}
 /* mainContent.jsp */
@@ -135,7 +137,6 @@ section {margin-top: 20px;}
 .ft-medium {font-size: medium;}
 .nav-right {float: right; margin-left: 30px; width: 50px; height: 70px; margin-top: 20px; text-align: center;}
 .nav-span {font-size: 12px; margin-top: 10px;}
-
 .table>tbody>tr>td, .table>tfoot>tr>td{
     vertical-align: middle;
 }

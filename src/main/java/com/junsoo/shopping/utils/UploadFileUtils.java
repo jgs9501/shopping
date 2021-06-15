@@ -12,35 +12,47 @@ import net.coobird.thumbnailator.Thumbnails;
 
 public class UploadFileUtils {
 	
-	static final int IMAGE_WIDTH = 240;
-	static final int IMAGE_HEIGHT = 240;
+	static final int THUMBNAIL_IMAGE_WIDTH = 240;
+	static final int THUMBNAIL_IMAGE_HEIGHT = 240;
 	
-	public static String fileUpload(String uploadPath, 
+	/**
+	 * 파일 업로드할 때 사용하는 메소드
+	 * @param uploadPath
+	 * @param fileName
+	 * @param fileData
+	 * @param ymdPath
+	 * @param thumbFile_flag 
+	 * @return
+	 * @throws Exception
+	 */
+	public String fileUpload(String uploadPath, 
 									String fileName,
 									byte[] fileData, 
-									String ymdPath) throws Exception {
+									String ymdPath,
+									boolean thumbFile_flag) throws Exception {
 		
 		UUID uid = UUID.randomUUID();
 		
 		String newFileName = uid + "_" + fileName;
+		String thumbFileName = "s_" + newFileName;
 		String imgPath = uploadPath + ymdPath;
 		
 		File target = new File(imgPath, newFileName);
 		FileCopyUtils.copy(fileData, target);
 		
-		String thumbFileName = "s_" + newFileName;
 		File image = new File(imgPath + File.separator + newFileName);
 		
-		File thumbnail = new File(imgPath + File.separator + "s" + File.separator + thumbFileName);
-		
-		if(image.exists()) {
+		// 썸네일 파일 생성할 경우 실행
+		if(thumbFile_flag && image.exists()) {
+			File thumbnail = new File(imgPath + File.separator + "s" + File.separator + thumbFileName);
 			thumbnail.getParentFile().mkdirs();
-			Thumbnails.of(image).size(IMAGE_WIDTH, IMAGE_HEIGHT).toFile(thumbnail);
+			Thumbnails.of(image).size(THUMBNAIL_IMAGE_WIDTH, THUMBNAIL_IMAGE_HEIGHT).toFile(thumbnail);
 		}
+		
 		return newFileName;
 	}
 	
-	public static String calcPath(String uploadPath) {
+	public String calcPath(String uploadPath) {
 		
 		Calendar cal = Calendar.getInstance();
 		String yearPath = File.separator + cal.get(Calendar.YEAR);
@@ -53,7 +65,7 @@ public class UploadFileUtils {
 		return datePath;
 	}
 	
-	private static void makeDir(String uploadPath, String... paths) {
+	private void makeDir(String uploadPath, String... paths) {
 		
 		if(new File(paths[paths.length - 1]).exists()) { return; }
 		
