@@ -5,13 +5,13 @@
 
 <mapper namespace="com.mapper.userDataMapper">
 	<!-- SELECT 특정 유저의 모든 데이터를 취득 --> 
-	<select id="selectOneUser" resultType="UserVO">
+	<select id="selectOneUser" parameterType="String" resultType="UserVO">
 		SELECT	*
 		FROM	user_data
 		WHERE	user_id = #{user_id}
 	</select>
 	
-	<select id="selectSeqUser" parameterType="int">
+	<select id="selectSeqUser" parameterType="int" resultType="UserVO">
 		SELECT *
 		FROM   user_data
 		WHERE  seq_user_id = #{seq_user_id}
@@ -25,7 +25,7 @@
 	</select>
 
 	<!-- SELECT 로그인시 아이디와 패스워드 일치확인 -->
-	<select id="selectPassword" resultType="String">
+	<select id="selectPassword" parameterType="String" resultType="String">
 		SELECT  password
 		FROM    user_data
 		WHERE   user_id = #{user_id}

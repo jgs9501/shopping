@@ -18,12 +18,11 @@
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
 	
-	<ol class="breadcrumb container">
-		<li><a href="${contextPath}/index">메인</a></li>
-		<li class="active">상품등록</li>
-	</ol>
-	
 	<section>
+		<ol class="breadcrumb container">
+			<li><a href="${contextPath}/index">메인</a></li>
+			<li class="active">상품등록</li>
+		</ol>
 		<div class="container">
 			<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()" enctype="multipart/form-data">
 				<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}"> 

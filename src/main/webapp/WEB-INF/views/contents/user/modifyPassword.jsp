@@ -81,59 +81,64 @@
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
-	
-	<ol class="breadcrumb container">
-		<li><a href="${contextPath}/index">메인</a></li>
-		<li class="active">비밀번호수정</li>
-	</ol>
-	<c:choose>
-		<c:when test="${not empty sessionScope.user}">
-			<div class="container">
-				<aside>
-					<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
-				</aside>
-				
-				<section style="padding-left: 200px; padding-right: 200px;">
-					<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()">
-						<!-- 아이디 -->
-				    	<div id="inputId" class="form-group has-feedback">
-					    	<label class="col-sm-2 control-label">아이디</label>
-				    		<div class="col-sm-10">
-					    		<input type="text" class="form-control" aria-describedby="inputIdStatus" id="user_id" name="user_id" value="${userVO.user_id}" readonly="readonly">
-			      				<span id="inputIdStatus" class="sr-only"></span>
-					    	</div>
-					    	<span id="spanId"></span>
-				  		</div><hr>
-				  		<!-- 비밀번호 -->
-				  		<div id="inputPw" class="form-group has-feedback">
-				    		<label for="inputPassword" class="col-sm-2 control-label">비밀번호</label>
-				    		<div class="col-sm-10">
-				      			<input type="password" class="form-control" aria-describedby="inputPwStatus" id="password" name="password" placeholder="영문 숫자포함 6자리이상 입력해주세요" maxlength="13">
-				      			<span id="inputPwIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
-			      				<span id="inputPwStatus" class="sr-only"></span>
-				    		</div>
-				    		<span id="spanPassword"></span>
-				  		</div><hr>
-						<!-- 비밀번호 확인 -->
-				  		<div id="inputCheckPw" class="form-group has-feedback">
-				    		<label for="inputPasswordCheck" class="col-sm-2 control-label">비밀번호 확인</label>
-				    		<div class="col-sm-10">
-				      			<input type="password" class="form-control" id="checkPassword" name="checkPassword" placeholder="비밀번호를 다시 입력해주세요" maxlength="13">
-				      			<span id="inputPwCheckIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
-			      				<span id="inputPwCheckStatus" class="sr-only"></span>
-				    		</div>
-				    		<span id="spanCheckPassword"></span>
-				  		</div><hr>
-				  		<div class="form-group" align="center">
-				      		<button type="submit" class="btn btn-primary btn-lg">회 원 수 정</button>
-				  		</div>
-			  		</form>
-				</section>
-			</div>
-		</c:when>
-		<c:otherwise>
-		</c:otherwise>
-	</c:choose>
+	<nav>
+    	<jsp:include page="/WEB-INF/views/navbar/search_nav.jsp"></jsp:include>
+	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
+    </nav>
+    <section>
+		<ol class="breadcrumb container">
+			<li><a href="${contextPath}/index">메인</a></li>
+			<li class="active">비밀번호수정</li>
+		</ol>
+		<c:choose>
+			<c:when test="${not empty sessionScope.user}">
+				<div class="container">
+					<aside>
+						<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
+					</aside>
+					
+					<section style="padding-left: 200px; padding-right: 200px;">
+						<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()">
+							<!-- 아이디 -->
+					    	<div id="inputId" class="form-group has-feedback">
+						    	<label class="col-sm-2 control-label">아이디</label>
+					    		<div class="col-sm-10">
+						    		<input type="text" class="form-control" aria-describedby="inputIdStatus" id="user_id" name="user_id" value="${userVO.user_id}" readonly="readonly">
+				      				<span id="inputIdStatus" class="sr-only"></span>
+						    	</div>
+						    	<span id="spanId"></span>
+					  		</div><hr>
+					  		<!-- 비밀번호 -->
+					  		<div id="inputPw" class="form-group has-feedback">
+					    		<label for="inputPassword" class="col-sm-2 control-label">비밀번호</label>
+					    		<div class="col-sm-10">
+					      			<input type="password" class="form-control" aria-describedby="inputPwStatus" id="password" name="password" placeholder="영문 숫자포함 6자리이상 입력해주세요" maxlength="13">
+					      			<span id="inputPwIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				      				<span id="inputPwStatus" class="sr-only"></span>
+					    		</div>
+					    		<span id="spanPassword"></span>
+					  		</div><hr>
+							<!-- 비밀번호 확인 -->
+					  		<div id="inputCheckPw" class="form-group has-feedback">
+					    		<label for="inputPasswordCheck" class="col-sm-2 control-label">비밀번호 확인</label>
+					    		<div class="col-sm-10">
+					      			<input type="password" class="form-control" id="checkPassword" name="checkPassword" placeholder="비밀번호를 다시 입력해주세요" maxlength="13">
+					      			<span id="inputPwCheckIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				      				<span id="inputPwCheckStatus" class="sr-only"></span>
+					    		</div>
+					    		<span id="spanCheckPassword"></span>
+					  		</div><hr>
+					  		<div class="form-group" align="center">
+					      		<button type="submit" class="btn btn-primary btn-lg">회 원 수 정</button>
+					  		</div>
+				  		</form>
+					</section>
+				</div>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+    </section>
 	<!--바닥글-->
     <footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>

@@ -4,13 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.mapper.orderDetailMapper">
+  
+  	<select id="selectCntOrderDetail" resultType="int">
+  		SELECT COUNT(*)
+  		FROM   order_detail
+  		WHERE  order_id = #{order_id}
+  		AND    seq_user_id = #{seq_user_id}
+  	</select>
+  	
+  	<select id="selectAllOrderDetail" parameterType="OrderDetailVO" resultType="OrderDetailVO">
+  		SELECT *
+  		FROM   order_detail
+  		WHERE  seq_user_id = #{seq_user_id}
+  	</select>
+  	
   	<select id="selectOrderDetail" parameterType="OrderDetailVO" resultType="OrderDetailVO">
   		SELECT *
   		FROM   order_detail
   		WHERE  seq_user_id = #{seq_user_id}
   		AND    order_id = #{order_id}
   	</select>
-  	
   	<insert id="insertOrderDetail" parameterType="OrderDetailVO">
   		INSERT INTO order_detail (
   			order_detail_id,
@@ -33,7 +46,7 @@
   		)
   	</insert>
   	
-  	<update id="updateOrderDetail" parameterType="OrderDetailVO">
+  	<update id="updateOrderDetail">
   		UPDATE order_detail 
   		SET    mod_date = NOW(),
   			   order_detail_id = #{order_detail_id}
@@ -41,15 +54,16 @@
   		AND    order_detail_id = #{order_detail_id}
   	</update>
   	
-  	<delete id="deleteAllOrderDetail" parameterType="OrderDetailVO">
+  	<delete id="deleteAllOrderDetail">
   		DELETE FROM order_detail
   		FROM   seq_user_id = #{seq_user_id}
-  		AND    order_id = #{order_id}
+  		WHERE    order_id = #{order_id}
   	</delete>
  
-  	<delete id="deleteOrderDetail" parameterType="OrderDetailVO">
+  	<delete id="deleteOrderDetail">
   		DELETE FROM order_detail
-  		FROM   seq_user_id = #{seq_user_id}
-  		AND    order_detail_id = #{order_detail_id}
+  		WHERE   seq_user_id = #{seq_user_id}
+  		AND  order_detail_id = #{order_detail_id}
+  		AND    order_id = #{order_id}
   	</delete>
   </mapper>

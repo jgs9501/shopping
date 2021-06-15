@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService{
 				error = "User name input type error." + userVO.getUser_name();
 			}
 			// 유저 이메일 정규식 확인 (UserId와 형식 동일하여 UserId사용)
-			else if(!regexChecker.isUserId(userVO.getUser_email())) {
+			else if(!regexChecker.isUserEmail(userVO.getUser_email())) {
 				error = "User email input type error." + userVO.getUser_email();
 			}
 			// 유저 도메인 정규식 확인

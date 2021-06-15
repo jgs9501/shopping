@@ -18,7 +18,10 @@
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
-	
+	<nav>
+    	<jsp:include page="/WEB-INF/views/navbar/search_nav.jsp"></jsp:include>
+	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
+    </nav>
 	<!-- 로그인 화면 -->
 	<section>
 		<form action="signOut" class="center-sort center-padding" method="post">

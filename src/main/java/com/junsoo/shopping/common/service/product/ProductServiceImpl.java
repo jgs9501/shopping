@@ -37,16 +37,19 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int insertProduct(ProductVO productVO, MultipartFile file) throws Exception {
 		
+		UploadFileUtils uploadFileUtils = new UploadFileUtils();
 		String imgUploadPath = uploadPath + File.separator + "images";
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+		String ymdPath = uploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
 		
 		try {
 			if(file != null) {
-				fileName = UploadFileUtils.fileUpload(imgUploadPath, 
+				fileName = uploadFileUtils.fileUpload(imgUploadPath, 
 						file.getOriginalFilename(), 
 						file.getBytes(),
-						ymdPath);
+						ymdPath,
+						true);
+				
 			} else {
 				fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
 			}
@@ -86,17 +89,21 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int updateProduct(ProductVO productVO, MultipartFile file) throws Exception {
 		
+		UploadFileUtils uploadFileUtils = new UploadFileUtils();
+		
 		String imgUploadPath = uploadPath + File.separator + "images";
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+		String ymdPath = uploadFileUtils.calcPath(imgUploadPath);
 		String fileName = file.getOriginalFilename();
 		
 		try {
 			
 			if(file != null && !fileName.equals("")) {
-				fileName = UploadFileUtils.fileUpload(imgUploadPath, 
+				fileName = uploadFileUtils.fileUpload(imgUploadPath, 
 						file.getOriginalFilename(), 
 						file.getBytes(),
-						ymdPath);
+						ymdPath,
+						true);
+				
 				productVO.setProduct_img(File.separator + "images" + ymdPath + File.separator + fileName);
 				productVO.setProduct_thumbImg(File.separator + "images" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 			}		

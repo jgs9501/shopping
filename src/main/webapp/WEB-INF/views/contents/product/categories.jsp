@@ -6,27 +6,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>JS SHOP</title>
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-<script src="${contextPath}/resources/js/jquery.min.js"></script> 
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
+	<script src="${contextPath}/resources/js/jquery.number.min.js"></script> 
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
 </head>
 <body>
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
-	<ol class="breadcrumb container">
-		<li><a href="${contextPath}/index">메인</a></li>
-		<li class="active">${categoryName}</li>
-	</ol>
-	<div class="main-container">
-		<aside>
-			<jsp:include page="/WEB-INF/views/side/shoppingList.jsp"></jsp:include>
-		</aside>
-		<section>
+	<nav>
+    	<jsp:include page="/WEB-INF/views/navbar/search_nav.jsp"></jsp:include>
+	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
+    </nav>
+	<section>
+		<ol class="breadcrumb container">
+			<li><a href="${contextPath}/index">메인</a></li>
+			<li class="active">${categoryName}</li>
+		</ol>
+		<div class="main-container">
 			<article>
 				<div class="product-container">
 				    <h3 class="h3">최근 출시된 상품</h3>
@@ -116,7 +122,7 @@
 						                    </a>
 						                    <ul class="social">
 						                        <li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
-						                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+						                        <li><a href="#" onclick="cartBtn()"><i class="fa fa-shopping-cart"></i></a></li>
 						                    </ul>
 					                	</div>
 						                <div class="product-content">
@@ -168,7 +174,7 @@
 				    		</div>
 				    	</c:if>
 					</div>
-					<nav style="text-align: center;">
+					<div style="text-align: center;">
 						<c:set var="info" value="${pagination}" />
 					  	<ul class="pagination">
 						  	<c:if test="${info.curPage ne 1}">
@@ -188,11 +194,11 @@
 							    <li><a href="javascript:void(0);" onclick="fn_paging(${category_id},${info.nextPage})" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 						  	</c:if>
 					 	</ul> 
-					</nav>
+					</div>
 				</div>
 			</article>
-		</section>
-	</div>
+		</div>
+	</section>
 	
 	<footer>
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
@@ -201,6 +207,12 @@
 	<script>
 		function fn_paging(category, curPage) {
 			location.href = "/categories/"+category+"?curPage="+curPage;
+		}
+		function cartBtn() {
+			var flag = confirm("장바구니에 추가하시겠습니까?");
+			if(flag) {
+				location.replace("${contextPath}/cart");
+			}
 		}
 	</script>
 </body>

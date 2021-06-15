@@ -56,7 +56,6 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
 					<p> TEL. KakaoTalk : voicefam | LINE : sosojs | jgs950130@gmail.com</p>
-					<p class="h6">© All right Reversed.</p>
 				</div>
 				<hr>
 			</div>	

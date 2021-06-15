@@ -11,9 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.junsoo.shopping.common.dao.cart.CartDAO;
@@ -23,7 +25,6 @@ import com.junsoo.shopping.common.service.order.OrderService;
 import com.junsoo.shopping.common.service.user.UserpointService;
 import com.junsoo.shopping.common.vo.OrderDetailVO;
 import com.junsoo.shopping.common.vo.OrderVO;
-import com.junsoo.shopping.common.vo.ProductVO;
 import com.junsoo.shopping.common.vo.UserVO;
 import com.junsoo.shopping.utils.Utils;
 
@@ -198,4 +199,48 @@ public class OrderController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value = "order/history", method = {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView postOrderHistory(HttpServletRequest request) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		List<OrderVO> order_list = new ArrayList<OrderVO>();
+		List<OrderDetailVO> orderDetail_list = new ArrayList<OrderDetailVO>();
+		try {
+			order_list = orderService.selectAllOrder(userVO.getSeq_user_id());
+			orderDetail_list = orderDetailService.selectAllOrderDetail(userVO.getSeq_user_id());
+			mv.addObject("orders", order_list);
+			mv.addObject("details", orderDetail_list);
+			mv.setViewName("contents/user/order_history");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			mv.setViewName("contents/error");
+		}
+		
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "order/cancel", method = RequestMethod.POST)
+	public HashMap<String, Object> postOrderHistory(HttpServletRequest request,
+										 @RequestBody HashMap<String, Object> map) throws Exception {
+		
+		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		try {
+			if(userVO.getSeq_user_id() < 1) {
+				request.getSession().invalidate();
+			}
+			orderDetailService.deleteOrderDetail(map);
+			orderService.updateOrderTotalPrice(map);
+			
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return map;
+	}
+	
 }

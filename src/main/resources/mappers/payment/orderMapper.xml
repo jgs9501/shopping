@@ -4,7 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.mapper.orderMapper">
-	<select id="selectAllOrder" parameterType="int" resultType="List">
+
+	<select id="selectAllOrder" parameterType="int" resultType="OrderVO">
 		SELECT *
 		FROM   order_tbl
 		WHERE  seq_user_id = #{seq_user_id}
@@ -34,7 +35,7 @@
 		)
 	</insert>
 	
-	<update id="updateOrderStatus" parameterType="OrderVO">
+	<update id="updateOrderStatus">
 		UPDATE order_tbl
 		SET    mod_date = NOW(),
 	           order_status = #{order_status}
@@ -42,7 +43,15 @@
 	    AND    order_id = #{order_id}
 	</update>
 	
-	<delete id="deleteOrder" parameterType="OrderVO">
+	<update id="updateOrderTotalPrice">
+		UPDATE order_tbl
+		SET    mod_date = NOW(),
+			   total_price = #{total_price}
+	    WHERE  seq_user_id = #{seq_user_id}
+	    AND    order_id = #{order_id}
+	</update>
+	
+	<delete id="deleteOrder">
 		DELETE FROM order_tbl
 		WHERE  seq_user_id = #{seq_user_id}
 		AND    order_id = #{order_id}

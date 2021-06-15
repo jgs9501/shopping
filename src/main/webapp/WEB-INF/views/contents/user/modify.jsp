@@ -86,96 +86,97 @@
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
-	
-	<ol class="breadcrumb container">
-		<li><a href="${contextPath}/index">메인</a></li>
-		<li class="active">회원정보수정</li>
-	</ol>
-	<c:choose>
-		<c:when test="${not empty sessionScope.userVO}">
-			<div class="container">
-				<aside>
-					<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
-				</aside>
-				
-				<section style="margin-left: 150px; margin-right: 150px;">
-					<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()">
-						<!-- 아이디 -->
-				    	<div id="inputId" class="form-group has-feedback">
-					    	<label class="col-sm-2 control-label">아이디</label>
-				    		<div class="col-sm-10">
-					    		<input type="text" class="form-control" aria-describedby="inputIdStatus" id="user_id" name="user_id" value="${userVO.user_id}" readonly="readonly">
-			      				<span id="inputIdStatus" class="sr-only"></span>
-					    	</div>
-					    	<span id="spanId"></span>
-				  		</div><hr>
-				  		<!-- 이름 -->
-				  		<div class="form-group">
-				    		<label for="inputUserName" class="col-sm-2 control-label">이 름</label>
-				    		<div class="col-sm-10">
-				      			<input type="text" class="form-control" id="user_name" name="user_name" value="${userVO.user_name}" disabled="disabled">
-				    		</div>
-				      		<span id="spanUserName"></span>
-				  		</div><hr>
-				  		<!-- 이메일 -->
-				  		<div class="form-group">
-				    		<label class="col-sm-2 control-label">이메일</label>
-				    		<div class="col-sm-4">
-				      			<input type="text" class="form-control" id="user_email" name="user_email" value="${userVO.user_email}">
-				    		</div>
-					    	<div class="input-group col-sm-6">
-								<span class="input-group-addon">@</span>
-								<input type="text" class="form-control" id="user_domain" name="user_domain" value="${userVO.user_domain}" placeholder="gmail.com" aria-describedby="sizing-addon2">
-							</div>
-							<span id="spanUserEmail"></span>
-				  		</div><hr>
-				  		<!-- 전화번호 -->
-				  		<div class="form-group">
-				    		<label for="inputPassword3" class="col-sm-2 control-label">전화번호</label>
-				    		<div class="col-sm-10">
-				      			<input type="text" class="form-control" id="user_phone" name="user_phone" value="${userVO.user_phone}" placeholder="' - ' 제외하고 입력해주세요." maxlength="11">
-				    		</div>
-				    		<span id="spanPhone"></span>
-				  		</div><hr>
-				  		
-				  		<!-- 우편번호 -->
-				  		<div class="form-group">
-				    		<label class="col-sm-2 control-label">우편번호</label>
-				    		<div class="col-sm-5">
-				      			<input type="number" class="form-control" id="user_post" name="user_post" value="${userVO.user_post}" readonly="readonly">
-				    		</div>
-				    		<div>
-				    			<jsp:include page="/WEB-INF/views/modal/postModal.jsp"></jsp:include>
-				    			<button type="button" class="btn btn-default btn-sm" onclick="execDaumPostcode()">우편번호</button>
-				    		</div>
-				  		</div>
-				  		<!-- 주소 -->
-				  		<div class="form-group">
-				    		<label for="inputPassword3" class="col-sm-2 control-label">주 소</label>
-				    		<div class="col-sm-10">
-				      			<input type="text" class="form-control" id="user_address" name="user_address" value="${userVO.user_address}" readonly="readonly">
-				    		</div>
-				  		</div>
-				  		<!-- 상세주소 -->
-				  		<div class="form-group">
-				    		<label for="inputPassword3" class="col-sm-2 control-label">상세주소</label>
-				    		<div class="col-sm-10">
-				      			<input type="text" class="form-control" id="user_detail_address" name="user_detail_address" value="${userVO.user_detail_address}">
-				    		</div>
-				  		<span id="spanPost"></span>
-				  		</div><hr>
-				  		<div class="form-group" align="center">
-				      		<button type="submit" class="btn btn-primary btn-lg">회 원 수 정</button>
-				  		</div>
-					</form>
-				</section>
-			</div>
-		</c:when>
+	<nav>
+    	<jsp:include page="/WEB-INF/views/navbar/search_nav.jsp"></jsp:include>
+	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
+    </nav>
+    <section>
+		<ol class="breadcrumb container">
+			<li><a href="${contextPath}/index">메인</a></li>
+			<li class="active">회원정보수정</li>
+		</ol>
+		<c:choose>
+			<c:when test="${not empty sessionScope.userVO}">
+				<div class="container">
+					<section style="margin-left: 150px; margin-right: 150px;">
+						<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()">
+							<!-- 아이디 -->
+					    	<div id="inputId" class="form-group has-feedback">
+						    	<label class="col-sm-2 control-label">아이디</label>
+					    		<div class="col-sm-10">
+						    		<input type="text" class="form-control" aria-describedby="inputIdStatus" id="user_id" name="user_id" value="${userVO.user_id}" readonly="readonly">
+				      				<span id="inputIdStatus" class="sr-only"></span>
+						    	</div>
+						    	<span id="spanId"></span>
+					  		</div><hr>
+					  		<!-- 이름 -->
+					  		<div class="form-group">
+					    		<label for="inputUserName" class="col-sm-2 control-label">이 름</label>
+					    		<div class="col-sm-10">
+					      			<input type="text" class="form-control" id="user_name" name="user_name" value="${userVO.user_name}" disabled="disabled">
+					    		</div>
+					      		<span id="spanUserName"></span>
+					  		</div><hr>
+					  		<!-- 이메일 -->
+					  		<div class="form-group">
+					    		<label class="col-sm-2 control-label">이메일</label>
+					    		<div class="col-sm-4">
+					      			<input type="text" class="form-control" id="user_email" name="user_email" value="${userVO.user_email}">
+					    		</div>
+						    	<div class="input-group col-sm-6">
+									<span class="input-group-addon">@</span>
+									<input type="text" class="form-control" id="user_domain" name="user_domain" value="${userVO.user_domain}" placeholder="gmail.com" aria-describedby="sizing-addon2">
+								</div>
+								<span id="spanUserEmail"></span>
+					  		</div><hr>
+					  		<!-- 전화번호 -->
+					  		<div class="form-group">
+					    		<label for="inputPassword3" class="col-sm-2 control-label">전화번호</label>
+					    		<div class="col-sm-10">
+					      			<input type="text" class="form-control" id="user_phone" name="user_phone" value="${userVO.user_phone}" placeholder="' - ' 제외하고 입력해주세요." maxlength="11">
+					    		</div>
+					    		<span id="spanPhone"></span>
+					  		</div><hr>
+					  		
+					  		<!-- 우편번호 -->
+					  		<div class="form-group">
+					    		<label class="col-sm-2 control-label">우편번호</label>
+					    		<div class="col-sm-5">
+					      			<input type="number" class="form-control" id="user_post" name="user_post" value="${userVO.user_post}" readonly="readonly">
+					    		</div>
+					    		<div>
+					    			<jsp:include page="/WEB-INF/views/modal/postModal.jsp"></jsp:include>
+					    			<button type="button" class="btn btn-default btn-sm" onclick="execDaumPostcode()">우편번호</button>
+					    		</div>
+					  		</div>
+					  		<!-- 주소 -->
+					  		<div class="form-group">
+					    		<label for="inputPassword3" class="col-sm-2 control-label">주 소</label>
+					    		<div class="col-sm-10">
+					      			<input type="text" class="form-control" id="user_address" name="user_address" value="${userVO.user_address}" readonly="readonly">
+					    		</div>
+					  		</div>
+					  		<!-- 상세주소 -->
+					  		<div class="form-group">
+					    		<label for="inputPassword3" class="col-sm-2 control-label">상세주소</label>
+					    		<div class="col-sm-10">
+					      			<input type="text" class="form-control" id="user_detail_address" name="user_detail_address" value="${userVO.user_detail_address}">
+					    		</div>
+					  		<span id="spanPost"></span>
+					  		</div><hr>
+					  		<div class="form-group" align="center">
+					      		<button type="submit" class="btn btn-primary btn-lg">회 원 수 정</button>
+					  		</div>
+						</form>
+					</section>
+				</div>
+			</c:when>
 	<%-- 비로그인일 경우 로그인 페이지 --%>	
-	<c:otherwise>
-		<%response.sendRedirect("${contextPage}/contents/user/login.jsp"); %>
-	</c:otherwise>
-	</c:choose>
+			<c:otherwise>
+				<%response.sendRedirect("${contextPage}/contents/user/login.jsp"); %>
+			</c:otherwise>
+		</c:choose>
+    </section>
 	<!--바닥글-->
     <footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
