@@ -6,6 +6,7 @@
 > + 2-1. IDE
 > + 2-2. 프레임워크
 > + 2-3. DB 및 라이브러리
+> + 2-4. 예정
 
 
 프로젝트 설명
@@ -28,4 +29,6 @@ MySQL 1.1.7<br>
 JQuery<br>
 Swiper<br>
 Lombok 1.18.10<br>
-
+### 4. 예정
+AWS
+jenkins
