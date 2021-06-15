@@ -22,6 +22,14 @@ public interface QnaService {
 	public int selectTypeQnaCount(String type) throws Exception;
 	
 	/**
+	 * 자주묻는질문 특정 정보 데이터 반환
+	 * @param qna_id
+	 * @return
+	 * @throws Exception
+	 */
+	public QnaVO selectQna(int qna_id) throws Exception;
+	
+	/**
 	 * 자주묻는질문 전체 컬럼의 데이터 반환
 	 * @return
 	 */

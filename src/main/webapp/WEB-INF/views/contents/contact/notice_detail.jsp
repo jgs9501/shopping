@@ -39,10 +39,10 @@
 			<hr>
 			<!-- 제목 -->
 			<div style="width: 100%;">
-				<div class="col-xs-1" style="float: left; text-align: right;">
+				<div class="col-xs-1" style="float: left; width: 12%;">
 					<h4 style="color: #5a5a5a;">[${noticeVO.type}]</h4>
 				</div>
-				<div class="col-xs-8" style="float: left; padding-left: 10px;">
+				<div class="col-xs-7" style="float: left;">
 					<h4>${noticeVO.title}</h4>
 				</div>
 				<div class="col-xs-2" style="float: right; text-align: right;">
@@ -61,28 +61,39 @@
 			<hr>
 			<!-- 내용 -->
 			<div style="width: 100%;">
-				<div align="center" style="max-width: 1200px;">
+				<div align="center" style="">
 					<c:if test="${noticeVO.content_img1 ne null}">
-						<img style="text-align: center; align-content: center;" alt="..."
+						<img style="text-align: center; align-content: center; max-width: 1140px;" alt="..."
 							src="${noticeVO.content_img1}">
 						<br>
 					</c:if>
 					<c:if test="${noticeVO.content_img2 ne null}">
-						<img style="text-align: center;" alt="..."
+						<img style="text-align: center; align-content: center; max-width: 1140px;" alt="..."
 							src="${noticeVO.content_img2}">
 						<br>
 					</c:if>
 					<c:if test="${noticeVO.content_img3 ne null}">
-						<img style="text-align: center;" alt="..."
+						<img style="text-align: center; align-content: center; max-width: 1140px;" alt="..."
 							src="${noticeVO.content_img3}">
 					</c:if>
 				</div>
 				<h5 style="line-height: 23px;">${noticeVO.content}</h5>
 			</div>
 			<hr>
-			<a class="btn btn-primary btn-lg" href="${contextPath}/contact"
-				style="color: white;"><i
-				class="glyphicon glyphicon-chevron-left"></i>뒤로가기</a>
+			<div style="float: left;">
+				<a class="btn btn-primary btn-lg" href="${contextPath}/contact"
+					style="color: white;"><i
+					class="glyphicon glyphicon-chevron-left"></i>뒤로가기</a>
+			</div>
+			<c:if test="${userVO.auth eq 3}">
+				<div style="float: right;">
+					<form id="notice_form" action="${contextPath}/contact/notice/${noticeVO.notice_id}/delete" method="post">
+						<a class="btn btn-primary btn-lg" href="${contextPath}/contact/notice/${noticeVO.notice_id}/update"
+							style="color: white;">수정</a>
+						<input class="btn btn-primary btn-lg" type="submit" style="color: white;" value="삭제">
+					</form>
+				</div>
+			</c:if>
 		</div>
 	</section>
 	<footer>

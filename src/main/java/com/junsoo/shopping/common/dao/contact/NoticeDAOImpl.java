@@ -12,7 +12,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.junsoo.shopping.common.vo.NoticeVO;
-import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 
 @Repository
 public class NoticeDAOImpl implements NoticeDAO {
@@ -115,7 +114,8 @@ public class NoticeDAOImpl implements NoticeDAO {
 		try {
 			
 			logger.info("Notice has been created. : " + noticeVO);
-			return sqlSession.insert(namespace + ".insertNotice", noticeVO);
+			sqlSession.insert(namespace + ".insertNotice", noticeVO);
+			return 200;
 		} catch (DataAccessException dae) {
 			logger.error("Data access Exception", dae);
 			return -1;
@@ -131,7 +131,8 @@ public class NoticeDAOImpl implements NoticeDAO {
 		try {
 			
 			logger.info("Notice has been updated. : " + noticeVO);
-			return sqlSession.update(namespace + ".updateNotice", noticeVO);
+			sqlSession.update(namespace + ".updateNotice", noticeVO);
+			return 200;
 		} catch (DataAccessException dae) {
 			logger.error("Data access Exception", dae);
 			return -1;
@@ -146,7 +147,8 @@ public class NoticeDAOImpl implements NoticeDAO {
 
 		try {
 			
-			return sqlSession.update(namespace + ".updateViewsNotice", noticeVO);
+			sqlSession.update(namespace + ".updateViewsNotice", noticeVO);
+			return 200;
 		} catch (DataAccessException dae) {
 			logger.error("Data access Exception", dae);
 			return -1;
@@ -162,7 +164,8 @@ public class NoticeDAOImpl implements NoticeDAO {
 		try {
 			
 			logger.info("Notice has been deleted. notice_id: " + notice_id);
-			return sqlSession.delete(namespace + ".deleteNotice", notice_id);
+			sqlSession.delete(namespace + ".deleteNotice", notice_id);
+			return 200;
 		} catch (DataAccessException dae) {
 			logger.error("Data access Exception", dae);
 			return -1;

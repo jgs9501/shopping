@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.junsoo.shopping.common.vo.NoticeVO;
-import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 
 public interface NoticeService {
 
@@ -68,7 +67,7 @@ public interface NoticeService {
 	 * @return
 	 * @throws Exception
 	 */
-	public int updateNotice(NoticeVO noticeVO) throws Exception;
+	public int updateNotice(NoticeVO noticeVO, List<MultipartFile> uploadFile_list) throws Exception;
 	
 	/**
 	 * 해당 공지사항의 조회수 증가 메소드

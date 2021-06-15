@@ -28,14 +28,14 @@
     </nav>
     <section>
     	<div class="container">
-    		<h2><strong>공지사항등록</strong></h2>
+    		<h2><strong>자주묻는질문 수정</strong></h2>
     		<hr>
-    		<form class="form-horizontal" action="/notice" method="post" enctype="multipart/form-data">
+    		<form class="form-horizontal" action="${contextPath}/qna/${qnaVO.qna_id}/update" method="post">
     			<!-- 제목 -->
     			<div class="form-group">
 	    			<label class="col-sm-1 control-label"><span class="emphasis">*</span>제목</label>
 	    			<div class="col-sm-10">
-				    	<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" maxlength="50">
+				    	<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" value="${qnaVO.title}" maxlength="50">
 				    </div>
     			</div>
     			<hr>
@@ -53,42 +53,21 @@
 				    </div>
     			</div>
     			<hr>
-			    <!-- 내용 -->
+    			<!-- 내용 -->
 			    <div class="form-group">
 				    <label class="col-sm-1 control-label"><span class="emphasis">*</span>내용</label>
 	    			<div class="col-sm-10">
-			      		<textarea class="form-control" rows="4" id="content" name="content"></textarea>
+			      		<textarea class="form-control" rows="20" id="answer" name="answer">${qnaVO.answer}</textarea>
 			    	</div>
 			    </div>
 			    <hr>
-			    <!-- 사진 -->
-		  		<div class="form-group">
-		    		<label class="col-sm-1 control-label">사진1</label>
-		    		<div class="col-sm-6">
-		      			<input type="file" class="form-control" id="uploadFile1" name="uploadFile1" accept=".jpg, .png">
-		    		</div>
-				</div>
-		  		<div class="form-group">
-		    		<label class="col-sm-1 control-label">사진2</label>
-		    		<div class="col-sm-6">
-		      			<input type="file" class="form-control" id="uploadFile2" name="uploadFile2" accept=".jpg, .png">
-		    		</div>
-				</div>
-		  		<div class="form-group">
-		    		<label class="col-sm-1 control-label">사진3</label>
-		    		<div class="col-sm-6">
-		      			<input type="file" class="form-control" id="uploadFile3" name="uploadFile3" accept=".jpg, .png">
-		    		</div>
-				</div>
-				<hr>
-				<div class="form-group" align="center">
-					<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}">
+			    <div class="form-group" align="center">
 	      			<button type="submit" class="btn btn-primary btn-lg">확인</button>
 	  			</div>
     		</form>
     	</div>
     </section>
-    <footer>
+	<footer>
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
 	</footer>
 </body>

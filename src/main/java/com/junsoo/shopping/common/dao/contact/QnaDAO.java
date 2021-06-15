@@ -14,6 +14,11 @@ public interface QnaDAO {
 	 *  @param String type @return int */
 	public int selectTypeQnaCount(String type) throws Exception;
 	
+	/**
+	 * Qna_board 테이블의 특정 데이터 반환
+	 * @return QnaVO*/
+	public QnaVO selectQna(int qna_id) throws Exception;
+	
 	/** Qna_board 테이블의 모든 컬럼의 데이터 반환
 	 *  @return List<QnaVO>*/
 	public List<QnaVO> selectAllQna();

@@ -3,11 +3,7 @@ package com.junsoo.shopping.common.dao.contact;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 import com.junsoo.shopping.common.vo.NoticeVO;
-import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 
 public interface NoticeDAO {
 

@@ -53,9 +53,9 @@ public class ValueChecker {
 	 */
 	public boolean isExistContactType(String type) {
 		
-		String[] notice_types = {"PI", "DI", "UI", "OI", "ETC"};
-		for(String arg : notice_types) {
-			if(arg == type) { return true; }
+		String[] types = {"PI", "DI", "UI", "OI", "ETC"};
+		for(String arg : types) {
+			if(type.compareToIgnoreCase(arg) == 0) { return true; }
 		}
 		return false;
 	}

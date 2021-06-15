@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.junsoo.shopping.common.dao.contact.NoticeDAO;
 import com.junsoo.shopping.common.vo.NoticeVO;
-import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 import com.junsoo.shopping.utils.UploadFileUtils;
 import com.junsoo.shopping.utils.checker.ValueChecker;
 
@@ -24,6 +23,7 @@ import com.junsoo.shopping.utils.checker.ValueChecker;
 public class NoticeServiceImpl implements NoticeService {
 
 	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
+	private static final int NOTICE_IMAGE_SIZE = 3;
 	
 	@Inject
 	NoticeDAO noticeDAO;
@@ -71,13 +71,13 @@ public class NoticeServiceImpl implements NoticeService {
 			}
 			noticeVO = noticeDAO.selectNotice(notice_id);
 			noticeVO.setType(vc.getContactTypeToName(noticeVO.getType()));
+			
 			return noticeVO;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return null;
 		}
 	}
-	
 	
 	@Override
 	public List<NoticeVO> selectAllNoticePaging(HashMap<String, Object> hashMap) throws Exception {
@@ -146,7 +146,7 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		String imgUploadPath = uploadPath + File.separator + "images";
 		String ymdPath = uploadFileUtils.calcPath(imgUploadPath);
-		String[] fileName = new String[uploadFile_list.size()];
+		String[] fileName = new String[NOTICE_IMAGE_SIZE];
 		int index = 0;
 		
 		try {
@@ -173,10 +173,10 @@ public class NoticeServiceImpl implements NoticeService {
 				if(!file.isEmpty()) {
 					fileName[index] = File.separator + "images" + ymdPath + File.separator +
 										uploadFileUtils.fileUpload(imgUploadPath, 
-																	file.getOriginalFilename(), 
-																	file.getBytes(),
-																	ymdPath,
-																	false);
+															file.getOriginalFilename(), 
+															file.getBytes(),
+															ymdPath,
+															false);
 				} else {
 					fileName[index] = null;
 				}
@@ -200,9 +200,23 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int updateNotice(NoticeVO noticeVO) throws Exception {
+	public int updateNotice(NoticeVO noticeVO, List<MultipartFile> uploadFile_list) throws Exception {
+		
+		UploadFileUtils uploadFileUtils = new UploadFileUtils();
+		ValueChecker checker = new ValueChecker();
+		
+		String imgUploadPath = uploadPath + File.separator + "images";
+		String ymdPath = uploadFileUtils.calcPath(imgUploadPath);
+		String[] fileName = new String[NOTICE_IMAGE_SIZE];
+		int index = 0;
 		
 		try {
+			// 공지사항의 상담종류 존재 확인
+			// 해당 항목이 없을 경우, 기타항목으로 설정
+			if(!checker.isExistContactType(noticeVO.getType())) {
+				logger.warn("The type does not exist, so register it as an ETC.");
+				noticeVO.setType("ETC");
+			}
 			// 공지사항 공유의 값 확인 
 			if(noticeVO.getNotice_id() < 1) {
 				logger.error("Does not exist notice. : " + noticeVO);
@@ -218,6 +232,27 @@ public class NoticeServiceImpl implements NoticeService {
 				logger.error("Notice content error. : " + noticeVO);
 				return 4003;
 			}
+			
+			for(MultipartFile file : uploadFile_list) {
+				if(!file.isEmpty()) {
+					fileName[index] = File.separator + "images" + ymdPath + File.separator +
+										uploadFileUtils.fileUpload(imgUploadPath, 
+															file.getOriginalFilename(), 
+															file.getBytes(),
+															ymdPath,
+															false);
+				} else {
+					fileName[index] = null;
+				}
+				index++;
+			}
+			
+			noticeVO.setContent(noticeVO.getContent().replaceAll("\n", "<br>"));
+			// 이미지를 바꾼 경우 해당 이미지 DB컬럼 수정 
+			if(fileName[0] != null) { noticeVO.setContent_img1(fileName[0]);}
+			if(fileName[1] != null) { noticeVO.setContent_img2(fileName[1]);}
+			if(fileName[2] != null) { noticeVO.setContent_img3(fileName[2]);}
+			
 			noticeDAO.updateNotice(noticeVO);
 		} catch (Exception e) {
 			logger.error(e.getMessage());

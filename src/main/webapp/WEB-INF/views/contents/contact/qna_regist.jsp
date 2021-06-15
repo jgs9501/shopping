@@ -58,7 +58,7 @@
 			    <div class="form-group">
 				    <label class="col-sm-1 control-label"><span class="emphasis">*</span>내용</label>
 	    			<div class="col-sm-10">
-			      		<textarea class="form-control" rows="4" id="answer" name="answer"></textarea>
+			      		<textarea class="form-control" rows="20" id="answer" name="answer"></textarea>
 			    	</div>
 			      	<span id="spanContent"></span>
 			    </div>
@@ -69,7 +69,7 @@
     		</form>
     	</div>
     </section>
-    <footer>
+	<footer>
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
 	</footer>
 </body>

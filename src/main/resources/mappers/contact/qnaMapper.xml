@@ -15,10 +15,16 @@
 		WHERE  type = #{type}
 	</select>
 	
+	<select id="selectQna" parameterType="int" resultType="QnaVO">
+		SELECT *
+		FROM   qna_board
+		WHERE  qna_id = #{qna_id}
+	</select>
+	
 	<select id="selectAllQna" resultType="QnaVO">
 		SELECT *
 		FROM   qna_board
-		ORDER BY qna_id DESC
+		ORDER BY type, qna_id
 	</select>
 	
 	<select id="selectTypeQna" parameterType="String" resultType="QnaVO">
@@ -29,7 +35,7 @@
 	</select>
 	
 	<insert id="insertQna" parameterType="QnaVO">
-		INSERT INTO notice_board(
+		INSERT INTO qna_board(
 			seq_user_id,
 			title,
 			answer,

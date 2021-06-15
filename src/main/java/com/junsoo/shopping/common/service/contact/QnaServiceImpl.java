@@ -50,6 +50,19 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
+	public QnaVO selectQna(int qna_id) throws Exception {
+		
+		try {
+			QnaVO qnaVO = qnaDAO.selectQna(qna_id);
+			qnaVO.setAnswer(qnaVO.getAnswer().replaceAll("<br>", "\n"));
+			return qnaVO;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
 	public List<QnaVO> selectAllQna() {
 		
 		try {
@@ -79,11 +92,11 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public int insertQna(QnaVO qnaVO) throws Exception {
 		
-		ValueChecker checker = new ValueChecker();
+		ValueChecker vc = new ValueChecker();
 		try {
 			// 자주묻는질문의 상담종류 존재 확인
 			// 해당 항목이 없을 경우, 기타항목으로 설정
-			if(!checker.isExistContactType(qnaVO.getType())) {
+			if(!vc.isExistContactType(qnaVO.getType())) {
 				logger.warn("The type does not exist, so register it as an ETC.");
 				qnaVO.setType("ETC");
 			}
@@ -131,6 +144,7 @@ public class QnaServiceImpl implements QnaService {
 				return 4003;
 			}
 			
+			qnaVO.setAnswer(qnaVO.getAnswer().replaceAll("\n", "<br>"));
 			qnaDAO.updateQna(qnaVO);
 		} catch (Exception e) {
 			logger.error(e.getMessage());

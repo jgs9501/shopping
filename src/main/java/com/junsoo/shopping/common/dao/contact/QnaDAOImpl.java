@@ -47,9 +47,25 @@ public class QnaDAOImpl implements QnaDAO {
 			return -1;
 		}
 	}
-
+	
+	@Override
+	public QnaVO selectQna(int qna_id) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectOne(namespace + ".selectQna", qna_id);
+		} catch (DataAccessException dae) {
+			logger.error("Data access Exception", dae);
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
 	@Override
 	public List<QnaVO> selectAllQna() {
+		
 		try {
 			
 			return sqlSession.selectList(namespace + ".selectAllQna");
@@ -83,7 +99,8 @@ public class QnaDAOImpl implements QnaDAO {
 		try {
 			
 			logger.info("QnA has been created. : " + qnaVO);
-			return sqlSession.insert(namespace + ".insertQna", qnaVO);
+			sqlSession.insert(namespace + ".insertQna", qnaVO);
+			return 200;
 		} catch (DataAccessException dae) {
 			logger.error("Data access Exception", dae);
 			return -1;
@@ -100,7 +117,8 @@ public class QnaDAOImpl implements QnaDAO {
 		try {
 			
 			logger.info("QnA has been updated. : " + qnaVO);
-			return sqlSession.update(namespace + ".updateQna", qnaVO);
+			sqlSession.update(namespace + ".updateQna", qnaVO);
+			return 200;
 		} catch (DataAccessException dae) {
 			logger.error("Data access Exception", dae);
 			return -1;
@@ -116,7 +134,8 @@ public class QnaDAOImpl implements QnaDAO {
 		try {
 			
 			logger.info("QnA has been deleted. qna_id : " + qna_id);
-			return sqlSession.delete(namespace + ".deleteQna", qna_id);
+			sqlSession.delete(namespace + ".deleteQna", qna_id);
+			return 200;
 		} catch (DataAccessException dae) {
 			logger.error("Data access Exception", dae);
 			return -1;
