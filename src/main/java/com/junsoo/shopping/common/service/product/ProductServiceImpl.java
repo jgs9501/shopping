@@ -1,7 +1,6 @@
 package com.junsoo.shopping.common.service.product;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.junsoo.shopping.common.dao.product.ProductDAO;
 import com.junsoo.shopping.common.vo.ProductVO;
-import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 import com.junsoo.shopping.utils.UploadFileUtils;
 import com.junsoo.shopping.utils.checker.ValueChecker;
 
@@ -32,12 +30,91 @@ public class ProductServiceImpl implements ProductService{
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 	
-	ValueChecker vc = new ValueChecker();
+	@Override
+	public List<ProductVO> selectRecentlyProduct(int category) throws Exception {
+		
+		ValueChecker vc = new ValueChecker();
+		try {
+			
+			if(!vc.isCheckCategory(category)) {
+				logger.error("selectRecentlyProduct() category does not exist. error category value : " + category);
+				return null;
+			}
+			return productDAO.selectRecentlyProduct(category);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public int selectCategoryProductCount(HashMap<String, Object> hashMap) throws Exception {
+		
+		ValueChecker vc = new ValueChecker();
+		int category = 0;
+		
+		try {
+			
+			// HashMap 키 값 체크
+			if(!hashMap.containsKey("category")) {
+				logger.error("selectSearchCategoryCount() 'category' does not exist in HashMap");
+				return -1;
+			}
+			if(!hashMap.containsKey("search")) {
+				logger.error("selectSearchCategoryCount() 'search' does not exist in HashMap");
+				return -1;
+			}
+			category = (int)hashMap.get("category");
+			// 존재하는 카테고리인지 확인
+			if(!vc.isCheckCategory(category)) {
+				logger.error("selectSearchCategoryCount() category does not exist. error category value : " 
+					+ category);
+				return -1;
+			}
+			return productDAO.selectCategoryProductCount(hashMap);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return -1;
+		}
+	}
 	
+	@Override
+	public List<ProductVO> selectCategoryProducts(HashMap<String, Object> hashMap) throws Exception {
+		
+		ValueChecker vc = new ValueChecker();
+		int category = 0;
+		
+		try {
+			
+			// HashMap 키 값 체크
+			if(!hashMap.containsKey("category")) {
+				logger.error("selectSearchCategoryCount() 'category' does not exist in HashMap");
+				return null;
+			}
+			if(!hashMap.containsKey("search")) {
+				logger.error("selectSearchCategoryCount() 'search' does not exist in HashMap");
+				return null;
+			}
+			category = (int)hashMap.get("category");
+			// 존재하는 카테고리인지 확인
+			if(!vc.isCheckCategory(category)) {
+				logger.error("selectSearchCategoryCount() category does not exist. error category value : " 
+						+ category);
+				return null;
+			}
+			
+			return productDAO.selectCategoryProducts(hashMap);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
 	@Override
 	public int insertProduct(ProductVO productVO, MultipartFile file) throws Exception {
 		
 		UploadFileUtils uploadFileUtils = new UploadFileUtils();
+		ValueChecker vc = new ValueChecker();
 		String imgUploadPath = uploadPath + File.separator + "images";
 		String ymdPath = uploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
@@ -77,19 +154,12 @@ public class ProductServiceImpl implements ProductService{
 		}
 		return 1;
 	}
-
-
-	@Override
-	public List<ProductVO> selectRecentlyProduct(int category) throws Exception {
-		
-		return productDAO.selectRecentlyProduct(category);
-	}
-
-
+	
 	@Override
 	public int updateProduct(ProductVO productVO, MultipartFile file) throws Exception {
 		
 		UploadFileUtils uploadFileUtils = new UploadFileUtils();
+		ValueChecker vc = new ValueChecker();
 		
 		String imgUploadPath = uploadPath + File.separator + "images";
 		String ymdPath = uploadFileUtils.calcPath(imgUploadPath);
@@ -128,26 +198,4 @@ public class ProductServiceImpl implements ProductService{
 		}
 		return 1;
 	}
-
-
-	@Override
-	public List<ProductVO> selectCategoryProducts(ProductVO productVO, PaginationInfo paginationInfo) throws Exception {
-		
-		List<ProductVO> productList = Collections.emptyList();
-		
-		int productTotalCount = productDAO.selectCategoryProductCount(productVO.getCategory());
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("category", productVO.getCategory());
-		map.put("startIndex", paginationInfo.getStartIndex());
-		map.put("pageSize", paginationInfo.getPageSize());
-		if(productTotalCount > 0) {
-			productList = productDAO.selectCategoryProducts(map);
-		}
-		
-		return productList;
-	}
-
-
-
 }

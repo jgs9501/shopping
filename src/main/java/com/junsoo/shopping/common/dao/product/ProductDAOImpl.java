@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.junsoo.shopping.common.vo.ProductDetailVO;
@@ -25,58 +26,148 @@ public class ProductDAOImpl implements ProductDAO {
 	SqlSession sqlSession;
 	
 	@Override
+	public List<ProductVO> selectRecentlyProduct(int category) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectRecentlyProduct", category);
+		} catch (DataAccessException dae) {
+			logger.error("selectRecentlyProduct() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public ProductDetailVO selectProductDetail(int product_id) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectOne(namespace + ".selectProductDetail", product_id);
+		} catch (DataAccessException dae) {
+			logger.error("selectProductDetail() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public List<ProductVO> selectSameStoreProduct(ProductVO productVO) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectSameStoreProduct", productVO);
+		} catch (DataAccessException dae) {
+			logger.error("selectSameStoreProduct() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public int selectCategoryProductCount(HashMap<String, Object> hashMap) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectOne(namespace + ".selectCategoryProductCount", hashMap);
+		} catch (DataAccessException dae) {
+			logger.error("selectCategoryProductCount() Data access Exception. " + dae.getMessage());
+			return -1;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return -1;
+		}
+	}
+
+	@Override
+	public List<ProductVO> selectCategoryProducts(HashMap<String, Object> hashMap) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectCategoryProducts", hashMap);
+		} catch (DataAccessException dae) {
+			logger.error("selectCategoryProducts() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
+	public List<ProductVO> selectStoreProducts(int seq_user_id) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectStoreProducts", seq_user_id);
+		} catch (DataAccessException dae) {
+			logger.error("selectStoreProducts() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
+	public ProductVO selectStoreProduct(ProductVO productVO) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectOne(namespace + ".selectStoreProduct", productVO);
+		} catch (DataAccessException dae) {
+			logger.error("selectStoreProduct() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
+	public int selectBuyProduct(Map<String, Integer> hashMap) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectOne(namespace + ".selectBuyProduct", hashMap);
+		} catch (DataAccessException dae) {
+			logger.error("selectBuyProduct() Data access Exception. " + dae.getMessage());
+			return -1;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return -1;
+		}
+	}
+	
+	@Override
+	public List<PurchaseInfoVO> selectBuyProducts(int seq_user_id) throws Exception {
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectBuyProducts", seq_user_id);
+		} catch (DataAccessException dae) {
+			logger.error("selectBuyProducts() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
 	public void insertProduct(ProductVO productVO) throws Exception {
 		sqlSession.insert(namespace + ".insertProduct", productVO);
 	}
 
 	@Override
-	public List<ProductVO> selectRecentlyProduct(int category) throws Exception {
-		return sqlSession.selectList(namespace + ".selectRecentlyProduct", category);
-	}
-
-	@Override
-	public ProductDetailVO selectProductDetail(int product_id) throws Exception {
-		return sqlSession.selectOne(namespace + ".selectProductDetail", product_id);
-	}
-
-	@Override
-	public List<ProductVO> selectSameStoreProduct(ProductVO productVO) throws Exception {
-		return sqlSession.selectList(namespace + ".selectSameStoreProduct", productVO);
-	}
-
-	@Override
-	public List<ProductVO> selectCategoryProducts(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectList(namespace + ".selectCategoryProducts", map);
-	}
-
-	@Override
-	public int selectCategoryProductCount(int category) throws Exception {
-		return sqlSession.selectOne(namespace + ".selectCategoryProductCount", category);
-	}
-	
-	@Override
-	public List<ProductVO> selectStoreProducts(int seq_user_id) throws Exception {
-		return sqlSession.selectList(namespace + ".selectStoreProducts", seq_user_id);
-	}
-	
-	@Override
-	public ProductVO selectStoreProduct(ProductVO productVO) throws Exception {
-		return sqlSession.selectOne(namespace + ".selectStoreProduct", productVO);
-	}
-
-	@Override
 	public void updateProduct(ProductVO productVO) throws Exception {
 		sqlSession.update(namespace + ".updateProduct", productVO);
-	}
-	
-	@Override
-	public int selectBuyProduct(Map<String, Integer> map) throws Exception {
-		return sqlSession.selectOne(namespace + ".selectBuyProduct", map);
-	}
-
-	@Override
-	public List<PurchaseInfoVO> selectBuyProducts(int seq_user_id) throws Exception {
-		return sqlSession.selectList(namespace + ".selectBuyProducts", seq_user_id);
 	}
 
 
