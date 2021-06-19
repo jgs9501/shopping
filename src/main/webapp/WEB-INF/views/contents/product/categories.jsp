@@ -131,14 +131,13 @@
 							<div class="col-xs-3 col-xs-6">
 								<div class="product-grid">
 									<div class="product-image">
-										<input type="hidden" value="${product.seq_user_id}"> <a
-											href="${contextPath}/products/${product.product_id}"> <img
-											class="pic-1" src="${product.product_thumbImg}">
+										<input type="hidden" value="${product.seq_user_id}">
+										<a href="${contextPath}/products/${product.product_id}">
+											<img class="pic-1" src="${product.product_thumbImg}">
 										</a>
 										<ul class="social">
 											<li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
-											<li><a href="#" onclick="cartBtn()"><i
-													class="fa fa-shopping-cart"></i></a></li>
+											<li><a href="#" onclick="cartBtn()"><i class="fa fa-shopping-cart"></i></a></li>
 										</ul>
 									</div>
 									<div class="product-content">
@@ -146,22 +145,16 @@
 											<a href="${contextPath}/products/${product.product_id}">${product.product_name}</a>
 										</h3>
 										<div class="price">
-											<fmt:formatNumber type="number" minIntegerDigits="1"
-												pattern="0,000"
-												value="${product.product_price - product.discount}"></fmt:formatNumber>
-											원
+											<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price - product.discount}"/> 원
 											<c:if test="${product.discount ne 0}">
-												<span><fmt:formatNumber type="number"
-														minIntegerDigits="1" pattern="0,000"
-														value="${product.product_price}"></fmt:formatNumber>원</span>
+												<span><fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price}"/>원</span>
 											</c:if>
 										</div>
 										<ul class="rating">
 											<c:choose>
 												<c:when test="${product.rating ne null}">
-													<fmt:formatNumber var="rating" value="${product.rating}"
-														pattern="0.0" />
-													<fmt:formatNumber var="avg" value="${rating*10}" />
+													<fmt:formatNumber var="rating" value="${product.rating}" pattern="0.0" />
+													<fmt:formatNumber var="avg" value="${rating*10}"/>
 													<c:forEach begin="10" end="50" step="10" varStatus="idx">
 														<c:choose>
 															<c:when test="${avg >= idx.current}">
@@ -202,22 +195,21 @@
 					<c:set var="info" value="${pagination}" />
 					<ul class="pagination">
 						<c:if test="${info.curPage ne 1}">
-							<li><a href="javascript:void(0);"
-								onclick="fn_paging(${category_id},${info.prevPage})"
-								aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+							<li>
+								<a href="javascript:void(0);" onclick="fn_paging(${category_id},${info.prevPage})" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+							</li>
 						</c:if>
-						<c:forEach var="pageNum" begin="${info.startPage}"
-							end="${info.endPage}">
+						<c:forEach var="pageNum" begin="${info.startPage}" end="${info.endPage}">
 							<c:choose>
 								<c:when test="${pageNum eq info.curPage}">
-									<li class="active"><a href=javascript:void(0);
-										onclick="fn_paging(${category_id},${pageNum})">${pageNum}
+									<li class="active">
+										<a href=javascript:void(0); onclick="fn_paging(${category_id},${pageNum})">${pageNum}
 											<span class="sr-only">(current)</span>
-									</a></li>
+										</a>
+									</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="javascript:void(0);"
-										onclick="fn_paging(${category_id},${pageNum})">${pageNum}</a></li>
+									<li><a href="javascript:void(0);" onclick="fn_paging(${category_id},${pageNum})">${pageNum}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>

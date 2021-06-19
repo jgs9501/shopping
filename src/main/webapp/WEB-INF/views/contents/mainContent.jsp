@@ -1,48 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<head>
-	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-</head>
 <body>
-	<div class="card">
-		<div class="card-body">
-			<h4 class="glyphicon glyphicon-chevron-right"> 오늘의 상품
-			<small>오늘 엄선된 상품입니다!</small></h4>
+	<div class="content-title">
+		<h4>
+			<span class="main-title"><i class="glyphicon glyphicon-chevron-right">&nbsp;</i>오늘의 상품</span>
+			&nbsp;<small>오늘 엄선된 상품입니다!</small>
+		</h4>
+	</div>
+	<div class="content-box">
+		<div class="content content-half">
+			<a href="#"><img src="./resources/images/displayitem_a4b512cf-2055-40e1-8b4f-b3361724a2c5.jpg"></a>
+		</div>
+		<div class="content content-half">
+			<a href="#"><img src="./resources/images/C2_1.jpg"></a>
+		</div>
+		<div class="content content-quarter">
+			<a href="#"><img src="./resources/images/C2_4.jpg"></a>
+		</div>
+		<div class="content content-quarter">
+			<a href="#"><img src="./resources/images/quarter1.jpg"></a>
+		</div>
+		<div class="content content-quarter">
+			<a href="#"><img src="./resources/images/C2_8.jpg"></a>
+		</div>
+		<div class="content content-quarter">
+			<a href="#"><img src="./resources/images/C2_9_(1).jpg"></a>
 		</div>
 	</div>
-	<div class="swiper-container swiper-per-group">
-	    <div class="swiper-wrapper swiper-margin">
-	      <div class="swiper-slide thumbnail"><img src="./resources/images/test.png"></div>
-	      <div class="swiper-slide thumbnail"><img src="./resources/images/test.png"></div>
-	      <div class="swiper-slide thumbnail"><img src="./resources/images/test.png"></div>
-	      <div class="swiper-slide thumbnail"><img src="./resources/images/test.png"></div>
-	      <div class="swiper-slide thumbnail"><img src="./resources/images/test.png"></div>
-	      <div class="swiper-slide thumbnail"><img src="./resources/images/test.png"></div>
-	    </div>
-	    <div class="swiper-pagination"></div>
-	    <div class="swiper-button-next"></div>
-	    <div class="swiper-button-prev"></div>
-	  </div>
-	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script>
-    var swiper = new Swiper('.swiper-per-group', {
-    	slidesPerView: 4,
-        spaceBetween: 30,
-        slidesPerGroup: 4,
-        loop: true,
-        loopFillGroupWithBlank: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-      });
-  </script>
+	<hr>
+	
+	<script type="text/javascript">
+		$(function () {
+			$('.content-box img').hover(function () {
+				var content = $(this);
+				$(content).addClass('hover-img');
+			})
+		})
+	</script>
 </body>
 </html>

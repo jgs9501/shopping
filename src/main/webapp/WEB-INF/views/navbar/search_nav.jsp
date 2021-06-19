@@ -46,16 +46,15 @@
 				</form>
 			</div>
 			<div class="nav-right">
-				<a href="${contextPath}/cart"><i class="fas fa-shopping-cart"
-					style="font-size: xx-large; color: black;"></i> <br>
-				<span class="nav-span">장바구니</span> </a>
-
+				<a href="${contextPath}/cart"><i class="fas fa-shopping-cart" style="font-size: xx-large; color: black;"></i>
+					<br><span class="nav-span">장바구니</span>
+				</a>
 			</div>
 			<div class="nav-right">
 				<a href="${contextPath}/order/history">
-				<i class="fas fa-user-alt" style="font-size: xx-large; color: black;"></i>
-				<br>
-				<span class="nav-span">주문내역</span>
+					<i class="fas fa-user-alt" style="font-size: xx-large; color: black;"></i>
+					<br>
+					<span class="nav-span">주문내역</span>
 				</a>
 			</div>
 
@@ -67,10 +66,10 @@
 <script type="text/javascript">
 	$(function() {
 		$('.input-group-btn .dropdown-menu li').click(function() {
+			
 			let selText = $(this).text();
 			let category = $(this).val();
 			let search = $('#search').val();
-			console.log(category);
 			$(this).parents('.input-group-btn')
 					.find('.btn-search')
 					.html(selText + '&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down ft-small"></span>');
@@ -78,7 +77,6 @@
 				$('#btn_search').removeAttr('disabled');
 			} else if (category == 0){
 				$('#btn_search').attr('disabled', 'disabled');
-				console.log($(this));
 			}
 			$('.navbar-search').attr('action', '${contextPath}/categories/'+category+'?search='+search);
 		});
