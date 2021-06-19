@@ -1,6 +1,7 @@
 package com.junsoo.shopping.common.controller.product;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -62,19 +63,15 @@ public class ProductController {
 		
 		ModelAndView mv = new ModelAndView();
 		UserVO userVO = (UserVO)session.getAttribute("userVO");
-		try {
-			if(userVO.getAuth() == 2) {
-				mv.setViewName("contents/product/release");
-			}
-			else {
-				mv.setViewName("contents/error");
-				mv.addObject("result", "잘못된 권한입니다");
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			mv.setViewName("contents/error");
-			mv.addObject("result", "시스템 오류가 발생하였습니다");
+		
+		if(userVO.getAuth() == 2) {
+			mv.setViewName("contents/product/release");
 		}
+		else {
+			mv.setViewName("contents/error");
+			mv.addObject("result", "잘못된 권한입니다");
+		}
+		
 		return mv;
 	}
 	
@@ -94,43 +91,30 @@ public class ProductController {
 		
 		ModelAndView mv = new ModelAndView();
 		MultipartHttpServletRequest multiReq = (MultipartHttpServletRequest) request;
+	
+		productVO.setSeq_user_id(Integer.parseInt(multiReq.getParameter("seq_user_id")));
+		productVO.setProduct_name(multiReq.getParameter("product_name"));
+		productVO.setProduct_cnt(Integer.parseInt(multiReq.getParameter("product_cnt")));
+		productVO.setProduct_price(Integer.parseInt(multiReq.getParameter("product_price")));
+		productVO.setProduct_desc(multiReq.getParameter("product_desc"));
+		productVO.setCategory(Integer.parseInt(multiReq.getParameter("category")));
+		productVO.setSale(multiReq.getParameter("sale"));
+		productVO.setDiscount(Integer.parseInt(multiReq.getParameter("discount")));
+		productVO.setProduct_desc(multiReq.getParameter("weight"));
+		productVO.setAttention(multiReq.getParameter("attention"));
+		productVO.setValid_date(multiReq.getParameter("valid_date"));
+		productVO.setUse_info(multiReq.getParameter("use_info"));
+		productVO.setCountry(multiReq.getParameter("country"));
 		
-		try {
-			productVO.setSeq_user_id(Integer.parseInt(multiReq.getParameter("seq_user_id")));
-			productVO.setProduct_name(multiReq.getParameter("product_name"));
-			productVO.setProduct_cnt(Integer.parseInt(multiReq.getParameter("product_cnt")));
-			productVO.setProduct_price(Integer.parseInt(multiReq.getParameter("product_price")));
-			productVO.setProduct_desc(multiReq.getParameter("product_desc"));
-			productVO.setCategory(Integer.parseInt(multiReq.getParameter("category")));
-			productVO.setSale(multiReq.getParameter("sale"));
-			productVO.setDiscount(Integer.parseInt(multiReq.getParameter("discount")));
-			productVO.setProduct_desc(multiReq.getParameter("weight"));
-			productVO.setAttention(multiReq.getParameter("attention"));
-			productVO.setValid_date(multiReq.getParameter("valid_date"));
-			productVO.setUse_info(multiReq.getParameter("use_info"));
-			productVO.setCountry(multiReq.getParameter("country"));
-
-			if(productService.insertProduct(productVO, uploadFile) == 1) {
-				mv.setViewName("contents/complete");
-				mv.addObject("result", "상품등록");
-			}
-			else {
-				mv.setViewName("contents/error");
-				mv.addObject("result", "상품등록 에러");
-			}
-		} catch (NullPointerException npe) {
-			logger.error(npe.getMessage());
-			mv.setViewName("contents/error");
-			mv.addObject("result", "상품등록 에러");
-		} catch (IllegalArgumentException iae) {
-			logger.error(iae.getMessage());
-			mv.setViewName("contents/error");
-			mv.addObject("result", "상품등록 에러");
-		} catch (Exception e) {
-			logger.error(e.getMessage());
+		if(productService.insertProduct(productVO, uploadFile) == 1) {
+			mv.setViewName("contents/complete");
+			mv.addObject("result", "상품등록");
+		}
+		else {
 			mv.setViewName("contents/error");
 			mv.addObject("result", "상품등록 에러");
 		}
+		
 		return mv;
 	}
 	
@@ -147,33 +131,24 @@ public class ProductController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		try {
-			List<ProductVO> productList = productDAO.selectStoreProducts(seq_user_id);
-			UserVO userVO = (UserVO)session.getAttribute("userVO");
-			
-			if(userVO.getAuth() != 2) {
-				mv.setViewName("contents/error");
-				mv.addObject("result", "출품용 계정이 아닙니다");
-				return mv;
-			}
-			if(productList.size() < 1) {
-				mv.setViewName("contents/product/releaseList");
-				mv.addObject("listResult", "등록한 상품이 없습니다");
-				return mv;
-			}
-			
-			mv.setViewName("contents/product/releaseList");
-			mv.addObject("listResult", productList);
-		} catch (NullPointerException npe) {
-			logger.error(npe.getLocalizedMessage());
+		
+		List<ProductVO> productList = productDAO.selectStoreProducts(seq_user_id);
+		UserVO userVO = (UserVO)session.getAttribute("userVO");
+		
+		if(userVO.getAuth() != 2) {
 			mv.setViewName("contents/error");
-		} catch (IllegalArgumentException iae) {
-			logger.error(iae.getLocalizedMessage());
-			mv.setViewName("contents/error");
-		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-			mv.setViewName("contents/error");
+			mv.addObject("result", "출품용 계정이 아닙니다");
+			return mv;
 		}
+		if(productList.size() < 1) {
+			mv.setViewName("contents/product/releaseList");
+			mv.addObject("listResult", "등록한 상품이 없습니다");
+			return mv;
+		}
+		
+		mv.setViewName("contents/product/releaseList");
+		mv.addObject("listResult", productList);
+		
 		return mv;
 	}
 	
@@ -195,31 +170,16 @@ public class ProductController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		try {
-			
-			System.out.println(productVO.getProduct_desc());
-			if(productService.updateProduct(productVO, uploadFile) == 1) {
-				logger.info(productVO.toString());
-				mv.setViewName("contents/complete");
-				mv.addObject("result", "상품수정");
-			}
-			else {
-				mv.setViewName("contents/error");
-				mv.addObject("result", "상품수정 에러");
-			}
-		} catch (NullPointerException npe) {
-			logger.error(npe.getMessage());
-			mv.setViewName("contents/error");
-			mv.addObject("result", "상품수정 에러");
-		} catch (IllegalArgumentException iae) {
-			logger.error(iae.getMessage());
-			mv.setViewName("contents/error");
-			mv.addObject("result", "상품수정 에러");
-		} catch (Exception e) {
-			logger.error(e.getMessage());
+		if(productService.updateProduct(productVO, uploadFile) == 1) {
+			logger.info(productVO.toString());
+			mv.setViewName("contents/complete");
+			mv.addObject("result", "상품수정");
+		}
+		else {
 			mv.setViewName("contents/error");
 			mv.addObject("result", "상품수정 에러");
 		}
+		
 		return mv;
 	}
 	
@@ -237,73 +197,65 @@ public class ProductController {
 										 @PathVariable("product_id") int product_id) throws Exception{
 		
 		ModelAndView mv = new ModelAndView();
-		try {
-			productVO = productDAO.selectStoreProduct(productVO);
-			if(productVO.equals(null)) {
-				mv.addObject("result", "검색된 출품 상품이 없습니다");
-				mv.setViewName("contents/error");
-				return mv;
-			}
-			mv.setViewName("contents/product/releaseModify");
-			mv.addObject("product", productVO);
-		} catch (NullPointerException npe) {
-			logger.error(npe.getLocalizedMessage());
-		} 
-		catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-		} 
+		
+		productVO = productDAO.selectStoreProduct(productVO);
+		if(productVO.equals(null)) {
+			mv.addObject("result", "검색된 출품 상품이 없습니다");
+			mv.setViewName("contents/error");
+			return mv;
+		}
+		mv.setViewName("contents/product/releaseModify");
+		mv.addObject("product", productVO);
+		
 		return mv;
 	}
 	/**
-	 * categories.jsp
-	 * 해당 카테고리의 상품조회 및 페이지 이동
+	 * categories.jsp 해당 카테고리의 상품조회 및 페이지 이동
 	 * @param productVO
 	 * @param category
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "categories/{category}", method = RequestMethod.GET)
-	public ModelAndView getCategory(ProductVO productVO, 
-									@RequestParam(defaultValue = "1") int curPage,
+	public ModelAndView getCategory(@RequestParam(defaultValue = "1") int curPage,
+									@RequestParam(defaultValue = "") String search,
+									@RequestParam(defaultValue = "8") int PageSize,
 									@PathVariable("category") int category) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
 		ValueChecker vc = new ValueChecker();
-		try {
-			// 카테고리 이름 구별
-			String categoryName = vc.getCategoryName(category);
-			// 카테고리 상품 개수 조회
-			int count = productDAO.selectCategoryProductCount(category);
-			// 최근 해당 카테고리에 등록한 상품 4개를 조회한 데이터
-			List<ProductVO> recentlyProducts = productService.selectRecentlyProduct(category);
-			// 페이징 정보 입력
-			PaginationInfo paginationInfo = new PaginationInfo(count, curPage);
-			// 해당 카테고리에 등록한 모든 상품 조회 데이터
-			List<ProductVO> productList = productService.selectCategoryProducts(productVO, paginationInfo);
-			
-			if(recentlyProducts.size() < 1) {
-				mv.addObject("recentlyProductResult", "해당 카테고리에 최근 출시된 상품이 없습니다");
-			}
-			if(count < 1) {
-				mv.addObject("totalProductResult", "해당 카테고리에 출시된 상품이 없습니다.");
-			}
-			mv.setViewName("contents/product/categories");
-			mv.addObject("categoryName", categoryName);
-			mv.addObject("categoryProductCount",count);
-			mv.addObject("recentlyProducts", recentlyProducts);
-			mv.addObject("productList", productList);
-			mv.addObject("pagination", paginationInfo);
-			
-		} catch (NullPointerException npe) {
-			logger.error("NullPointerException " + npe.getLocalizedMessage());
-			mv.setViewName("contents/error");
-		} catch (IllegalArgumentException iae) {
-			logger.error(iae.getLocalizedMessage());
-			mv.setViewName("contents/error");
-		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-			mv.setViewName("contents/error");
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+		// 카테고리 이름 구별
+		String categoryName = vc.getCategoryName(category);
+		
+		hashMap.put("category", category);
+		hashMap.put("search", search);
+		// 카테고리 상품 개수 조회
+		int count = productService.selectCategoryProductCount(hashMap);
+		// 최근 해당 카테고리에 등록한 상품 4개를 조회한 데이터
+		List<ProductVO> recentlyProducts = productService.selectRecentlyProduct(category);
+		// 페이징 정보 입력
+		PaginationInfo paginationInfo = new PaginationInfo(count, curPage);
+		paginationInfo.setPageSize(PageSize);
+		// 해당 카테고리에 등록한 모든 상품 조회 데이터
+		hashMap.put("startIndex", paginationInfo.getStartIndex());
+		hashMap.put("pageSize", paginationInfo.getPageSize());
+		List<ProductVO> productList = productService.selectCategoryProducts(hashMap);
+		
+		if(recentlyProducts.size() < 1) {
+			mv.addObject("recentlyProductResult", "해당 카테고리에 최근 출시된 상품이 없습니다");
 		}
+		if(count < 1) {
+			mv.addObject("totalProductResult", "해당 카테고리에 출시된 상품이 없습니다.");
+		}
+		mv.addObject("categoryName", categoryName);
+		mv.addObject("categoryProductCount",count);
+		mv.addObject("recentlyProducts", recentlyProducts);
+		mv.addObject("productList", productList);
+		mv.addObject("pagination", paginationInfo);
+		mv.addObject("search", search);
+		mv.setViewName("contents/product/categories");
 		
 		return mv;
 	}
@@ -326,41 +278,36 @@ public class ProductController {
 		ValueChecker vc = new ValueChecker();
 		String categoryName = ""; 
 		
-		try {
-			if(product_id < 1) {
-				logger.error("not exist product ID: " + product_id);
-				mv.addObject("result", "상품 오류");
-				mv.setViewName("contents/error");
-				return mv;
-			}
-			
-			// 선택한 상품의 정보들 조회
-			ProductDetailVO pdVO = productDAO.selectProductDetail(product_id);
-			// 선택한 상품의 점포 관련 물품들 조회
-			List<ProductVO> listProduct = productDAO.selectSameStoreProduct(pdVO.getProductVO());
-			// 선택한 상품의 댓글 수 조회
-			int reply_count = replyDAO.selectProductReplyCount(product_id);
-			// 상품의 평가 평균 점수 조회 (소수점 첫째 자리수 계산)
-			float rating_avg = (Math.round(replyService.selectProductAvgRating(product_id)*10)/10.0f);
-			// 해당 상품의 댓글 정보 조회 (페이징 적용)
-			PaginationInfo paginationInfo = new PaginationInfo(reply_count, curPage);
-			List<ProductReplyVO> listReply = replyService.selectProductReplies(product_id, paginationInfo);
-			//카테고리 이름 치환
-			categoryName = vc.getCategoryName(pdVO.getProductVO().getCategory());
-			
-			mv.setViewName("contents/product/productDetail");
-			mv.addObject("listProduct", listProduct);
-			mv.addObject("replyCount", reply_count);
-			mv.addObject("rating_avg", rating_avg);
-			mv.addObject("listReply", listReply);
-			mv.addObject("pdVO", pdVO);
-			mv.addObject("categoryName", categoryName);
-			mv.addObject("pagination", paginationInfo);
-			
-		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+		
+		if(product_id < 1) {
+			logger.error("not exist product ID: " + product_id);
+			mv.addObject("result", "상품 오류");
 			mv.setViewName("contents/error");
+			return mv;
 		}
+			
+		// 선택한 상품의 정보들 조회
+		ProductDetailVO pdVO = productDAO.selectProductDetail(product_id);
+		// 선택한 상품의 점포 관련 물품들 조회
+		List<ProductVO> listProduct = productDAO.selectSameStoreProduct(pdVO.getProductVO());
+		// 선택한 상품의 댓글 수 조회
+		int reply_count = replyDAO.selectProductReplyCount(product_id);
+		// 상품의 평가 평균 점수 조회 (소수점 첫째 자리수 계산)
+		float rating_avg = (Math.round(replyService.selectProductAvgRating(product_id)*10)/10.0f);
+		// 해당 상품의 댓글 정보 조회 (페이징 적용)
+		PaginationInfo paginationInfo = new PaginationInfo(reply_count, curPage);
+		List<ProductReplyVO> listReply = replyService.selectProductReplies(product_id, paginationInfo);
+		//카테고리 이름 치환
+		categoryName = vc.getCategoryName(pdVO.getProductVO().getCategory());
+		
+		mv.setViewName("contents/product/productDetail");
+		mv.addObject("listProduct", listProduct);
+		mv.addObject("replyCount", reply_count);
+		mv.addObject("rating_avg", rating_avg);
+		mv.addObject("listReply", listReply);
+		mv.addObject("pdVO", pdVO);
+		mv.addObject("categoryName", categoryName);
+		mv.addObject("pagination", paginationInfo);
 		
 		return mv;
 	}

@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,20 +28,14 @@
 	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
     	<jsp:include page="/WEB-INF/views/contents/mainChartImage.jsp"></jsp:include>
     </nav>
-	<div class="main-container">
 	    <%-- <aside class="aside-list fixed-aside">
 	    	<jsp:include page="side/shoppingList.jsp"></jsp:include>
 	    </aside> --%>
-		<!-- 콘텐츠 -->
-	    <section class="section-main">
-	    	<article>
-				<jsp:include page="/WEB-INF/views/contents/mainContent.jsp"></jsp:include>
-	    	</article>
-			<article>
-				<jsp:include page="/WEB-INF/views/contents/mainViewedItems.jsp"></jsp:include>
-			</article>
-	    </section>
-	</div>
+	    
+	<section class="container">
+		<jsp:include page="/WEB-INF/views/contents/mainContent.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/contents/mainViewedItems.jsp"></jsp:include>
+	</section>
 	
     <footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>

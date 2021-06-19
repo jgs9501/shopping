@@ -35,7 +35,7 @@ section {margin-top: 20px;}
 .footer {float: left;position: relative; width: 100%; padding-top: 200px;}
 
 /* mainViewdItems.jsp */
-.viewed-items-containers {float: left;padding-bottom: 50px;padding-left: 100px;padding-right: 100px;width: 1200px;height: 100%;}
+.viewed-items-containers {padding-bottom: 50px;}
 .swiper-slide {text-align: center;font-size: 18px;background: #fff;
 	/* Center slide text vertically */
 	display: -webkit-box;
@@ -51,13 +51,27 @@ section {margin-top: 20px;}
 	-webkit-align-items: center;
 	align-items: center;
 }
-.thumbnail a img {height: 240px; width: 240px; display: block;}
+.content-title {padding-top: 10px; padding-bottom: 10px;}
+.content-title .main-title {font-weight: bold;}
+.content-box {border: 1px solid #d2d2d2; text-align: center;}
+.content-box .content-quarter { width:267px; border: 1px solid #d2d2d2; margin: 5px; clear: both; display: inline-block;}
+.content-box .content-half { width:550px; border: 1px solid #d2d2d2; margin: 5px; clear: both; display: inline-block;}
+.content-box img{ 
+	width:100%; 
+	height: 250px;
+	transform: scale(1);
+	transition: .3s ease-in-out;
+}
+.hover-img:hover {
+	transform: scale(1.1);
+}
+.thumbnail a img {margin-left: 20px; margin-right: 20px;}
 .text-left {text-align: left; margin-left: 20px;}
 .text-right {text-align: right; margin-right: 20px;}
 /* mainContent.jsp */
 .card {float: left;overflow: hidden;margin-left: 10px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;}
 .swiper-per-group {float: left;width: 1200px;height:300px;}
-.swiper-margin {margin-left: 100px;margin-top: 10px;margin-right: 100px;margin-bottom: 10px;}
+.swiper-margin {margin-left: 101px;margin-top: 10px;margin-right: 100px;margin-bottom: 10px;}
 
 /* mainChartImage.jsp */
 .swiper-chart {height: 500px;width: 100%;}

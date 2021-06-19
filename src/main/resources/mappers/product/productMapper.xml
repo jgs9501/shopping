@@ -88,12 +88,18 @@
 	</select>
 
 	<!-- 카테고리 별 상품 개수조회 -->
-	<select id="selectCategoryProductCount" parameterType="Integer" resultType="Integer">
+	<select id="selectCategoryProductCount" parameterType="HashMap" resultType="int">
 		SELECT COUNT(*)
 		FROM   product
-		WHERE  category = #{category}
-		AND    sale = 'Y'
+		WHERE sale = 'Y'
+		<if test='category != null'>
+			AND  category = #{category}
+		</if>
+		<if test='search != null and !search.equals("")'>
+			AND product_name LIKE CONCAT('%',#{search},'%')
+		</if>
 	</select>	
+	
 	<!-- 카테고리별 모든 상품 조회 -->
 	<select id="selectCategoryProducts" parameterType="hashMap" resultType="ProductVO">
 		SELECT p.seq_user_id, 
@@ -117,9 +123,14 @@
 		       rating 
 		FROM product p 
 		LEFT JOIN (SELECT product_id, AVG(rating) as rating FROM product_reply group by product_id) pr 
-		ON p.product_id = pr.product_id 
-		WHERE p.category = #{category}
-		AND p.sale = 'Y'
+		ON p.product_id = pr.product_id
+		WHERE p.sale = 'Y'
+		<if test='category != null'>
+			AND  p.category = #{category}
+		</if>
+		<if test='search != null and !search.equals("")'>
+			AND p.product_name LIKE CONCAT('%',#{search},'%')
+		</if>
 		ORDER BY rating DESC, reg_date DESC
 		LIMIT #{startIndex}, #{pageSize}
 	</select>
