@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/product-detail.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/reply.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/5.10.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 </head>
 <body>
 	<header>
@@ -285,7 +285,7 @@
     var swiper = new Swiper('.swiper-per-group', {
     	slidesPerView: 4,
         spaceBetween: 30,
-        slidesPerGroup: 3,
+        slidesPerGroup: 4,
    	    pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -297,7 +297,7 @@
 	});
     
     var rate = 0;
-    (function () {
+    $(function () {
         var starEls = document.querySelectorAll('#star span.star');
         loop(starEls, function (el, index) {
             el.addEventListener('click', function () {
@@ -319,7 +319,7 @@
             });
             rate = score;
         }
-    })();
+    })
     
     $(document).on('click', '#btnReply', function(e) {
 		let form = {

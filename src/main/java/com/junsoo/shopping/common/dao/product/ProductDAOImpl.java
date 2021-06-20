@@ -23,7 +23,7 @@ public class ProductDAOImpl implements ProductDAO {
 	private static final String namespace = "com.mapper.productMapper";
 	
 	@Inject
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public List<ProductVO> selectRecentlyProduct(int category) throws Exception {
@@ -131,22 +131,22 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 	
 	@Override
-	public int selectBuyProduct(Map<String, Integer> hashMap) throws Exception {
+	public HashMap<String, Object> selectBuyProduct(Map<String, Object> hashMap) throws Exception {
 		
 		try {
 			
 			return sqlSession.selectOne(namespace + ".selectBuyProduct", hashMap);
 		} catch (DataAccessException dae) {
 			logger.error("selectBuyProduct() Data access Exception. " + dae.getMessage());
-			return -1;
+			return null;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return -1;
+			return null;
 		}
 	}
 	
 	@Override
-	public List<PurchaseInfoVO> selectBuyProducts(int seq_user_id) throws Exception {
+	public List<HashMap<String, Object>> selectBuyProducts(int seq_user_id) throws Exception {
 		
 		try {
 			
@@ -162,12 +162,28 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public void insertProduct(ProductVO productVO) throws Exception {
-		sqlSession.insert(namespace + ".insertProduct", productVO);
+		
+		try {
+			
+			sqlSession.insert(namespace + ".insertProduct", productVO);
+		} catch (DataAccessException dae) {
+			logger.error("insertProduct() Data access Exception. " + dae.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 
 	@Override
 	public void updateProduct(ProductVO productVO) throws Exception {
-		sqlSession.update(namespace + ".updateProduct", productVO);
+		
+		try {
+			
+			sqlSession.update(namespace + ".updateProduct", productVO);
+		} catch (DataAccessException dae) {
+			logger.error("updateProduct() Data access Exception. " + dae.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 
 

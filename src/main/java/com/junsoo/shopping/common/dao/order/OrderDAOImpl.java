@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.junsoo.shopping.common.vo.OrderVO;
@@ -19,47 +20,100 @@ public class OrderDAOImpl implements OrderDAO{
 	private static final String namespace = "com.mapper.orderMapper";
 	
 	@Inject
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public List<OrderVO> selectAllOrder(int seq_user_id) throws Exception {
-		return sqlSession.selectList(namespace + ".selectAllOrder", seq_user_id);
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectAllOrder", seq_user_id);
+		} catch (DataAccessException dae) {
+			logger.error("selectAllOrder() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
 	}
 	
 	@Override
 	public OrderVO selectOrder(OrderVO orderVO) throws Exception {
-		return sqlSession.selectOne(namespace + ".selectOrder", orderVO);
+		
+		try {
+			
+			return sqlSession.selectOne(namespace + ".selectOrder", orderVO);
+		} catch (DataAccessException dae) {
+			logger.error("selectOrder() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
 	}
 	
 	@Override
 	public void insertOrder(OrderVO orderVO) throws Exception {
-		sqlSession.insert(namespace + ".insertOrder", orderVO); 
+		
+		try {
+			
+			sqlSession.insert(namespace + ".insertOrder", orderVO); 
+		} catch (DataAccessException dae) {
+			logger.error("insertOrder() Data access Exception. " + dae.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 	
 	@Override
 	public void updateOrderStatus(OrderVO orderVO) throws Exception {
-		sqlSession.update(namespace + ".updateOrderStatus", orderVO);
+		
+		try {
+			
+			sqlSession.update(namespace + ".updateOrderStatus", orderVO);
+		} catch (DataAccessException dae) {
+			logger.error("updateOrderStatus() Data access Exception. " + dae.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 	
 	@Override
 	public void updateOrderTotalPrice(HashMap<String, Object> map) throws Exception {
-		sqlSession.update(namespace + ".updateOrderTotalPrice", map);
+		
+		try {
+			
+			sqlSession.update(namespace + ".updateOrderTotalPrice", map);
+		} catch (DataAccessException dae) {
+			logger.error("updateOrderTotalPrice() Data access Exception. " + dae.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 	
 	@Override
 	public void deleteOrder(OrderVO orderVO) throws Exception {
-		sqlSession.delete(namespace + ".deleteOrder", orderVO);
+		
+		try {
+			
+			sqlSession.delete(namespace + ".deleteOrder", orderVO);
+		} catch (DataAccessException dae) {
+			logger.error("deleteOrder() Data access Exception. " + dae.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 
 	@Override
 	public void deleteOrder(HashMap<String, Object> map) throws Exception {
-		sqlSession.delete(namespace + ".deleteOrder", map);		
+		
+		try {
+			
+			sqlSession.delete(namespace + ".deleteOrder", map);		
+		} catch (DataAccessException dae) {
+			logger.error("deleteOrder() Data access Exception. " + dae.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
-
-	
-
-	
-	
-	
-
 }

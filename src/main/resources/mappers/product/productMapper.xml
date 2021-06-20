@@ -135,18 +135,53 @@
 		LIMIT #{startIndex}, #{pageSize}
 	</select>
 	
-	<!-- 고객이 특정 상품을 구매했는지 조회-->
-	<select id="selectBuyProduct" parameterType="Map" resultType="int">
-		SELECT COUNT(*)
-		FROM   purchase_info
-		WHERE  seq_user_id = #{seq_user_id}
-		AND    product_id = #{product_id}
+	<!-- 리뷰관리) 특정 상품을 구매한 유저의 유저정보와 주문번호, 리뷰 작성정보 조회-->
+	<select id="selectBuyProduct" parameterType="HashMap" resultType="HashMap">
+		SELECT ud.seq_user_id,
+				ud.user_id,
+				ud.user_name,
+				ud.auth,
+				od.order_id,
+				od.order_detail_id,
+				od.product_id,
+				od.amount,
+				od.order_date,
+				od.product_price,
+				od.product_name,
+				pr.content,
+				pr.rating,
+				pr.answer,
+				pr.reg_date,
+				pr.mod_date
+		FROM user_data ud
+		INNER JOIN order_detail od ON ud.seq_user_id = od.seq_user_id
+		LEFT JOIN product_reply pr ON od.product_id = pr.product_id
+		WHERE od.seq_user_id = #{seq_user_id}
+		AND   od.product_id = #{product_id}
 	</select>
+	
 	<!-- 고객이 구매한 상품들 조회 -->
 	<select id="selectBuyProducts">
-		SELECT *
-		FROM   purchase_info
-		WHERE  seq_user_id = #{seq_user_id}
+		SELECT ud.seq_user_id,
+				ud.user_id,
+				ud.user_name,
+				ud.auth,
+				od.order_id,
+				od.order_detail_id,
+				od.product_id,
+				od.amount,
+				od.order_date,
+				od.product_price,
+				od.product_name,
+				pr.content,
+				pr.rating,
+				pr.answer,
+				pr.reg_date,
+				pr.mod_date
+		FROM user_data ud
+		INNER JOIN order_detail od ON ud.seq_user_id = od.seq_user_id
+		LEFT JOIN product_reply pr ON od.product_id = pr.product_id
+		WHERE od.seq_user_id = #{seq_user_id}
 	</select>
 	
 <!-- =============================점포용===================== -->

@@ -21,7 +21,7 @@ public class OrderServiceImpl implements OrderService {
 	private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 	
 	@Inject
-	OrderDAO orderDAO;
+	private OrderDAO orderDAO;
 
 	@Override
 	public List<OrderVO> selectAllOrder(int seq_user_id) throws Exception {
