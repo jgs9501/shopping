@@ -8,6 +8,11 @@ import com.junsoo.shopping.common.vo.ProductDetailVO;
 import com.junsoo.shopping.common.vo.ProductVO;
 import com.junsoo.shopping.common.vo.PurchaseInfoVO;
 
+/**
+ * product 상품관련 SQL호출 메소드
+ * @author jjsoo
+ *
+ */
 public interface ProductDAO {
 	
 	/**
@@ -67,12 +72,12 @@ public interface ProductDAO {
 	public ProductVO selectStoreProduct(ProductVO productVO) throws Exception;
 	
 	/**
-	 * 고객이 특정 상품을 구매했는지 확인하는 조회 메소드
+	 * 고객의 특정 상품 구매여부 및 작성리뷰 조회 메소드
 	 * @param map
 	 * @return
 	 * @throws Exception
 	 */
-	public int selectBuyProduct(Map<String, Integer> map) throws Exception;
+	public HashMap<String, Object> selectBuyProduct(Map<String, Object> hashMap) throws Exception;
 	
 	/**
 	 * 고객이 구매한 모든 상품 조회 메소드
@@ -80,7 +85,7 @@ public interface ProductDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<PurchaseInfoVO> selectBuyProducts(int seq_user_id) throws Exception;
+	public List<HashMap<String, Object>> selectBuyProducts(int seq_user_id) throws Exception;
 	
 	/**
 	 * 점포의 상품 출판 메소드

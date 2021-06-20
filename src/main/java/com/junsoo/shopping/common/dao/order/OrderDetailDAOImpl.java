@@ -20,7 +20,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 	private static final String namespace = "com.mapper.orderDetailMapper";
 	
 	@Inject
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public List<OrderDetailVO> selectAllOrderDetail(int seq_user_id) throws Exception {

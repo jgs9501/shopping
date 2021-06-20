@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.junsoo.shopping.common.dao.product.ProductDAO;
 import com.junsoo.shopping.common.dao.reply.ReplyDAO;
+import com.junsoo.shopping.common.service.product.ProductService;
 import com.junsoo.shopping.common.vo.ProductReplyVO;
 import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 
@@ -23,56 +23,30 @@ public class ReplyServiceImpl implements ReplyService{
 	private static final Logger logger = LoggerFactory.getLogger(ReplyServiceImpl.class);
 	
 	@Inject
-	ReplyDAO replyDAO;
+	private ReplyDAO replyDAO;
 	
 	@Inject
-	ProductDAO productDAO;
+	private ProductService productService;
 	
-	/**
-	 * 댓글 작성
-	 * - 댓글을 달고자하는 물품의 중복댓글 확인 후 작성
-	 * @return -1: 구매하지 않음, 0: 과거에 댓글작성, 1: 성공
-	 */
 	@Override
-	public int insertProductReply(ProductReplyVO prVO) throws Exception {
-		
-		Map<String, Integer> purchaseProduct = new HashMap<String, Integer>();
-		purchaseProduct.put("seq_user_id", prVO.getSeq_user_id());
-		purchaseProduct.put("product_id", prVO.getProduct_id());
-		try {
-			// 해당 제품의 구입 이력 확인
-			if(productDAO.selectBuyProduct(purchaseProduct) == 0) {
-				logger.warn("don't bought product. seq_user_id : " + prVO.getSeq_user_id() + 
-						    " product_id : " + prVO.getProduct_id() + 
-						    " user_name : " + prVO.getUser_name());
-				return -1;
-			}
-			// 해당 제품의 현재 아이디와 중복된 댓글 확인
-			if(replyDAO.selectProductReply(prVO) != null) {
-				logger.warn("duplicate reply. seq_user_id : " + prVO.getSeq_user_id() + 
-					    " product_id : " + prVO.getProduct_id()  +
-					    " user_name : " + prVO.getUser_name());
-				return 0;
-			}
-			replyDAO.insertProductReply(prVO);
-		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-		} 
-		return 1;
-	}
-
-	@Override
-	public int updateProductReplyAnswer(ProductReplyVO prVO) throws Exception {
+	public ProductReplyVO selectProductReply(ProductReplyVO prVO) throws Exception {
 		
 		try {
-			replyDAO.updateProductReplyAnswer(prVO);
+			if(prVO.getSeq_user_id() < 1) {
+				logger.error("selectProductReply() seq_user_id error " + prVO);
+				return null;
+			}
+			if(prVO.getProduct_id() < 1) {
+				logger.error("selectProductReply() product_id error " + prVO);
+				return null;
+			}
+			return replyDAO.selectProductReply(prVO);
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-			return 0;
+			logger.error(e.getMessage());
+			return null;
 		}
-		return 1;
 	}
-
+	
 	@Override
 	public List<ProductReplyVO> selectProductReplies(int product_id, 
 													 PaginationInfo paginationInfo) throws Exception {
@@ -102,4 +76,74 @@ public class ReplyServiceImpl implements ReplyService{
 		return 0.0f;
 	}
 
+	@Override
+	public int insertProductReply(ProductReplyVO prVO) throws Exception {
+		
+		Map<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("seq_user_id", prVO.getSeq_user_id());
+		hashMap.put("product_id", prVO.getProduct_id());
+		try {
+			// 해당 제품의 구입 이력 확인
+			if(productService.selectBuyProduct(hashMap) == null) {
+				logger.warn("couldn't buy the product. seq_user_id : " + prVO.getSeq_user_id() + 
+						    " product_id : " + prVO.getProduct_id() + 
+						    " user_name : " + prVO.getUser_name());
+				return -1;
+			}
+			// 해당 제품의 현재 아이디와 중복된 댓글 확인
+			if(replyDAO.selectProductReply(prVO) != null) {
+				logger.warn("duplicate reply. seq_user_id : " + prVO.getSeq_user_id() + 
+					    " product_id : " + prVO.getProduct_id()  +
+					    " user_name : " + prVO.getUser_name());
+				return -1;
+			}
+			replyDAO.insertProductReply(prVO);
+			return 1;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return 0;
+		} 
+	}
+
+	@Override
+	public int updateProductReplyAnswer(ProductReplyVO prVO) throws Exception {
+		
+		try {
+			
+			if(prVO.getSeq_user_id() < 1) {
+				logger.error("updateProductReplyAnswer() seq_user_id value error. " + prVO);
+				return -1;
+			}
+			if(prVO.getProduct_id() < 1) {
+				logger.error("updateProductReplyAnswer() product_id value error. " + prVO);
+				return -1;
+			}
+			replyDAO.updateProductReplyAnswer(prVO);
+		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage());
+			return 0;
+		}
+		return 1;
+	}
+	
+	@Override
+	public int deleteProductReplyAnswer(ProductReplyVO prVO) throws Exception {
+		
+		try {
+			
+			if(prVO.getSeq_user_id() < 1) {
+				logger.error("deleteProductReplyAnswer() seq_user_id value error. " + prVO);
+				return -1;
+			}
+			if(prVO.getProduct_id() < 1) {
+				logger.error("deleteProductReplyAnswer() product_id value error. " + prVO);
+				return -1;
+			}
+			replyDAO.deleteProductReplyAnswer(prVO);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return 0;
+		}
+		return 1;
+	}
 }

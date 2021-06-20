@@ -18,7 +18,7 @@
   		WHERE  seq_user_id = #{seq_user_id}
   	</select>
   	
-  	<select id="selectOrderDetail" parameterType="OrderDetailVO" resultType="OrderDetailVO">
+  	<select id="selectOrderDetail" resultType="OrderDetailVO">
   		SELECT *
   		FROM   order_detail
   		WHERE  seq_user_id = #{seq_user_id}
@@ -57,7 +57,7 @@
   	<delete id="deleteAllOrderDetail">
   		DELETE FROM order_detail
   		FROM   seq_user_id = #{seq_user_id}
-  		WHERE    order_id = #{order_id}
+  		WHERE  order_id = #{order_id}
   	</delete>
  
   	<delete id="deleteOrderDetail">

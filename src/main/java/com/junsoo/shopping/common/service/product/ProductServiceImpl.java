@@ -3,6 +3,7 @@ package com.junsoo.shopping.common.service.product;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements ProductService{
 	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 	
 	@Inject
-	ProductDAO productDAO;
+	private ProductDAO productDAO;
 
 	@Resource(name = "uploadPath")
 	private String uploadPath;
@@ -104,6 +105,42 @@ public class ProductServiceImpl implements ProductService{
 			}
 			
 			return productDAO.selectCategoryProducts(hashMap);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
+	public HashMap<String, Object> selectBuyProduct(Map<String, Object> hashMap) throws Exception {
+		
+		try {
+			System.out.println(hashMap);
+			if(!hashMap.containsKey("seq_user_id")) {
+				logger.error("selectBuyProduct() seq_user_id key error. " + hashMap);
+				return null;
+			}
+			if(!hashMap.containsKey("product_id")) {
+				logger.error("selectBuyProduct() product_id key error. " + hashMap);
+				return null;
+			}
+			return productDAO.selectBuyProduct(hashMap);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public List<HashMap<String, Object>> selectBuyProducts(int seq_user_id) throws Exception {
+
+		try {
+			
+			if(seq_user_id < 1) {
+				logger.error("selectBuyProducts() seq_user_id value error.");
+				return null;
+			}
+			return productDAO.selectBuyProducts(seq_user_id);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return null;

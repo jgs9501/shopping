@@ -153,7 +153,7 @@ public class OrderController {
 		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
 		int seq_user_id = userVO.getSeq_user_id();
 		String user_id = userVO.getUser_id();
-		
+		System.out.println(orderDetailsVO);
 		// 유저 포인트 정보를 HashMap으로 세팅
 		HashMap<String, Object> userPointMap = new HashMap<String, Object>();
 		userPointMap.put("user_id", user_id);
@@ -227,18 +227,12 @@ public class OrderController {
 										 @RequestBody HashMap<String, Object> map) throws Exception {
 		
 		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
-		try {
-			if(userVO.getSeq_user_id() < 1) {
-				request.getSession().invalidate();
-			}
-			orderDetailService.deleteOrderDetail(map);
-			orderService.updateOrderTotalPrice(map);
-			
-		} catch (NullPointerException npe) {
-			logger.error(npe.getMessage());
-		} catch (Exception e) {
-			logger.error(e.getMessage());
+		
+		if(userVO.getSeq_user_id() < 1) {
+			request.getSession().invalidate();
 		}
+		orderDetailService.deleteOrderDetail(map);
+		orderService.updateOrderTotalPrice(map);
 		
 		return map;
 	}
