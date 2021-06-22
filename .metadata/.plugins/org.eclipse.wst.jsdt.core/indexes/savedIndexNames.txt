@@ -1,7 +1,0 @@
-INDEX VERSION 1.4+D:\STS_workspace\shopping\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1978418865.index
-1530919905.index
-3959983516.index
-2472360604.index
-382073720.index
-2115935309.index
