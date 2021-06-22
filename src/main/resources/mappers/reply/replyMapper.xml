@@ -53,12 +53,12 @@
 	</update>
 	
 	<!-- 특정 상품 댓글의 답글 삭제(answer column : null) -->
-	<delete id="deleteProductReplyAnswer">
+	<update id="deleteProductReplyAnswer" parameterType="ProductReplyVO">
 		UPDATE product_reply
 		SET    answer = null
 		WHERE  seq_user_id = #{seq_user_id}
 		AND    product_id = #{product_id}
-	</delete>
+	</update>
 	
 	<!-- 상품의 평균 평가점수 조회 -->
 	<select id="selectProductAvgRating" resultType="float">

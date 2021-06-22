@@ -22,10 +22,10 @@ public class OrderDetaiServiceImpl implements OrderDetailService {
 	private static final Logger logger = LoggerFactory.getLogger(OrderDetailService.class);
 			
 	@Inject
-	OrderDetailDAO orderDetailDAO;
+	private OrderDetailDAO orderDetailDAO;
 	
 	@Inject
-	OrderService orderService;
+	private OrderService orderService;
 	
 	@Override
 	public List<OrderDetailVO> selectAllOrderDetail(int seq_user_id) throws Exception {
@@ -110,11 +110,11 @@ public class OrderDetaiServiceImpl implements OrderDetailService {
 					logger.error("insertOrderDetail method error : seq_user_id does not exist.");
 					return 311;
 				}
-				if(vo.getOrder_id() == "") {
+				if(vo.getOrder_id() == "" || vo.equals(null)) {
 					logger.error("insetOrderDetail method error : order_id does not exist.");
 					return 312;
 				}
-				if(vo.getOrder_detail_id() == "") {
+				if(vo.getOrder_detail_id() == "" || vo.equals(null)) {
 					logger.error("insertOrderDetail method error : order_detail_id does not exist.");
 					return 313;
 				}
