@@ -105,30 +105,7 @@
 				</div>
 			</div>
 			<hr>
-			<h4 class="h4">출품한 업체의 다른 물품</h4>
-			<div class="row">
-				<div class="swiper-container swiper-per-group">
-				    <div class="swiper-wrapper">
-				    	<c:forEach var="product" items="${listProduct}">
-					        <div class="swiper-slide thumbnail">
-					        	<div>
-					        		<a href="${contextPath}/products/${product.product_id}"><img src="${product.product_thumbImg}"></a>
-						        	<div class="text-left">
-							        	<a href="${contextPath}/products/${product.product_id}"><strong>${product.product_name}</strong></a>
-						        	</div>
-						        	<div class="text-right price">
-							        	<h5>${product.product_price-product.discount} 원</h5>
-						        	</div>
-					        	</div>
-					        </div>
-				    	
-				    	</c:forEach>
-				    </div>
-				    <div class="swiper-pagination"></div>
-				    <div class="swiper-button-next"></div>
-				    <div class="swiper-button-prev"></div>
-				</div>
-			</div>
+			<jsp:include page="/WEB-INF/views/contents/product/storeProducts.jsp"></jsp:include>
 		</div>
 		<ul class="nav nav-tabs nav-justified" style="margin-top: 20px;">
 			<li class="active" >
@@ -282,20 +259,6 @@
 	</footer>
 
 <script>
-    var swiper = new Swiper('.swiper-per-group', {
-    	slidesPerView: 4,
-        spaceBetween: 30,
-        slidesPerGroup: 4,
-   	    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-  	    },
-  	navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-        },
-	});
-    
     var rate = 0;
     $(function () {
         var starEls = document.querySelectorAll('#star span.star');

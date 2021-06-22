@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import com.junsoo.shopping.common.vo.ProductDetailVO;
 import com.junsoo.shopping.common.vo.ProductVO;
-import com.junsoo.shopping.common.vo.PurchaseInfoVO;
 
 @Repository
 public class ProductDAOImpl implements ProductDAO {
@@ -160,6 +159,21 @@ public class ProductDAOImpl implements ProductDAO {
 		}
 	}
 
+	@Override
+	public List<HashMap<String, Object>> selectFavoriteProduct() throws Exception {
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectFavoriteProduct");
+		} catch (DataAccessException dae) {
+			logger.error("insertProduct() Data access Exception. " + dae.getMessage());
+			return null;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+	
 	@Override
 	public void insertProduct(ProductVO productVO) throws Exception {
 		

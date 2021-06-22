@@ -14,18 +14,65 @@
 	</div>
     <div class="swiper-container viewed-items-containers">
         <div class="swiper-wrapper">
-        <%for(int i=0;i<10; i++){ %>
-        	<div class="thumbnail swiper-slide">
-	        	<div>
-		            <img style="height: 240px; width: 100%; display: block;"
-		            src="./resources/images/242x200.png">
-					<div>
-						<h3 style="text-align: left;">TEST</h3>
-						<h4 style="text-align: right; font-weight: bold;">test</h4>
-					</div>
-    	    	</div>
-        	</div>
-        <%} %>
+	       	<c:forEach var="fav" items="${favorite_list }">
+	       		<div class="swiper-slide">
+	       			<div class="product-grid">
+			        	<div class="product-image">
+			        		<a href="${contextPath}/products/${fav.product_id}">
+					            <img src="${fav.product_thumbImg }">
+			        		</a>
+			        		<ul class="social">
+								<li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
+								<li><a href="#" onclick="cartBtn()"><i class="fa fa-shopping-cart"></i></a></li>
+							</ul>
+		    	    	</div>
+						<div class="product-content">
+							<h3 class="title">
+								<a href="${contextPath}/products/${fav.product_id}">${fav.product_name}</a>
+							</h3>
+							<div class="price">
+								<span>
+									<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${fav.product_price - fav.discount}"/>&nbsp;원
+								</span>
+								<c:if test="${fav.discount ne 0}">
+									<span class="discount">
+										<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${fav.product_price}"/>&nbsp;원
+									</span>
+								</c:if>
+							</div>
+							<div class="rating">
+									<c:choose>
+										<c:when test="${fav.rating ne null}">
+											<fmt:formatNumber var="rating" value="${fav.rating}" pattern="0.0" />
+											<fmt:formatNumber var="avg" value="${rating*10}"/>
+											<c:forEach begin="10" end="50" step="10" varStatus="idx">
+												<c:choose>
+													<c:when test="${avg >= idx.current}">
+														<span class="fa fa-star"></span>
+													</c:when>
+													<c:otherwise>
+														<c:if test="${(avg - idx.current) > 0}">
+															<span class="fa fa-star-half-o"></span>
+														</c:if>
+														<c:if test="${(avg - idx.current) <= 0}">
+															<span class="fa fa-star disable"></span>
+														</c:if>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<c:forEach begin="0" end="5">
+												<span class="fa fa-star disable"></span>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+									<span class="reply-count">(${fav.reply_count })</span>
+								</div>
+							</div>
+							</div>
+	        		</div>
+	       	</c:forEach>
     	</div>
    		<div class="swiper-pagination"></div>
 	    <div class="swiper-button-next"></div>

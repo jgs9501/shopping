@@ -59,6 +59,14 @@ public interface ProductService {
 	public List<HashMap<String, Object>> selectBuyProducts(int seq_user_id) throws Exception;
 	
 	/**
+	 * index 페이지의 마음에 드는 상품 조회 메소드<br>
+	 * (총 상품 중 별점 평균과 댓글달린 개수 내림차순 정렬12개 )
+	 * @return
+	 * @throws Exception
+	 */
+	public List<HashMap<String, Object>> selectFavoriteProduct() throws Exception;
+	
+	/**
 	 * 점포의 상품 출판 메소드
 	 * @param productVO
 	 * @param file

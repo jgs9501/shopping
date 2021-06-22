@@ -146,6 +146,18 @@ public class ProductServiceImpl implements ProductService{
 			return null;
 		}
 	}
+	
+	@Override
+	public List<HashMap<String, Object>> selectFavoriteProduct() throws Exception {
+		
+		try {
+			
+			return productDAO.selectFavoriteProduct();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
 
 	@Override
 	public int insertProduct(ProductVO productVO, MultipartFile file) throws Exception {

@@ -75,23 +75,22 @@
 															value="${product.product_price}"></fmt:formatNumber>원</span>
 												</c:if>
 											</div>
-											<ul class="rating">
+											<div class="rating">
 												<c:choose>
 													<c:when test="${product.rating ne null}">
-														<fmt:formatNumber var="rating" value="${product.rating}"
-															pattern=".0" />
+														<fmt:formatNumber var="rating" value="${product.rating}" pattern=".0" />
 														<fmt:formatNumber var="avg" value="${rating*10}" />
 														<c:forEach begin="10" end="50" step="10" varStatus="idx">
 															<c:choose>
 																<c:when test="${avg >= idx.current}">
-																	<li class="fa fa-star"></li>
+																	<span class="fa fa-star"></span>
 																</c:when>
 																<c:otherwise>
 																	<c:if test="${(avg - idx.current) > 0}">
-																		<li class="fa fa-star-half-o"></li>
+																		<span class="fa fa-star-half-o"></span>
 																	</c:if>
 																	<c:if test="${(avg - idx.current) <= 0}">
-																		<li class="fa fa-star disable"></li>
+																		<span class="fa fa-star disable"></span>
 																	</c:if>
 																</c:otherwise>
 															</c:choose>
@@ -99,11 +98,11 @@
 													</c:when>
 													<c:otherwise>
 														<c:forEach begin="0" end="5">
-															<li class="fa fa-star disable"></li>
+															<span class="fa fa-star disable"></span>
 														</c:forEach>
 													</c:otherwise>
 												</c:choose>
-											</ul>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -150,7 +149,7 @@
 												<span><fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price}"/>원</span>
 											</c:if>
 										</div>
-										<ul class="rating">
+										<div class="rating">
 											<c:choose>
 												<c:when test="${product.rating ne null}">
 													<fmt:formatNumber var="rating" value="${product.rating}" pattern="0.0" />
@@ -158,14 +157,14 @@
 													<c:forEach begin="10" end="50" step="10" varStatus="idx">
 														<c:choose>
 															<c:when test="${avg >= idx.current}">
-																<li class="fa fa-star"></li>
+																<span class="fa fa-star"></span>
 															</c:when>
 															<c:otherwise>
 																<c:if test="${(avg - idx.current) > 0}">
-																	<li class="fa fa-star-half-o"></li>
+																	<span class="fa fa-star-half-o"></span>
 																</c:if>
 																<c:if test="${(avg - idx.current) <= 0}">
-																	<li class="fa fa-star disable"></li>
+																	<span class="fa fa-star disable"></span>
 																</c:if>
 															</c:otherwise>
 														</c:choose>
@@ -173,11 +172,11 @@
 												</c:when>
 												<c:otherwise>
 													<c:forEach begin="0" end="5">
-														<li class="fa fa-star disable"></li>
+														<span class="fa fa-star disable"></span>
 													</c:forEach>
 												</c:otherwise>
 											</c:choose>
-										</ul>
+										</div>
 									</div>
 								</div>
 							</div>

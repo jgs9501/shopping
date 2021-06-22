@@ -85,18 +85,12 @@ public class ReplyServiceImpl implements ReplyService{
 		try {
 			// 해당 제품의 구입 이력 확인
 			if(productService.selectBuyProduct(hashMap) == null) {
-				logger.warn("couldn't buy the product. seq_user_id : " + prVO.getSeq_user_id() + 
+				logger.warn("couldn't write the product reply. seq_user_id : " + prVO.getSeq_user_id() + 
 						    " product_id : " + prVO.getProduct_id() + 
 						    " user_name : " + prVO.getUser_name());
 				return -1;
 			}
 			// 해당 제품의 현재 아이디와 중복된 댓글 확인
-			if(replyDAO.selectProductReply(prVO) != null) {
-				logger.warn("duplicate reply. seq_user_id : " + prVO.getSeq_user_id() + 
-					    " product_id : " + prVO.getProduct_id()  +
-					    " user_name : " + prVO.getUser_name());
-				return -1;
-			}
 			replyDAO.insertProductReply(prVO);
 			return 1;
 		} catch (Exception e) {
