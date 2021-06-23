@@ -77,6 +77,26 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
+	public int selectProductReplyCount(int product_id) throws Exception {
+		
+		try {
+			if(product_id < 1) {
+				logger.error("selectProductReplyCount() product_id error. " + product_id);
+				product_id = 0;
+			}
+			return replyDAO.selectProductReplyCount(product_id);
+		} catch (NumberFormatException nfe) {
+			logger.error(nfe.getMessage());
+			nfe.printStackTrace();
+			throw nfe;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
 	public int insertProductReply(ProductReplyVO prVO) throws Exception {
 		
 		Map<String, Object> hashMap = new HashMap<String, Object>();

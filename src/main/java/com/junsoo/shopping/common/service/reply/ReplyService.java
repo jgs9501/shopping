@@ -38,6 +38,14 @@ public interface ReplyService {
 	public float selectProductAvgRating(int product_id) throws Exception;
 	
 	/**
+	 * 해당 상품에 달린 댓글 개수 조회
+	 * @param product_id
+	 * @return
+	 * @throws Exception
+	 */
+	public int selectProductReplyCount(int product_id) throws Exception;
+	
+	/**
 	 * 댓글 작성<br>
 	 * - 댓글을 달고자하는 물품의 중복댓글 확인 후 작성<br>
 	 * -1: 구매하지 않음, 0: 과거에 댓글작성, 1: 성공
