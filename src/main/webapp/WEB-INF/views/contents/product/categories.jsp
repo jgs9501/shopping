@@ -65,14 +65,13 @@
 												<a href="${contextPath}/products/${product.product_id}">${product.product_name}</a>
 											</h3>
 											<div class="price">
-												<fmt:formatNumber type="number" minIntegerDigits="1"
-													pattern="0,000"
-													value="${product.product_price - product.discount}"></fmt:formatNumber>
-												원
+												<span>
+													<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price - product.discount}"/>&nbsp;원
+												</span>
 												<c:if test="${product.discount ne 0}">
-													<span><fmt:formatNumber type="number"
-															minIntegerDigits="1" pattern="0,000"
-															value="${product.product_price}"></fmt:formatNumber>원</span>
+													<span class="discount">
+														<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price}"/>&nbsp;원
+													</span>
 												</c:if>
 											</div>
 											<div class="rating">
@@ -144,9 +143,13 @@
 											<a href="${contextPath}/products/${product.product_id}">${product.product_name}</a>
 										</h3>
 										<div class="price">
-											<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price - product.discount}"/> 원
+											<span>
+												<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price - product.discount}"/>&nbsp;원
+											</span>
 											<c:if test="${product.discount ne 0}">
-												<span><fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price}"/>원</span>
+												<span class="discount">
+													<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${product.product_price}"/>&nbsp;원
+												</span>
 											</c:if>
 										</div>
 										<div class="rating">
