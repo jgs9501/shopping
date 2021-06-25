@@ -66,14 +66,10 @@ public class ReplyController {
 	@RequestMapping(value = "postProductReplyAnswer", method = RequestMethod.POST)
 	public ProductReplyVO updateProductReplyAnswer(@RequestBody ProductReplyVO prVO) throws Exception {
 		
-		try {
-			int flag = replyService.updateProductReplyAnswer(prVO);
-			if(flag != 1) {
-				logger.error("failed answer comment " + prVO.toString());
-				return null;
-			}
-		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+		int flag = replyService.updateProductReplyAnswer(prVO);
+		if(flag != 1) {
+			logger.error("failed answer comment " + prVO.toString());
+			return null;
 		}
 		return replyService.selectProductReply(prVO);
 	}
@@ -81,12 +77,7 @@ public class ReplyController {
 	@RequestMapping(value = "postProductReplyAnswerDelete", method = RequestMethod.POST)
 	public int deleteProductReplyAnswer(@RequestBody ProductReplyVO prVO) throws Exception {
 		
-		try {
-			replyService.deleteProductReplyAnswer(prVO);
-		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-			return 0;
-		}
+		replyService.deleteProductReplyAnswer(prVO);
 		return 1;
 	}
 }
