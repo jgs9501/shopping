@@ -35,6 +35,7 @@ public class SecurityUserVO implements UserDetails {
 		this.user_email = userVO.getUser_email() + "@" + userVO.getUser_domain();
 		this.authorities = getAuthorities(userVO.getAuth());
 	}
+	
 	/**
 	 * 해당 유저의 권한 목록
 	 */
