@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -32,7 +35,7 @@
 			<span class="glyphicon glyphicon-remove" style="width: 100px; height: 100px;"></span>
 			<h3>부적절한 오류가 발생하였습니다</h3>
 			<br><h3>${result}</h3>
-			<br><p><a class="btn btn-primary btn-lg" href="${ContextPath}/index" role="button">홈으로</a></p>
+			<br><p><a class="btn btn-primary btn-lg" href="/index" role="button">홈으로</a></p>
 		</div>
 	</section>
 	<!--바닥글-->

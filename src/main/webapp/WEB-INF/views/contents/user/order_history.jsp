@@ -58,7 +58,7 @@
 												<div class="row">
 													<div class="col-sm-2 hidden-xs"><img src="${detail.product_thumbImg }" alt="..." class="img-responsive"/></div>
 													<div class="col-sm-10">
-														<h4 class="nomargin"><a href="${contextPath}/products/${detail.product_id}">${detail.product_name}</a></h4>
+														<h4 class="nomargin"><a href="/products/${detail.product_id}">${detail.product_name}</a></h4>
 													</div>
 												</div>
 											</td>

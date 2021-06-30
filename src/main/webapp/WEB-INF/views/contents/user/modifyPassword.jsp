@@ -87,7 +87,7 @@
     </nav>
     <section>
 		<ol class="breadcrumb container">
-			<li><a href="${contextPath}/index">메인</a></li>
+			<li><a href="/index">메인</a></li>
 			<li class="active">비밀번호수정</li>
 		</ol>
 		<c:choose>

@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -32,7 +32,7 @@
 	<section>
 		<div class="container">
 			<ol class="breadcrumb">
-				<li><a href="${contextPath}/index">메인</a></li>
+				<li><a href="/index">메인</a></li>
 				<li class="active">${categoryName}</li>
 			</ol>
 			<article>
@@ -45,7 +45,7 @@
 									<div class="product-grid">
 										<div class="product-image">
 											<input type="hidden" value="${product.seq_user_id}">
-											<a href="${contextPath}/products/${product.product_id}">
+											<a href="/products/${product.product_id}">
 												<img class="pic-1" src="${product.product_thumbImg}">
 											</a>
 											<ul class="social">
@@ -62,7 +62,7 @@
 										</div>
 										<div class="product-content">
 											<h3 class="title">
-												<a href="${contextPath}/products/${product.product_id}">${product.product_name}</a>
+												<a href="/products/${product.product_id}">${product.product_name}</a>
 											</h3>
 											<div class="price">
 												<span>
@@ -140,7 +140,7 @@
 									</div>
 									<div class="product-content">
 										<h3 class="title">
-											<a href="${contextPath}/products/${product.product_id}">${product.product_name}</a>
+											<a href="/products/${product.product_id}">${product.product_name}</a>
 										</h3>
 										<div class="price">
 											<span>

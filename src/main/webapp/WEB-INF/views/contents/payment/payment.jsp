@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -193,7 +195,7 @@
 		
 		if(payment_type == "point") {
 			form.method = "POST";
-			form.action = "payment/point";
+			form.action = "/payment/point";
 			let price = $('#totalPrice').val();
 			let point = $('#point_text').val();
 			
@@ -201,7 +203,7 @@
 		}
 		else if(payment_type == "kakaopay") {
 		    form.method = "POST";
-			form.action = "payment/kakaopay";
+			form.action = "/payment/kakaopay";
 			const phone = '${userVO.user_phone}';
 			//가맹점 식별코드
 			IMP.init('imp03024031');
