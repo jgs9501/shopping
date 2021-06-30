@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -29,8 +30,8 @@
     </nav>
 	<section>
 	<ol class="breadcrumb container">
-		<li><a href="${contextPath}/index">메인</a></li>
-		<li><a href="${contextPath}/categories/${pdVO.productVO.category}">${categoryName}</a></li>
+		<li><a href="/index">메인</a></li>
+		<li><a href="/categories/${pdVO.productVO.category}">${categoryName}</a></li>
 		<li class="active">${pdVO.productVO.product_name}</li>
 	</ol>
 		<input type="hidden" id="seq_user_id" name="seq_user_id" value="${userVO.seq_user_id}"/>
@@ -86,7 +87,7 @@
 								</span>
 							</c:if>
 						</div>
-						<form class="form-horizontal form-width" method="post" action="${contextPath}/insertCart">
+						<form class="form-horizontal form-width" method="post" action="/insertCart">
 						    <input type="hidden" name="product_id" value="${productVO.product_id}"/>
 							<strong>상품개수  </strong>
 							<select name="amount">
@@ -219,7 +220,7 @@
 		
 		$.ajax({
 			type: "POST",
-			url: "${contextPath}/postProductReply",
+			url: "/postProductReply",
 			dataType: "json",
 			contentType: "application/json",
 			data: JSON.stringify(form),

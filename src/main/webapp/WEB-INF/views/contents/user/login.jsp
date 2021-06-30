@@ -4,40 +4,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>login</title>
-	<!-- Bootstrap CSS -->
-	<script src="${contextPath}/resources/js/jquery.min.js"></script>
-	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var user_id = $.cookie('key');
-			if(user_id != ""){
-				$('#user_id').val(user_id);
-			    $('#saveId').attr('checked', true);
-			}
-			
-			$('#saveId').change(function(){
-				if($('#saveId').is(':checked')){
-				    $.cookie('key', $('#user_id').val(), { expires: 7 });
-				}else{
-					$('#saveId').removeAttr('checked');
-				    $.removeCookie('key');
-				}
-			});
-			     
-			$('#user_id').keyup(function(){
-			    if($('#saveId').is(':checked')){
-			        $.cookie('key', $('#user_id').val(), { expires: 7 });
-			    }
-			});
-		});
-	</script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
+	<script src="${contextPath}/resources/js/jquery.cookie.js"></script> 
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
+	<title>JS Shop</title>
 </head>
-<body style="background: #eee">
+<body>
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
@@ -46,7 +28,8 @@
 	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
     </nav>
 	<section>
-		<form action="loginPost" class="center-sort center-padding" method="post">
+		<form action="/loginPost" class="center-sort center-padding" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	 		<fieldset class="well well-lg center-padding width-limit">
 		 		<c:if test="${result ne null}">
 			 		<div class="alert alert-danger" role="alert">
@@ -73,11 +56,35 @@
 			    <div>
 			      	<button type="submit" class="btn btn-primary btn-lg btn-block">로 그 인</button>
 			    </div>
-			    <h6 style="float: right;"><a href="${contextPath}/contents/user/password">비밀번호를 잊으셨나요?</a></h6>
+			    <h6 style="float: right;"><a href="/user/password">비밀번호를 잊으셨나요?</a></h6>
  			    <hr class="my-4">
-				<h6 style="float: right;">회원가입을 원하실 경우는 <a href="${contextPath}/contents/user/regist">여기</a></h6>
+				<h6 style="float: right;">회원가입을 원하실 경우는 <a href="/user/regist">여기</a></h6>
 		    </fieldset>
 		</form>
 	</section>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var user_id = $.cookie('key');
+			if(user_id != ""){
+				$('#user_id').val(user_id);
+			    $('#saveId').attr('checked', true);
+			}
+			
+			$('#saveId').change(function(){
+				if($('#saveId').is(':checked')){
+				    $.cookie('key', $('#user_id').val(), { expires: 7 });
+				}else{
+					$('#saveId').removeAttr('checked');
+				    $.removeCookie('key');
+				}
+			});
+			     
+			$('#user_id').keyup(function(){
+			    if($('#saveId').is(':checked')){
+			        $.cookie('key', $('#user_id').val(), { expires: 7 });
+			    }
+			});
+		});
+	</script>
 </body>
 </html>

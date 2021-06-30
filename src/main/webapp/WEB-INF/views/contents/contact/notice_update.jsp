@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="UTF-8" isErrorPage="true"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -33,7 +32,7 @@
 		<div class="container">
     		<h2><strong>공지사항수정</strong></h2>
     		<hr>
-    		<form class="form-horizontal" name="noticeVO" action="${contextPath}/contact/notice/${noticeVO.notice_id}/update" method="POST" enctype="multipart/form-data">
+    		<form class="form-horizontal" name="noticeVO" action="/contact/notice/${noticeVO.notice_id}/update" method="POST" enctype="multipart/form-data">
     			<input type="hidden" name="_method" value="PATCH">
     			<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}">
     			<!-- 제목 -->

@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -14,13 +14,13 @@
 				<div class="swiper-slide">
 					<div class="product-grid">
 						<div class="product-image">
-							<a href="${contextPath}/products/${store_product.product_id}">
+							<a href="/products/${store_product.product_id}">
 								<img src="${store_product.product_thumbImg }">
 							</a>
 						</div>
 						<div class="product-content">
 							<h3 class="title">
-								<a href="${contextPath}/products/${store_product.product_id}">${store_product.product_name}</a>
+								<a href="/products/${store_product.product_id}">${store_product.product_name}</a>
 							</h3>
 							<div class="price">
 								<span> <fmt:formatNumber type="number"

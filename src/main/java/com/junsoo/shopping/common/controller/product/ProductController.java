@@ -29,7 +29,6 @@ import com.junsoo.shopping.common.service.reply.ReplyService;
 import com.junsoo.shopping.common.vo.ProductDetailVO;
 import com.junsoo.shopping.common.vo.ProductReplyVO;
 import com.junsoo.shopping.common.vo.ProductVO;
-import com.junsoo.shopping.common.vo.UserVO;
 import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 import com.junsoo.shopping.utils.checker.ValueChecker;
 
@@ -58,21 +57,10 @@ public class ProductController {
 	 * @return ModelAndView
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "product/release", method = RequestMethod.GET)
-	public ModelAndView getProductRelease(HttpSession session) throws Exception {
+	@RequestMapping(value = "/product/release", method = RequestMethod.GET)
+	public String getProductRelease(HttpSession session) throws Exception {
 		
-		ModelAndView mv = new ModelAndView();
-		UserVO userVO = (UserVO)session.getAttribute("userVO");
-		
-		if(userVO.getAuth() == 2) {
-			mv.setViewName("contents/product/release");
-		}
-		else {
-			mv.setViewName("contents/error");
-			mv.addObject("result", "잘못된 권한입니다");
-		}
-		
-		return mv;
+		return "contents/product/release";
 	}
 	
 	/**
@@ -84,7 +72,7 @@ public class ProductController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "product/release", method = RequestMethod.POST)
+	@RequestMapping(value = "/product/release", method = RequestMethod.POST)
 	public ModelAndView postProductRelease(ProductVO productVO, 
 											HttpServletRequest request, 
 											@RequestPart("uploadFile") MultipartFile uploadFile) throws Exception {
@@ -107,11 +95,11 @@ public class ProductController {
 		productVO.setCountry(multiReq.getParameter("country"));
 		
 		if(productService.insertProduct(productVO, uploadFile) == 1) {
-			mv.setViewName("contents/complete");
+			mv.setViewName("/contents/complete");
 			mv.addObject("result", "상품등록");
 		}
 		else {
-			mv.setViewName("contents/error");
+			mv.setViewName("/contents/error");
 			mv.addObject("result", "상품등록 에러");
 		}
 		
@@ -125,7 +113,7 @@ public class ProductController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "product/release/{seq_user_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/product/release/{seq_user_id}", method = RequestMethod.GET)
 	public ModelAndView getProductReleaseList(HttpSession session, 
 											@PathVariable("seq_user_id") int seq_user_id) throws Exception {
 		
@@ -133,20 +121,14 @@ public class ProductController {
 		
 		
 		List<ProductVO> productList = productDAO.selectStoreProducts(seq_user_id);
-		UserVO userVO = (UserVO)session.getAttribute("userVO");
 		
-		if(userVO.getAuth() != 2) {
-			mv.setViewName("contents/error");
-			mv.addObject("result", "출품용 계정이 아닙니다");
-			return mv;
-		}
 		if(productList.size() < 1) {
-			mv.setViewName("contents/product/releaseList");
+			mv.setViewName("/contents/product/releaseList");
 			mv.addObject("listResult", "등록한 상품이 없습니다");
 			return mv;
 		}
 		
-		mv.setViewName("contents/product/releaseList");
+		mv.setViewName("/contents/product/releaseList");
 		mv.addObject("listResult", productList);
 		
 		return mv;
@@ -161,7 +143,7 @@ public class ProductController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "product/release/{seq_user_id}/{product_id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/product/release/{seq_user_id}/{product_id}", method = RequestMethod.POST)
 	public ModelAndView postProductModify(HttpServletRequest request,
 										 @RequestPart("uploadFile") MultipartFile uploadFile,
 										 @ModelAttribute ProductVO productVO,
@@ -172,11 +154,11 @@ public class ProductController {
 		
 		if(productService.updateProduct(productVO, uploadFile) == 1) {
 			logger.info(productVO.toString());
-			mv.setViewName("contents/complete");
+			mv.setViewName("/contents/complete");
 			mv.addObject("result", "상품수정");
 		}
 		else {
-			mv.setViewName("contents/error");
+			mv.setViewName("/contents/error");
 			mv.addObject("result", "상품수정 에러");
 		}
 		
@@ -191,7 +173,7 @@ public class ProductController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "product/release/{seq_user_id}/{product_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/product/release/{seq_user_id}/{product_id}", method = RequestMethod.GET)
 	public ModelAndView getProductModify(@ModelAttribute ProductVO productVO,
 										 @PathVariable("seq_user_id") int seq_user_id, 
 										 @PathVariable("product_id") int product_id) throws Exception{
@@ -199,12 +181,12 @@ public class ProductController {
 		ModelAndView mv = new ModelAndView();
 		
 		productVO = productDAO.selectStoreProduct(productVO);
-		if(productVO.equals(null)) {
+		if(productVO == null) {
 			mv.addObject("result", "검색된 출품 상품이 없습니다");
 			mv.setViewName("contents/error");
 			return mv;
 		}
-		mv.setViewName("contents/product/releaseModify");
+		mv.setViewName("/contents/product/releaseModify");
 		mv.addObject("product", productVO);
 		
 		return mv;
@@ -216,7 +198,7 @@ public class ProductController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "categories/{category}", method = RequestMethod.GET)
+	@RequestMapping(value = "/categories/{category}", method = RequestMethod.GET)
 	public ModelAndView getCategory(@RequestParam(defaultValue = "1") int curPage,
 									@RequestParam(defaultValue = "") String search,
 									@RequestParam(defaultValue = "8") int PageSize,
@@ -255,7 +237,7 @@ public class ProductController {
 		mv.addObject("productList", productList);
 		mv.addObject("pagination", paginationInfo);
 		mv.addObject("search", search);
-		mv.setViewName("contents/product/categories");
+		mv.setViewName("/contents/product/categories");
 		
 		return mv;
 	}
@@ -269,7 +251,7 @@ public class ProductController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "products/{product_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/products/{product_id}", method = RequestMethod.GET)
 	public ModelAndView getProductDetail(ProductVO productVO, 
 										@RequestParam(defaultValue = "1") int curPage,
 										@PathVariable("product_id") int product_id) throws Exception{
@@ -277,7 +259,6 @@ public class ProductController {
 		ModelAndView mv = new ModelAndView();
 		ValueChecker vc = new ValueChecker();
 		String categoryName = ""; 
-		
 		
 		if(product_id < 1) {
 			logger.error("not exist product ID: " + product_id);
@@ -300,7 +281,7 @@ public class ProductController {
 		//카테고리 이름 치환
 		categoryName = vc.getCategoryName(pdVO.getProductVO().getCategory());
 		
-		mv.setViewName("contents/product/productDetail");
+		mv.setViewName("/contents/product/productDetail");
 		mv.addObject("listProduct", listProduct);
 		mv.addObject("replyCount", reply_count);
 		mv.addObject("rating_avg", rating_avg);

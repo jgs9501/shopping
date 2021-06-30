@@ -7,8 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +21,7 @@ import com.junsoo.shopping.common.dao.cart.CartDAO;
 import com.junsoo.shopping.common.service.cart.CartService;
 import com.junsoo.shopping.common.service.order.OrderDetailService;
 import com.junsoo.shopping.common.service.order.OrderService;
+import com.junsoo.shopping.common.service.user.UserService;
 import com.junsoo.shopping.common.service.user.UserpointService;
 import com.junsoo.shopping.common.vo.OrderDetailVO;
 import com.junsoo.shopping.common.vo.OrderVO;
@@ -31,40 +31,44 @@ import com.junsoo.shopping.utils.Utils;
 @Controller
 public class OrderController {
 
-	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+	@Inject
+	private UserService userService;
 	
 	@Inject
-	CartService cartService;
+	private CartService cartService;
 	
 	@Inject
-	OrderService orderService;
+	private OrderService orderService;
 	
 	@Inject
-	OrderDetailService orderDetailService;
+	private OrderDetailService orderDetailService;
 	
 	@Inject
-	UserpointService userPointService;
+	private UserpointService userPointService;
 	
 	@Inject
-	CartDAO cartDAO;
+	private CartDAO cartDAO;
+	
 	/**
 	 * 결제 화면을 불러오는 메소드
 	 * @param request
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "payment", method = RequestMethod.GET)
+	@RequestMapping(value = "/payment", method = RequestMethod.GET)
 	public ModelAndView getPayment(HttpServletRequest request) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
+		UserVO userVO = new UserVO();
 		List<HashMap<String, Object>> cartList = new ArrayList<>();
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
 		
 		int seq_user_id = userVO.getSeq_user_id();
 		int point = userPointService.selectUserPoint(userVO.getUser_id());
 		cartList = cartService.selectAllCart(seq_user_id);
 		
-		mv.setViewName("contents/payment/payment");
+		mv.setViewName("/contents/payment/payment");
 		mv.addObject("userVO", userVO);
 		mv.addObject("cartList", cartList);
 		mv.addObject("point", point);
@@ -80,7 +84,7 @@ public class OrderController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "payment/point", method = RequestMethod.POST)
+	@RequestMapping(value = "/payment/point", method = RequestMethod.POST)
 	public ModelAndView postPointPayment(HttpServletRequest request,
 										 @RequestParam int usePoint,
 										 @RequestParam int totalPrice,
@@ -88,11 +92,12 @@ public class OrderController {
 										 @ModelAttribute OrderDetailVO orderDetailsVO) throws Exception{
 		
 		ModelAndView mv = new ModelAndView();
+		UserVO userVO = new UserVO();
 		Utils utils = new Utils();
 		// 세션으로 유저정보 취득
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
 		int seq_user_id = userVO.getSeq_user_id();
-		String user_id = userVO.getUser_id();
 		
 		// 유저 포인트 정보를 HashMap으로 세팅
 		HashMap<String, Object> userPointMap = new HashMap<String, Object>();
@@ -140,7 +145,7 @@ public class OrderController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "payment/kakaopay", method = RequestMethod.POST)
+	@RequestMapping(value = "/payment/kakaopay", method = RequestMethod.POST)
 	public ModelAndView postKakaoPayment(HttpServletRequest request,
 										 @RequestParam int usePoint,
 										 @RequestParam int totalPrice,
@@ -148,12 +153,13 @@ public class OrderController {
 										 @ModelAttribute OrderDetailVO orderDetailsVO) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
+		UserVO userVO = new UserVO();
 		Utils utils = new Utils();
 		// 세션으로 유저정보 취득
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
 		int seq_user_id = userVO.getSeq_user_id();
-		String user_id = userVO.getUser_id();
-		System.out.println(orderDetailsVO);
+		
 		// 유저 포인트 정보를 HashMap으로 세팅
 		HashMap<String, Object> userPointMap = new HashMap<String, Object>();
 		userPointMap.put("user_id", user_id);
@@ -187,53 +193,45 @@ public class OrderController {
 
 			mv.addObject("order", orderVO);
 			mv.addObject("orderDetailList", orderDetailList);
-			mv.setViewName("contents/payment/completePayment");
+			mv.setViewName("/contents/payment/completePayment");
 		}
 		else if(flag == -2){
-			mv.setViewName("contents/error");
+			mv.setViewName("/contents/error");
 			mv.addObject("result", "잔여 포인트가 부족합니다.");
 		}
 		else {
-			mv.setViewName("contents/error");
+			mv.setViewName("/contents/error");
 		}
 		
 		return mv;
 	}
 	
-	@RequestMapping(value = "order/history", method = {RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView postOrderHistory(HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/order", method = RequestMethod.GET)
+	public ModelAndView getOrderHistory(HttpServletRequest request) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		UserVO userVO = new UserVO();
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
+		
 		List<OrderVO> order_list = new ArrayList<OrderVO>();
 		List<OrderDetailVO> orderDetail_list = new ArrayList<OrderDetailVO>();
-		try {
-			order_list = orderService.selectAllOrder(userVO.getSeq_user_id());
-			orderDetail_list = orderDetailService.selectAllOrderDetail(userVO.getSeq_user_id());
-			mv.addObject("orders", order_list);
-			mv.addObject("details", orderDetail_list);
-			mv.setViewName("contents/user/order_history");
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			mv.setViewName("contents/error");
-		}
-		
+			
+		order_list = orderService.selectAllOrder(userVO.getSeq_user_id());
+		orderDetail_list = orderDetailService.selectAllOrderDetail(userVO.getSeq_user_id());
+		mv.addObject("orders", order_list);
+		mv.addObject("details", orderDetail_list);
+		mv.setViewName("/contents/user/order_history");
 		return mv;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "order/cancel", method = RequestMethod.POST)
+	@RequestMapping(value = "/order/cancel", method = RequestMethod.POST)
 	public HashMap<String, Object> postOrderHistory(HttpServletRequest request,
 										 @RequestBody HashMap<String, Object> map) throws Exception {
 		
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
-		
-		if(userVO.getSeq_user_id() < 1) {
-			request.getSession().invalidate();
-		}
 		orderDetailService.deleteOrderDetail(map);
 		orderService.updateOrderTotalPrice(map);
-		
 		return map;
 	}
 	

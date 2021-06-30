@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -81,14 +81,14 @@
 			</div>
 			<hr>
 			<div style="float: left;">
-				<a class="btn btn-primary btn-lg" href="${contextPath}/contact"
+				<a class="btn btn-primary btn-lg" href="/contact"
 					style="color: white;"><i
 					class="glyphicon glyphicon-chevron-left"></i>뒤로가기</a>
 			</div>
 			<c:if test="${userVO.auth eq 3}">
 				<div style="float: right;">
-					<form id="notice_form" action="${contextPath}/contact/notice/${noticeVO.notice_id}/delete" method="post">
-						<a class="btn btn-primary btn-lg" href="${contextPath}/contact/notice/${noticeVO.notice_id}/update"
+					<form id="notice_form" action="/contact/notice/${noticeVO.notice_id}/delete" method="post">
+						<a class="btn btn-primary btn-lg" href="/contact/notice/${noticeVO.notice_id}/update"
 							style="color: white;">수정</a>
 						<input class="btn btn-primary btn-lg" type="submit" style="color: white;" value="삭제">
 					</form>

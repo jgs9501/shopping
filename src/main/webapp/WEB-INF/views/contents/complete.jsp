@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -33,7 +36,7 @@
 			</div>
 			<div style="text-align: center;">
 				<br>
-				<a class="btn btn-primary btn-lg" href="${ContextPath}/index" role="button">홈으로</a>
+				<a class="btn btn-primary btn-lg" href="/index" role="button">홈으로</a>
 			</div>
 		</div>
 	</section>

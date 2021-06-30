@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -44,9 +45,9 @@
 			                    	<tr>
 			                      		<td class="col-sm-8 col-sm-6">
 			                        		<div class="media">
-			                            		<a class="thumbnail pull-left" href="${contextPath}/product/release/${product.seq_user_id}/${product.product_id}"> <img class="media-object" src="${product.product_thumbImg}" style="width: 100px; height: 100px;"> </a>
+			                            		<a class="thumbnail pull-left" href="/product/release/${product.seq_user_id}/${product.product_id}"> <img class="media-object" src="${product.product_thumbImg}" style="width: 100px; height: 100px;"> </a>
 				                            	<div class="media-body" style="padding-left: 20px;">
-				                                <h4 class="media-heading"><a href="${contextPath}/product/release/${product.seq_user_id}/${product.product_id}">${product.product_name }</a></h4>
+				                                <h4 class="media-heading"><a href="/product/release/${product.seq_user_id}/${product.product_id}">${product.product_name }</a></h4>
 				                                <c:if test="${product.sale == 'Y' }">
 					                                <span class="text-success"><strong>판매중</strong></span>
 				                                </c:if>

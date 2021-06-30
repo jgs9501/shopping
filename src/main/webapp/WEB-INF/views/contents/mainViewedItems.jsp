@@ -18,7 +18,7 @@
 	       		<div class="swiper-slide">
 	       			<div class="product-grid">
 			        	<div class="product-image">
-			        		<a href="${contextPath}/products/${fav.product_id}">
+			        		<a href="/products/${fav.product_id}">
 					            <img src="${fav.product_thumbImg }">
 			        		</a>
 			        		<ul class="social">
@@ -28,7 +28,7 @@
 		    	    	</div>
 						<div class="product-content">
 							<h3 class="title">
-								<a href="${contextPath}/products/${fav.product_id}">${fav.product_name}</a>
+								<a href="/products/${fav.product_id}">${fav.product_name}</a>
 							</h3>
 							<div class="price">
 								<span>

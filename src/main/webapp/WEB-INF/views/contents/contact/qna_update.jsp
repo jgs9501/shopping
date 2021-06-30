@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,7 @@
     	<div class="container">
     		<h2><strong>자주묻는질문 수정</strong></h2>
     		<hr>
-    		<form class="form-horizontal" action="${contextPath}/qna/${qnaVO.qna_id}/update" method="post">
+    		<form class="form-horizontal" action="/qna/${qnaVO.qna_id}/update" method="post">
     			<!-- 제목 -->
     			<div class="form-group">
 	    			<label class="col-sm-1 control-label"><span class="emphasis">*</span>제목</label>

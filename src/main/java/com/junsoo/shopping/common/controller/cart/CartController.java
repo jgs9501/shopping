@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.junsoo.shopping.common.dao.cart.CartDAO;
 import com.junsoo.shopping.common.service.cart.CartService;
+import com.junsoo.shopping.common.service.user.UserService;
 import com.junsoo.shopping.common.vo.CartVO;
 import com.junsoo.shopping.common.vo.UserVO;
 
@@ -23,16 +24,19 @@ import com.junsoo.shopping.common.vo.UserVO;
 public class CartController {
 	
 	@Inject
-	CartService cartService;
+	private UserService userService;
+	
 	@Inject
-	CartDAO cartDAO;
+	private CartService cartService;
 	
 	// 장바구니 화면 호출 메소드
 	@RequestMapping(value = "cart", method = RequestMethod.GET)
 	public ModelAndView getCart(HttpServletRequest request) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		UserVO userVO = new UserVO();
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
 		int seq_user_id = userVO.getSeq_user_id();
 		
 		List<HashMap<String, Object>> cartList = new ArrayList<>();
@@ -49,8 +53,9 @@ public class CartController {
 							 @RequestParam("amount") int amount) throws Exception {
 		
 		CartVO cartVO = new CartVO();
-		
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		UserVO userVO = new UserVO();
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
 		int seq_user_id = userVO.getSeq_user_id();
 		
 		cartVO.setSeq_user_id(seq_user_id);

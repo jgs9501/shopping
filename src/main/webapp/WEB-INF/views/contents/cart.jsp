@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,7 @@
 						<strong>장바구니에 담은 물품이 존재하지 않습니다</strong>
 						<br>
 						<div style="padding-top: 50px;">
-							<a href="${contextPath}/categories/100" class="btn btn-warning"><i class="fa fa-angle-left"></i>&nbsp;쇼핑하기</a>
+							<a href="/categories/100" class="btn btn-warning"><i class="fa fa-angle-left"></i>&nbsp;쇼핑하기</a>
 						</div>
 					</div>
 				</c:when>
@@ -58,7 +59,7 @@
 									<div class="row">
 										<div class="col-sm-2 hidden-xs"><img src="${cartList.product_thumbImg}" alt="..." class="img-responsive"/></div>
 										<div class="col-sm-10">
-											<h4 class="nomargin"><a href="${contextPath}/products/${cartList.product_id}">${cartList.product_name}</a></h4>
+											<h4 class="nomargin"><a href="/products/${cartList.product_id}">${cartList.product_name}</a></h4>
 										</div>
 									</div>
 								</td>
@@ -79,11 +80,11 @@
 						</c:forEach>
 						<tfoot>
 							<tr>
-								<td><a href="${contextPath}/categories/100" class="btn btn-warning"><i class="fa fa-angle-left"></i> 계속 쇼핑하기</a></td>
+								<td><a href="/categories/100" class="btn btn-warning"><i class="fa fa-angle-left"></i> 계속 쇼핑하기</a></td>
 								<td colspan="2" class="hidden-xs text-right"><strong>총합</strong></td>
 								<td class="hidden-xs text-center" id="totalPriceId"><strong><fmt:formatNumber type="number" maxFractionDigits="3" value="${totalPrice}"/> 원</strong></td>
 								<td>
-									<a href="${contextPath}/payment">
+									<a href="/payment">
 										<button class="btn btn-success btn-block">구 매 하 기<i class="fa fa-angle-right"></i></button>
 									</a>
 								</td>
@@ -103,7 +104,7 @@
 	function deleteCartItem(seq_user_id, cart_id) {
 		var flag = confirm("해당 상품을 장바구니에서 제거하시겠습니까?");
 		if (flag) {
-			var url = "${contextPath}/cart/"+seq_user_id+"/delete/"+cart_id;
+			var url = "/cart/"+seq_user_id+"/delete/"+cart_id;
 			location.href = url;
 		}
 	}
