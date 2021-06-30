@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.junsoo.shopping.common.vo.CartVO;
@@ -23,22 +24,70 @@ public class CartDAOImpl implements CartDAO {
 	
 	@Override
 	public void insertCart(CartVO cartVO) throws Exception {
-		sqlSession.insert(namespace + ".insertCart", cartVO);
+		
+		try {
+			
+			sqlSession.insert(namespace + ".insertCart", cartVO);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public List<HashMap<String, Object>> selectAllCart(int seq_user_id) throws Exception {
-		return sqlSession.selectList(namespace + ".selectAllCart", seq_user_id);
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectAllCart", seq_user_id);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public void deleteCart(CartVO cartVO) throws Exception {
-		sqlSession.delete(namespace + ".deleteCart", cartVO);
+		
+		try {
+			
+			sqlSession.delete(namespace + ".deleteCart", cartVO);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public void deleteAllCart(int seq_user_id) throws Exception {
-		sqlSession.delete(namespace + ".deleteAllCart", seq_user_id);
+		
+		try {
+			
+			sqlSession.delete(namespace + ".deleteAllCart", seq_user_id);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 	

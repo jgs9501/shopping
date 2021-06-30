@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.junsoo.shopping.common.vo.OrderDetailVO;
@@ -24,42 +25,138 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 	
 	@Override
 	public List<OrderDetailVO> selectAllOrderDetail(int seq_user_id) throws Exception {
-		return sqlSession.selectList(namespace + ".selectAllOrderDetail", seq_user_id);
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectAllOrderDetail", seq_user_id);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 	@Override
 	public List<OrderDetailVO> selectOrderDetail(OrderVO orderVO) throws Exception {
-		return sqlSession.selectList(namespace + ".selectOrderDetail", orderVO);
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectOrderDetail", orderVO);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 	@Override
 	public List<OrderDetailVO> selectOrderDetail(OrderDetailVO orderDetailVO) throws Exception {
-		return sqlSession.selectList(namespace + ".selectOrderDetail", orderDetailVO);
+		
+		try {
+			
+			return sqlSession.selectList(namespace + ".selectOrderDetail", orderDetailVO);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public int selectCntOrderDetail(HashMap<String, Object> map) throws Exception {
-		return sqlSession.selectOne(namespace + ".selectCntOrderDetail", map);
+		
+		try {
+			
+			return sqlSession.selectOne(namespace + ".selectCntOrderDetail", map);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 	@Override
 	public void insertOrderDetail(OrderDetailVO orderDetailVO) throws Exception {
-		sqlSession.insert(namespace + ".insertOrderDetail", orderDetailVO); 
+		
+		try {
+			
+			sqlSession.insert(namespace + ".insertOrderDetail", orderDetailVO); 
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public void updateOrderDetail(OrderDetailVO orderDetailVO) throws Exception {
-		sqlSession.update(namespace + ".updateOrderDetail", orderDetailVO);
+		
+		try {
+			
+			sqlSession.update(namespace + ".updateOrderDetail", orderDetailVO);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public void deleteOrderDetail(OrderDetailVO orderDetailVO) throws Exception {
-		sqlSession.delete(namespace + ".deleteOrderDetail", orderDetailVO);
+		
+		try {
+			
+			sqlSession.delete(namespace + ".deleteOrderDetail", orderDetailVO);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public void deleteOrderDetail(HashMap<String, Object> map) throws Exception {
-		sqlSession.delete(namespace + ".deleteOrderDetail", map);
+		
+		try {
+			
+			sqlSession.delete(namespace + ".deleteOrderDetail", map);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 

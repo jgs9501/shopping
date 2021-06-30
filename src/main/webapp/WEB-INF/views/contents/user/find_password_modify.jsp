@@ -22,7 +22,7 @@
 	    <jsp:include page="/WEB-INF/views/navbar/category_nav.jsp"></jsp:include>
     </nav>
 	<section class="container">
-		<form action="${contextPath}/contents/user/modifyPassword" method="post">
+		<form action="/user/modifyPassword" method="post">
 			<h2><strong>비밀번호 변경</strong></h2>
 			<hr>
 			<div class="center-auto" style="width: 400px;">

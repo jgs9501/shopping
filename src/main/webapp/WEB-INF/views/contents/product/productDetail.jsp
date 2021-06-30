@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -29,8 +30,8 @@
     </nav>
 	<section>
 	<ol class="breadcrumb container">
-		<li><a href="${contextPath}/index">메인</a></li>
-		<li><a href="${contextPath}/categories/${pdVO.productVO.category}">${categoryName}</a></li>
+		<li><a href="/index">메인</a></li>
+		<li><a href="/categories/${pdVO.productVO.category}">${categoryName}</a></li>
 		<li class="active">${pdVO.productVO.product_name}</li>
 	</ol>
 		<input type="hidden" id="seq_user_id" name="seq_user_id" value="${userVO.seq_user_id}"/>
@@ -57,16 +58,18 @@
 								<fmt:formatNumber var="avg" value="${rating_avg*10}"/>
 								<c:forEach begin="10" end="50" step="10" varStatus="idx">
 									<c:choose>
-										<c:when test="${avg >= idx.current}">
+										<c:when test="${(avg - idx.current) >= 0 }">
 											<span class="fa fa-star checked"></span>
 										</c:when>
 										<c:otherwise>
-											<c:if test="${(avg - idx.current) > 0}">
-												<span class="fa fa-star-half-o"></span>
-											</c:if>
-											<c:if test="${(avg - idx.current) <= 0}">
-												<span class="fa fa-star-o"></span>
-											</c:if>
+											<c:choose>
+												<c:when test="${(idx.current - avg) == 0 or (idx.current - avg) >= 10}">
+													<span class="fa fa-star-o"></span>
+												</c:when>
+												<c:otherwise>
+													<span class="fa fa-star-half-o"></span>
+												</c:otherwise>
+											</c:choose>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
@@ -74,22 +77,17 @@
 							</div>
 						</div>
 						<p class="product-description">${pdVO.productVO.product_desc}</p>
-						<c:if test="${pdVO.productVO.discount eq 0}">
-							<h4 class="price">가격: 
-								<span><fmt:formatNumber type="number" pattern="0,000" minIntegerDigits="1" value="${pdVO.productVO.product_price}"/> 원</span>
-							</h4>
-						</c:if>
-						<c:if test="${pdVO.productVO.discount ne 0}">
-							<h4 class="price">가격: 
-								<span class="discount" style="color: gray;">
-									<fmt:formatNumber type="number" pattern="0,000" minIntegerDigits="1" value="${pdVO.productVO.product_price}"/>
+						<div class="price">
+							<span>
+								<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${pdVO.productVO.product_price - pdVO.productVO.discount}"/>&nbsp;원
+							</span>
+							<c:if test="${pdVO.productVO.discount ne 0}">
+								<span class="discount">
+									<fmt:formatNumber type="number" minIntegerDigits="1" pattern="0,000" value="${pdVO.productVO.product_price}"/>&nbsp;원
 								</span>
-								<span>
-									<fmt:formatNumber type="number" pattern="0,000" minIntegerDigits="1" value="${pdVO.productVO.product_price - pdVO.productVO.discount}"/> 
-									원</span>
-							</h4>
-						</c:if>
-						<form class="form-horizontal form-width" method="post" action="${contextPath}/insertCart">
+							</c:if>
+						</div>
+						<form class="form-horizontal form-width" method="post" action="/insertCart">
 						    <input type="hidden" name="product_id" value="${productVO.product_id}"/>
 							<strong>상품개수  </strong>
 							<select name="amount">
@@ -151,7 +149,6 @@
 		  		<div class="col">
                     <div class="panel-body">
                         <form role="form">
-                        	
                             <fieldset>
                                 <div class="form-group">
 						  			<div id="star">
@@ -168,79 +165,7 @@
                         </form>
                     </div>
                 </div>
-                
-                <div class="container card" id="reply_card">
-					<c:forEach var="reply" items="${listReply}" varStatus="status">
-					    <div class="card-body">
-						    <div class="row">
-					        	<div class="col-xs-12" style="padding-top: 20px;">
-					        	    <p>
-					        	        <span class="float-left"><strong>${reply.user_name}</strong></span>
-					        	        <c:forEach begin="1" end="${reply.rating}" >
-							                <span><i class="fa fa-star checked"></i></span>
-					        	        </c:forEach>
-					        	        <c:forEach begin="1" end="${5 - reply.rating}">
-							                <span><i class="fa fa-star-o"></i></span>
-					        	        </c:forEach>
-					        	        <span>${reply.reg_date}</span>
-					        	    </p>
-					        	    <p>${reply.content}</p>
-					        	    <div id="">
-					        	    <c:set var="pId" value="${pdVO.productVO.seq_user_id}"/>
-					        	    <c:set var="uId" value="${userVO.seq_user_id }"></c:set>
-					        	    <c:if test="${(uId eq pId) and (reply.answer eq null)}">
-						        	    <p>
-						        	    	<input type="hidden" id="store_name" value="${pdVO.storeVO.store_name}">
-						        	      	<a class="float-left btn btn-default ml-2" id="answerBtn${status.index}" onclick="answer(${reply.seq_user_id}, ${reply.product_id}, ${status.index})"><i class="fa fa-reply"></i> 답글</a>
-						        	    </p>
-						        	   	<div id="form-answer${status.index}" class="form-group"></div>
-					        	    </c:if>
-					        	    </div>
-					        	</div>
-						    </div>
-						    <div id="answer_inner${status.index}">
-						    <c:if test="${(reply.answer ne null)}">
-						        <div class="card card-inner">
-					            	<div class="card-body">
-					            	    <div class="row">
-					                    	<div class="col-xs-12">
-					                    	    <p><strong>${pdVO.storeVO.store_name}</strong></p>
-					                    	    <div id="p_answer${status.index}"><p>${reply.answer}</p></div>
-					                    	    <c:if test="${uId eq pId}">
-					                    	    	<a class="float-right btn btn-default ml-2" onclick="answerUpdate(${reply.seq_user_id}, ${reply.product_id}, ${status.index})">수정</a>
-					                    	    	<a class="float-right btn btn-default ml-2" onclick="answerDelete(${reply.seq_user_id}, ${reply.product_id}, ${status.index})">삭제</a>
-					                    	    </c:if>
-					                    	</div>
-					            	    </div>
-					            	</div>
-						        </div>
-						    </c:if>
-						    </div>
-					    </div>
-					</c:forEach>
-				</div>
-				<nav style="text-align: center;">
-					<c:set var="info" value="${pagination}" />
-					<input type="hidden" id="productId" value="${productVO.product_id}">
-					<ul class="pagination">
-						<c:if test="${info.curPage ne 1}">
-							<li><a href="javascript:void(0);" onclick="fn_paging(${info.prevPage})" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-						</c:if>
-						<c:forEach var="pageNum" begin="${info.startPage}" end="${info.endPage}">
-						    <c:choose>
-					            <c:when test="${pageNum eq info.curPage}">
-								    <li class="active"><a href=javascript:void(0); onclick="fn_paging(${pageNum})">${pageNum} <span class="sr-only">(current)</span></a></li>
-							 	</c:when>
-							  	<c:otherwise>
-									<li><a href="javascript:void(0);" onclick="fn_paging(${pageNum})">${pageNum}</a></li>
-							  	</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:if test="${info.curPage ne info.pageCnt && info.pageCnt > 0}">
-							<li><a href="javascript:void(0);" onclick="fn_paging(${info.nextPage})" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-						</c:if>
-					</ul> 
-				</nav>
+                <jsp:include page="/WEB-INF/views/contents/product/productDetail_reply.jsp"/>
 		  	</div>
 			<div class="tab-pane fade" id="product_qa">
 				<p class="table-title">상품문의</p>
@@ -295,7 +220,7 @@
 		
 		$.ajax({
 			type: "POST",
-			url: "${contextPath}/postProductReply",
+			url: "/postProductReply",
 			dataType: "json",
 			contentType: "application/json",
 			data: JSON.stringify(form),
@@ -322,18 +247,18 @@
 			}
 		});
 		
-		function getStar(cnt) {
+		
+	})
+	function getStar(cnt) {
 			var html = "";
 			for(var i=0; i<cnt; i++) {
-				html += "<span><i class='fa fa-star checked' style='margin-left:5px;'></i></span>";
+				html += "<span><i class='fa fa-star checked'></i></span>";
 			} 
 			for(var i=cnt; i<5; i++) {
-				html += "<span><i class='fa fa-star-o' style='margin-left:5px;'></i></span>";
+				html += "<span><i class='fa fa-star-o'></i></span>";
 			}
 			return html;
 		}
-	})
-	
 	// seq : seq_user_id의 값, idx : foreach의 index값
 	function answer(uId, pId, idx) {
 		
@@ -450,22 +375,26 @@
 		})
 	}
 	
-	// 나중에 ajax 댓글 추가하자
 	function fn_paging(curPage) {
-		var product_id = $('#productId').val();
-		location.href = "/products/" + product_id + "?curPage=" + curPage;
-		
-/* 		$.ajax({
+		var product_id = $('#product_id').val();
+		var param = {
+				product_id : $('#product_id').val(),
+				curPage : curPage
+		};
+ 		$.ajax({
 			type: "POST",
-			url: "${contextPath}/postProductReplies",
-			dataType: "json",
-			contentType: "aplication/json",
-			data: {product_id: $('#productId').val(),
-				   curPage: curPage},
+			url: "/ajaxProductReply",
+			dataType: "html",
+			contentType: "application/json",
+			data: JSON.stringify(param),
 			success: function (data) {
-				
+				$('#reply_card').empty();
+				$('#reply_card').prepend(data);
+			},
+			error : function(request,status,error){
+				console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 			}
-		}) */
+		}) 
 	}
 		
 	function cartBtn(){

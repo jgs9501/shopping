@@ -24,7 +24,7 @@
     </nav>
 	<!-- 로그인 화면 -->
 	<section>
-		<form action="signOut" class="center-sort center-padding" method="post">
+		<form action="/signOut" class="center-sort center-padding" method="post">
 	 		<fieldset class="well well-lg center-padding width-limit">
 				<h1 class="text-center">JS Shop</h1><br>
 		    	<div class="form-group">

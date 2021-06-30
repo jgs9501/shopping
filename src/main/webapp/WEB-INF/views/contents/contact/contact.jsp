@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -76,7 +76,7 @@
 									<c:forEach var="notice" items="${noticeVO_list}">
 										<tr>
 											<th scope="row">${notice.notice_id }</th>
-											<td><a href="${contextPath}/contact/notice/${notice.notice_id}">[${notice.type}]&nbsp;${notice.title}</a></td>
+											<td><a href="/contact/notice/${notice.notice_id}">[${notice.type}]&nbsp;${notice.title}</a></td>
 											<td>${notice.views}</td>
 											<td>${notice.reg_date}</td>
 										</tr>
@@ -154,7 +154,7 @@
 													<c:if test="${userVO.auth eq 3}">
 														<div style="float: right;">
 															<form id="delete_form" action="" method="post">
-																<a class="btn btn-primary btn-lg" href="${contextPath}/qna/${qna.qna_id}" style="color: white;">수정</a>
+																<a class="btn btn-primary btn-lg" href="/qna/${qna.qna_id}" style="color: white;">수정</a>
 																<input class="btn btn-primary btn-lg" type="button" onclick="deleteQna(${qna.qna_id});" style="color: white;" value="삭제">
 															</form>
 														</div>
@@ -213,7 +213,7 @@
 						html += '<c:if test="${userVO.auth eq 3}">';
 						html += '<div style="float: right;">';
 						html += '<form id="delete_form" action="" method="post">';
-						html += '<a class="btn btn-primary btn-lg" href="${contextPath}/qna/'+item.qna_id+'" style="color: white;">수정</a> ';
+						html += '<a class="btn btn-primary btn-lg" href="/qna/'+item.qna_id+'" style="color: white;">수정</a> ';
 						html += '<input class="btn btn-primary btn-lg" type="button" onclick="deleteQna(${qna.qna_id});" style="color: white;" value="삭제">';
 						html += '</form>';
 						html += '</div></c:if>';

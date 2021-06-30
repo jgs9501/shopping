@@ -1,18 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <div class="container">
 	<div class="center-auto" style="width: 1000px;">
 		<div class="navbar" style="margin-bottom: 0px;">
 			<div style="float: left;">
-				<a href="${contextPath}/index"><img class="img-logo" alt="..."
-					src="${contextPath}/resources/images/JSShop_logo.png"></a>
+				<a href="/index"><img class="img-logo" alt="..."
+					src="/resources/images/JSShop_logo.png"></a>
 			</div>
 			<div style="float: left; margin-top: 30px; text-align: center; width: 600px;">
-				<form class="navbar-search" action="${contextPath}/categories?search=${search}" method="get">
+				<form class="navbar-search" action="/categories?search=${search}" method="get">
 					<div class="input-group"
 						style="text-align: center; margin-left: 10px;">
 						<div class="input-group-btn">
@@ -46,12 +46,12 @@
 				</form>
 			</div>
 			<div class="nav-right">
-				<a href="${contextPath}/cart"><i class="fas fa-shopping-cart" style="font-size: xx-large; color: black;"></i>
+				<a href="/cart"><i class="fas fa-shopping-cart" style="font-size: xx-large; color: black;"></i>
 					<br><span class="nav-span">장바구니</span>
 				</a>
 			</div>
 			<div class="nav-right">
-				<a href="${contextPath}/order/history">
+				<a href="/order">
 					<i class="fas fa-user-alt" style="font-size: xx-large; color: black;"></i>
 					<br>
 					<span class="nav-span">주문내역</span>
@@ -78,7 +78,7 @@
 			} else if (category == 0){
 				$('#btn_search').attr('disabled', 'disabled');
 			}
-			$('.navbar-search').attr('action', '${contextPath}/categories/'+category+'?search='+search);
+			$('.navbar-search').attr('action', '/categories/'+category+'?search='+search);
 		});
 		
 	});

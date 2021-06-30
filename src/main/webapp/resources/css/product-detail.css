@@ -21,8 +21,8 @@ table.info {
 	  line-height: 1.5;
 	  border-top: 1px solid #ccc;
 	  border-left: 1px solid #ccc;
-	  margin : 20px 10px; 
-	  align-items: center;
+	  margin : 20px 10px;
+	  width: 95%;
 }
 table.info th {
 	width: 150px;
@@ -91,7 +91,7 @@ table.info td {
 .card {
   margin-top: 50px;
   background: #ffffff;
-  padding: 3em;
+  padding: 1em;
   line-height: 1.5em; 
   border: thin;}
 
@@ -129,10 +129,12 @@ table.info td {
 
 .checked, .price span {
   color: #ff9f1a; }
-
+.price .discount {
+  color: #c0c0c0; }
+  
 .product-title, .rating, .product-description, .price, .vote, .sizes {
   margin-bottom: 15px; }
-
+.review-no {color: gray; font-size: 12px;}
 .product-title {
   margin-top: 0; }
 

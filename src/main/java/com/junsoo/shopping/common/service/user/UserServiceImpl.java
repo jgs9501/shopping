@@ -1,38 +1,39 @@
 package com.junsoo.shopping.common.service.user;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.junsoo.shopping.common.dao.user.UserDAO;
 import com.junsoo.shopping.common.dao.user.UserpointDAO;
+import com.junsoo.shopping.common.vo.SecurityUserVO;
 import com.junsoo.shopping.common.vo.UserVO;
 import com.junsoo.shopping.utils.WebUtils;
 import com.junsoo.shopping.utils.checker.RegexChecker;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserDetailsService, UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
 	@Inject
-	UserDAO dao;
+	private UserDAO userDAO;
 	
 	@Inject
-	UserpointDAO userPointDAO;
+	private UserpointDAO userPointDAO;
 
 	@Override
 	public String selectPassword(String userId) throws Exception {
-		return dao.selectPassword(userId);
+		return userDAO.selectPassword(userId);
 	}
 
 	@Override
@@ -42,14 +43,16 @@ public class UserServiceImpl implements UserService{
 				logger.error("selectOneUser method : Session does not exist. Login confirmation required");
 				return null;
 			}
+			return userDAO.selectOneUser(userVO);
 		} catch (NullPointerException npe) {
+			npe.printStackTrace();
 			logger.error(npe.getMessage());
-			return null;
+			throw npe;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e.getMessage());
-			return null;
+			throw e;
 		}
-		return dao.selectOneUser(userVO);
 	}
 	
 	@Override
@@ -61,13 +64,15 @@ public class UserServiceImpl implements UserService{
 				return null;
 			}
 		} catch (NullPointerException npe) {
+			npe.printStackTrace();
 			logger.error(npe.getMessage());
-			return null;
+			throw npe;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e.getMessage());
-			return null;
+			throw e;
 		}
-		return dao.selectOneUser(userId);
+		return userDAO.selectOneUser(userId);
 	}
 
 	@Override
@@ -78,20 +83,22 @@ public class UserServiceImpl implements UserService{
 				return null;
 			}
 		} catch (NullPointerException npe) {
+			npe.printStackTrace();
 			logger.error(npe.getMessage());
-			return null;
+			throw npe;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e.getMessage());
-			return null;
+			throw e;
 		}
-		return dao.selectOneUser(seq_user_id);
+		return userDAO.selectOneUser(seq_user_id);
 	}
 	
 	@Override
 	public void updateUser(UserVO userVO) throws Exception {
 		
 		logger.info("updateUser method called");
-		dao.updateUser(userVO);
+		userDAO.updateUser(userVO);
 	}
 
 	@Override
@@ -113,12 +120,16 @@ public class UserServiceImpl implements UserService{
 			}
 			if(error == "") {
 				userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
-				dao.updatePassword(userVO);
+				userDAO.updatePassword(userVO);
 			}
 		} catch (NullPointerException npe) {
+			npe.printStackTrace();
 			logger.error(npe.getMessage());
+			throw npe;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e.getMessage());
+			throw e;
 		}
 	}
 	
@@ -166,7 +177,7 @@ public class UserServiceImpl implements UserService{
 			// 비밀번호 암호화
 			userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
 			if(error == "") {
-				dao.insertUser(userVO);
+				userDAO.insertUser(userVO);
 				userPointDAO.insertUserPoint(userVO);
 			}
 			else {
@@ -176,13 +187,12 @@ public class UserServiceImpl implements UserService{
 			
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage() + error);
+			npe.printStackTrace();
 			throw npe;
-		} catch (DataIntegrityViolationException dive) {
-			logger.error(dive.getMessage() + error);
-			throw dive;
-		} catch (SQLIntegrityConstraintViolationException sql) {
-			logger.error(sql.getMessage() + error);
-			throw sql;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 		
 	}
@@ -190,13 +200,40 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int selectCheckId(String userId) throws Exception {
-		return dao.selectCheckId(userId);
+		return userDAO.selectCheckId(userId);
 	}
 	
 	@Override
 	public void signOut(UserVO userVO) throws Exception {
 		logger.info("signOut method called");
-		dao.signOut(userVO);
+		userDAO.signOut(userVO);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+		UserVO userVO = new UserVO();
+		try {
+			userVO = userDAO.selectOneUser(username);
+			if(userVO == null) {
+				throw new UsernameNotFoundException("loadUserByUsername() userVO is empty.");
+			}
+			// Spring security의 UserDetails
+			SecurityUserVO securityUserVO = new SecurityUserVO(userVO);
+			return securityUserVO;
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
+		} catch (UsernameNotFoundException unfe) {
+			logger.error(unfe.getMessage());
+			unfe.printStackTrace();
+			throw unfe;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw new Error(e.getMessage());
+		}
 	}
 
 }
