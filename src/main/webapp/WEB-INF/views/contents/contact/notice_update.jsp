@@ -34,7 +34,7 @@
 		<div class="container">
     		<h2><strong>공지사항수정</strong></h2>
     		<hr>
-    		<form class="form-horizontal" name="noticeVO" action="/admin/notice/${noticeVO.notice_id}/update" method="POST" enctype="multipart/form-data">
+    		<form class="form-horizontal" name="noticeVO" action="/admin/notice/${noticeVO.notice_id}/update?${_csrf.parameterName}=${_csrf.token}" method="POST" enctype="multipart/form-data">
     			<input type="hidden" name="_method" value="PATCH">
     			<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}">
     			<!-- 제목 -->

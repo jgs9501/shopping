@@ -88,6 +88,7 @@
 			<c:if test="${userVO.auth eq 3}">
 				<div style="float: right;">
 					<form id="notice_form" action="/admin/notice/${noticeVO.notice_id}/delete" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<a class="btn btn-primary btn-lg" href="/admin/notice/${noticeVO.notice_id}/update"
 							style="color: white;">수정</a>
 						<input class="btn btn-primary btn-lg" type="submit" style="color: white;" value="삭제">

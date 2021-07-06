@@ -34,6 +34,7 @@
     		<h2><strong>자주묻는질문 등록</strong></h2>
     		<hr>
     		<form class="form-horizontal" action="/admin/qna" method="post">
+    			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
     			<!-- 제목 -->
     			<div class="form-group">
 	    			<label class="col-sm-1 control-label"><span class="emphasis">*</span>제목</label>
