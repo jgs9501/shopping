@@ -9,6 +9,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<title>JS Shop</title>
 	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
 	<script src="${contextPath}/resources/js/bootstrap-select.js"></script>
@@ -27,7 +29,8 @@
 			<li class="active">상품등록</li>
 		</ol>
 		<div class="container">
-			<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()" enctype="multipart/form-data">
+			<form class="form-horizontal form-width" action="/product/release?${_csrf.parameterName}=${_csrf.token}"
+			 method="post" onsubmit="return checkInfo()" enctype="multipart/form-data">
 				<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}"> 
 				<!-- 상품이름 -->
 		    	<div id="productName" class="form-group has-feedback">
@@ -155,6 +158,16 @@
     </footer>
 </body>
 <script type="text/javascript">
+	$(function csrf() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(function() {
+			$(document).ajaxSend(function(e, xhr, options) {
+				xhr.setRequestHeader(header, token);
+			});
+		});
+	})
+
 	var checkNumber = RegExp(/^[0-9]{1,10}$/);
 	function checkInfo() {
 		$('span').empty();

@@ -32,7 +32,7 @@ public class ReplyController {
 	@Inject 
 	private ProductDAO productDAO;
 	
-	@RequestMapping(value = "postProductReply", method = RequestMethod.POST)
+	@RequestMapping(value = "/postProductReply", method = RequestMethod.POST)
 	public ProductReplyVO insertProductReply(@RequestBody ProductReplyVO prVO) throws Exception {
 		
 		int flag = replyService.insertProductReply(prVO);
@@ -42,7 +42,7 @@ public class ReplyController {
 		return replyService.selectProductReply(prVO);
 	}
 	
-	@RequestMapping(value = "ajaxProductReply", method = RequestMethod.POST)
+	@RequestMapping(value = "/ajaxProductReply", method = RequestMethod.POST)
 	public ModelAndView ajaxProductReply(@RequestBody HashMap<String, Object> param) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
@@ -63,7 +63,7 @@ public class ReplyController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "postProductReplyAnswer", method = RequestMethod.POST)
+	@RequestMapping(value = "/postProductReplyAnswer", method = RequestMethod.POST)
 	public ProductReplyVO updateProductReplyAnswer(@RequestBody ProductReplyVO prVO) throws Exception {
 		
 		int flag = replyService.updateProductReplyAnswer(prVO);
@@ -74,7 +74,7 @@ public class ReplyController {
 		return replyService.selectProductReply(prVO);
 	}
 	
-	@RequestMapping(value = "postProductReplyAnswerDelete", method = RequestMethod.POST)
+	@RequestMapping(value = "/postProductReplyAnswerDelete", method = RequestMethod.POST)
 	public int deleteProductReplyAnswer(@RequestBody ProductReplyVO prVO) throws Exception {
 		
 		replyService.deleteProductReplyAnswer(prVO);

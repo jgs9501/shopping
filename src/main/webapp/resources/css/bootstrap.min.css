@@ -5572,11 +5572,11 @@ to {
 }
 
 .media-right, .media>.pull-right {
-	padding-left: 10px
+	padding-left: 5px
 }
 
 .media-left, .media>.pull-left {
-	padding-right: 10px
+	padding-right: 5px
 }
 
 .media-body, .media-left, .media-right {

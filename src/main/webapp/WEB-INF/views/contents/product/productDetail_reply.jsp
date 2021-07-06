@@ -27,11 +27,8 @@
 						<c:set var="uId" value="${userVO.seq_user_id }" />
 						<c:if test="${(uId eq pId) and (reply.answer eq null)}">
 							<p>
-								<input type="hidden" id="store_name"
-									value="${pdVO.storeVO.store_name}"> <a
-									class="float-left btn btn-default ml-2"
-									id="answerBtn${status.index}"
-									onclick="answer(${reply.seq_user_id}, ${reply.product_id}, ${status.index})">
+								<input type="hidden" id="store_name" value="${pdVO.storeVO.store_name}"> 
+								<a class="float-left btn btn-default ml-2" id="answerBtn${status.index}" onclick="answer(${reply.seq_user_id}, ${reply.product_id}, ${status.index})">
 									<i class="fa fa-reply"></i> 답글
 								</a>
 							</p>

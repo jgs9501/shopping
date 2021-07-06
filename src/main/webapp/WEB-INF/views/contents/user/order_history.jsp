@@ -7,6 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <script src="${contextPath}/resources/js/jquery.min.js"></script> 
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
@@ -35,6 +37,7 @@
 				<c:otherwise>
 				<c:forEach var="order" items="${orders}" varStatus="o">
 					<form id="frmSubmit" name="frmSubmit" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<fmt:parseDate var="date" value="${order.order_date}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
 						<span style="font-size: x-large;"><strong><fmt:formatDate value="${date}" pattern="yyyy.MM.dd"/>&nbsp;</strong></span>
 						<span style="font-size: large;">주문번호&nbsp;</span>
@@ -110,6 +113,16 @@
     
     <script type="text/javascript">
     
+    $(function csrf() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(function() {
+		    $(document).ajaxSend(function(e, xhr, options) {
+		        xhr.setRequestHeader(header, token);
+		    });
+		});
+	})
+	
     function subBtn(idx) {
 		let order_id = $('#oi'+idx).val();
 		let seq_user_id = $('#sui'+idx).val();
@@ -143,7 +156,7 @@
 				data : JSON.stringify(param),
 				contentType : "application/json",
 				success : function () {
-					location.replace("/order/history");
+					location.replace("/order");
 				},
 				error : function () {
 				}
@@ -161,7 +174,7 @@
 		console.log(index);
 		if(result) {
 			form.method = "POST";
-			form.action = "order/cancel";
+			form.action = "/order/cancel";
 			form.submit();
 		}
 	}

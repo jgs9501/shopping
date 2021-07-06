@@ -21,6 +21,7 @@
 			<div class="collapse navbar-collapse" id="navbar1">
 				<ul class="nav navbar-nav">
 					<!-- auth: 1(소비자), 2(판매자) 3(관리자) -->
+					<security:authentication var="user" property="principal" />
 					<security:authorize access="hasRole('ROLE_STORE')"> 
 						<li><a href="/product/release">상품등록</a></li>
 						<li><a href="/product/release/${userVO.seq_user_id}">상품조회</a></li>
@@ -30,8 +31,8 @@
 						<li><a href="#">Link</a></li>
 					</security:authorize>
 					<security:authorize access="hasRole('ROLE_ADMIN')"> 
-						<li><a href="${contextPath}/notice">공지등록</a></li>
-						<li><a href="${contextPath}/qna">질의등록</a></li>
+						<li><a href="${contextPath}/admin/notice">공지등록</a></li>
+						<li><a href="${contextPath}/admin/qna">질의등록</a></li>
 						<li><a href="#">권한설정</a></li>
 					</security:authorize>
 				</ul>
@@ -57,6 +58,7 @@
 										</button>
 									</div>
 									<form action="/user/point" method="post">
+										<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 								      	<div class="modal-body">
 								      		<p>물품을 결제하기 위해 사용하는 테스트용 보유포인트 추가하는 기능입니다.</p>
 									     		<p>추가할 포인트를 입력해주세요.</p><br>

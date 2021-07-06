@@ -27,7 +27,7 @@
 					<c:forEach var="notice" items="${noticeVO_list}">
 						<tr>
 							<th scope="row">${notice.notice_id }</th>
-							<td><a href="/contact/notice/${notice.notice_id}">[${notice.type}]&nbsp;${notice.title}</a></td>
+							<td><a href="/notice/${notice.notice_id}">[${notice.type}]&nbsp;${notice.title}</a></td>
 							<td>${notice.views}</td>
 							<td>${notice.reg_date}</td>
 						</tr>

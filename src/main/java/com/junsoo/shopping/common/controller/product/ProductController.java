@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +27,11 @@ import com.junsoo.shopping.common.dao.product.ProductDAO;
 import com.junsoo.shopping.common.dao.reply.ReplyDAO;
 import com.junsoo.shopping.common.service.product.ProductService;
 import com.junsoo.shopping.common.service.reply.ReplyService;
+import com.junsoo.shopping.common.service.user.UserService;
 import com.junsoo.shopping.common.vo.ProductDetailVO;
 import com.junsoo.shopping.common.vo.ProductReplyVO;
 import com.junsoo.shopping.common.vo.ProductVO;
+import com.junsoo.shopping.common.vo.UserVO;
 import com.junsoo.shopping.common.vo.paging.PaginationInfo;
 import com.junsoo.shopping.utils.checker.ValueChecker;
 
@@ -38,14 +41,19 @@ public class ProductController {
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 	@Inject
-	ProductService productService;
-	@Inject
-	ProductDAO productDAO;
+	private UserService userService;
 	
 	@Inject
-	ReplyDAO replyDAO;
+	private ProductService productService;
+	
 	@Inject
-	ReplyService replyService;
+	private ProductDAO productDAO;
+	
+	@Inject
+	private ReplyDAO replyDAO;
+	
+	@Inject
+	private ReplyService replyService;
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
@@ -58,9 +66,16 @@ public class ProductController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/product/release", method = RequestMethod.GET)
-	public String getProductRelease(HttpSession session) throws Exception {
+	public ModelAndView getProductRelease(HttpServletRequest request) throws Exception {
 		
-		return "contents/product/release";
+		ModelAndView mv = new ModelAndView();
+		UserVO userVO = new UserVO();
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
+		
+		mv.addObject("userVO", userVO);
+		mv.setViewName("/contents/product/release");
+		return mv;
 	}
 	
 	/**
@@ -258,6 +273,10 @@ public class ProductController {
 		
 		ModelAndView mv = new ModelAndView();
 		ValueChecker vc = new ValueChecker();
+		UserVO userVO = new UserVO();
+		
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
 		String categoryName = ""; 
 		
 		if(product_id < 1) {
@@ -282,6 +301,7 @@ public class ProductController {
 		categoryName = vc.getCategoryName(pdVO.getProductVO().getCategory());
 		
 		mv.setViewName("/contents/product/productDetail");
+		mv.addObject("userVO", userVO);
 		mv.addObject("listProduct", listProduct);
 		mv.addObject("replyCount", reply_count);
 		mv.addObject("rating_avg", rating_avg);
