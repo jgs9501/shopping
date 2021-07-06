@@ -130,16 +130,17 @@ public class OrderController {
 			orderVO = orderService.selectOrder(orderVO);
 			ArrayList<OrderDetailVO> orderDetailList = orderDetailService.selectOrderDetail(orderDetailsVO);
 
+			mv.addObject("userVO", userVO);
 			mv.addObject("order", orderVO);
 			mv.addObject("orderDetailList", orderDetailList);
-			mv.setViewName("contents/payment/completePayment");
+			mv.setViewName("/contents/payment/completePayment");
 		}
 		else if(flag == -2){
-			mv.setViewName("contents/error");
+			mv.setViewName("/contents/error");
 			mv.addObject("result", "잔여 포인트가 부족합니다.");
 		}
 		else {
-			mv.setViewName("contents/error");
+			mv.setViewName("/contents/error");
 		}
 		
 		return mv;

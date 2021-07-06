@@ -4,74 +4,16 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>비밀번호변경</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
 	<script src="${contextPath}/resources/js/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">	
-	<script type="text/javascript">
-		var passwordCheck = RegExp(/^[A-Za-z0-9!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]{8,16}$/);
-		var pwFlag = false;
-		// 비밀번호 동일 체크
-		var pwCheckFlag = false;
-		$(function () {
-			// 패스워드
-			$('#password').blur(function () {
-				// 입력한 텍스트의 유효성 체크 (false)
-				// - 특수문자 + 영문 대/소문자 + 숫자
-				if(!passwordCheck.test($('#password').val())) {
-					$('#spanPassword').text("8자리 이상인 특수문자, 영문, 숫자만 입력가능합니다.").css("color","red");
-					$('#inputPw').removeClass('has-success').addClass('has-error');
-					$('#inputPwIcon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
-					pwFlag = false;
-				}
-				// 입력한 텍스트의 유효성 체크 (true)
-				else {
-					$('#spanPassword').text("");
-					$('#inputPw').removeClass('has-error').addClass('has-success');
-					$('#inputPwIcon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-					pwFlag = true;
-				}
-			})
-			// 패스워드 확인
-			$('#checkPassword').blur(function () {
-				// 입력한 텍스트의 유효성 체크 (false)
-				// 입력한 패스워드를 이중체크하여 값이 동일하지 않을 시, 에러를 나타내는 문자출력과 에러 디자인으로 변경한다
-				if($('#password').val() != $('#checkPassword').val()) {
-					$('#spanCheckPassword').text("입력한 패스워드가 다릅니다.").css("color","red");
-					$('#inputCheckPw').removeClass('has-success').addClass('has-error');
-					$('#inputPwCheckIcon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
-					$('#checkPassword').text("");
-					pwCheckFlag = false;
-				}
-				// 입력한 텍스트의 유효성 체크 (true)
-				// 입력한 패스워드를 이중체크하여 값이 동일할 시, 확인 디자인으로 변경한다 
-				else {
-					$('#spanCheckPassword').text("");
-					$('#inputCheckPw').removeClass('has-error').addClass('has-success');
-					$('#inputPwCheckIcon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-					pwCheckFlag = true;
-				}
-			})
-		})
-		function checkInfo() {
-				// 비밀번호 확인 : Ajax에서 pwFlag의 값을 불러옴 (정상치 : true)
-				if(!pwFlag) {
-					$('#spanPassword').text("비밀번호를 확인해주세요.").css("color","red");
-					$('#password').focus();
-					return false;
-				}
-				// 비밀번호 동일입력 확인
-				if(!pwCheckFlag) {
-					$('#spanCheckPassword').text("비밀번호를 다시 입력해주세요.").css("color","red");
-					$('#checkPassword').focus();
-					return false;
-				}
-		}
-	</script>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -143,5 +85,75 @@
     <footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
     </footer>
+    
+    <script type="text/javascript">
+		$(function csrf() {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(function() {
+			    $(document).ajaxSend(function(e, xhr, options) {
+			        xhr.setRequestHeader(header, token);
+			    });
+			});
+		})
+		var passwordCheck = RegExp(/^[A-Za-z0-9!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]{8,16}$/);
+		var pwFlag = false;
+		// 비밀번호 동일 체크
+		var pwCheckFlag = false;
+		$(function () {
+			// 패스워드
+			$('#password').blur(function () {
+				// 입력한 텍스트의 유효성 체크 (false)
+				// - 특수문자 + 영문 대/소문자 + 숫자
+				if(!passwordCheck.test($('#password').val())) {
+					$('#spanPassword').text("8자리 이상인 특수문자, 영문, 숫자만 입력가능합니다.").css("color","red");
+					$('#inputPw').removeClass('has-success').addClass('has-error');
+					$('#inputPwIcon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+					pwFlag = false;
+				}
+				// 입력한 텍스트의 유효성 체크 (true)
+				else {
+					$('#spanPassword').text("");
+					$('#inputPw').removeClass('has-error').addClass('has-success');
+					$('#inputPwIcon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+					pwFlag = true;
+				}
+			})
+			// 패스워드 확인
+			$('#checkPassword').blur(function () {
+				// 입력한 텍스트의 유효성 체크 (false)
+				// 입력한 패스워드를 이중체크하여 값이 동일하지 않을 시, 에러를 나타내는 문자출력과 에러 디자인으로 변경한다
+				if($('#password').val() != $('#checkPassword').val()) {
+					$('#spanCheckPassword').text("입력한 패스워드가 다릅니다.").css("color","red");
+					$('#inputCheckPw').removeClass('has-success').addClass('has-error');
+					$('#inputPwCheckIcon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+					$('#checkPassword').text("");
+					pwCheckFlag = false;
+				}
+				// 입력한 텍스트의 유효성 체크 (true)
+				// 입력한 패스워드를 이중체크하여 값이 동일할 시, 확인 디자인으로 변경한다 
+				else {
+					$('#spanCheckPassword').text("");
+					$('#inputCheckPw').removeClass('has-error').addClass('has-success');
+					$('#inputPwCheckIcon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+					pwCheckFlag = true;
+				}
+			})
+		})
+		function checkInfo() {
+				// 비밀번호 확인 : Ajax에서 pwFlag의 값을 불러옴 (정상치 : true)
+				if(!pwFlag) {
+					$('#spanPassword').text("비밀번호를 확인해주세요.").css("color","red");
+					$('#password').focus();
+					return false;
+				}
+				// 비밀번호 동일입력 확인
+				if(!pwCheckFlag) {
+					$('#spanCheckPassword').text("비밀번호를 다시 입력해주세요.").css("color","red");
+					$('#checkPassword').focus();
+					return false;
+				}
+		}
+	</script>
 </body>
 </html>

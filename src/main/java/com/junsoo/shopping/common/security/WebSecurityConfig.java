@@ -37,10 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().and()
 			.authorizeRequests()
-			.antMatchers("/user/regist", "/user/password").anonymous()
+			.antMatchers("/user/regist", "/user/password", "/login").anonymous()
 			.antMatchers("/cart*", "/order*", "/payment*", "/user/*", "/logout").authenticated()
 			.antMatchers("/product/release*").hasAuthority("ROLE_STORE")
-			.antMatchers("/categories/*", "/contact/*", "/contents/*", "/products/*", "/index").permitAll()
+			.antMatchers("/admin*").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/categories/*", "/contact/*", "/qna*", "/products/*", "/index").permitAll()
 			.anyRequest().permitAll()
 			.and()
 		.formLogin()

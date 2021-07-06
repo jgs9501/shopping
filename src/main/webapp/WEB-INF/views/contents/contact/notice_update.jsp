@@ -7,18 +7,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>고객센터</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
-<script src="${contextPath}/resources/js/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/jquery.number.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<script src="${contextPath}/resources/js/swiper.min.js"></script>
+	<meta charset="UTF-8">
+	<title>고객센터</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script>
+	<script src="${contextPath}/resources/js/jquery.number.min.js"></script>
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
 </head>
 <body>
 	<header>
@@ -32,7 +34,7 @@
 		<div class="container">
     		<h2><strong>공지사항수정</strong></h2>
     		<hr>
-    		<form class="form-horizontal" name="noticeVO" action="/contact/notice/${noticeVO.notice_id}/update" method="POST" enctype="multipart/form-data">
+    		<form class="form-horizontal" name="noticeVO" action="/admin/notice/${noticeVO.notice_id}/update" method="POST" enctype="multipart/form-data">
     			<input type="hidden" name="_method" value="PATCH">
     			<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}">
     			<!-- 제목 -->

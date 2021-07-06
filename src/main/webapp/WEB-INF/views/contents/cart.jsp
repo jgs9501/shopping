@@ -9,6 +9,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
@@ -101,6 +103,16 @@
     </footer>
 
 <script>
+	$(function () {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(function() {
+		    $(document).ajaxSend(function(e, xhr, options) {
+		        xhr.setRequestHeader(header, token);
+		    });
+		});
+	})
+	
 	function deleteCartItem(seq_user_id, cart_id) {
 		var flag = confirm("해당 상품을 장바구니에서 제거하시겠습니까?");
 		if (flag) {

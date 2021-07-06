@@ -139,6 +139,16 @@
 	</footer>
 
 	<script type="text/javascript">
+	
+		$(function csrf() {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(function() {
+			    $(document).ajaxSend(function(e, xhr, options) {
+			        xhr.setRequestHeader(header, token);
+			    });
+			});
+		})
 		// 문자 유효성 검사 선언
 		var nameCheck = RegExp(/^[가-힣]{2,10}$/);
 		//var emailCheck = RegExp(/^[A-Za-z0-9]{5,20}$/);

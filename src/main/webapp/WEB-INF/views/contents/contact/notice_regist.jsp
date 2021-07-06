@@ -9,6 +9,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
@@ -31,7 +33,7 @@
     	<div class="container">
     		<h2><strong>공지사항등록</strong></h2>
     		<hr>
-    		<form class="form-horizontal" action="/notice" method="post" enctype="multipart/form-data">
+    		<form class="form-horizontal" action="/admin/notice" method="post" enctype="multipart/form-data">
     			<!-- 제목 -->
     			<div class="form-group">
 	    			<label class="col-sm-1 control-label"><span class="emphasis">*</span>제목</label>

@@ -306,7 +306,7 @@ public class UserController {
 		userpointMap.put("point", point);
 		userpointService.updateTestPoint(userpointMap);
 		
-		return "/index";
+		return "redirect:/index";
 	}
 	
 	/**

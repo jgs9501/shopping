@@ -7,8 +7,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>JS SHOP</title>
+<meta charset="UTF-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <script src="${contextPath}/resources/js/jquery.min.js"></script> 
 <script src="${contextPath}/resources/js/swiper.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -87,7 +89,8 @@
 								</span>
 							</c:if>
 						</div>
-						<form class="form-horizontal form-width" method="post" action="/insertCart">
+						<form class="form-horizontal form-width" method="post" action="/cart">
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						    <input type="hidden" name="product_id" value="${productVO.product_id}"/>
 							<strong>상품개수  </strong>
 							<select name="amount">
@@ -96,7 +99,7 @@
 								</c:forEach>
 							</select>
 							<div>
-								<button class="add-to-cart btn btn-default" style="margin-top: 10px;" onclick="javascript:cartBtn()">장바구니 담기</button>
+								<button type="submit" class="add-to-cart btn btn-default" style="margin-top: 10px;">장바구니 담기</button>
 							</div>
 						</form>
 					</div>
@@ -184,6 +187,16 @@
 	</footer>
 
 <script>
+
+	$(function () {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	})
+
     var rate = 0;
     $(function () {
         var starEls = document.querySelectorAll('#star span.star');
@@ -212,7 +225,7 @@
     $(document).on('click', '#btnReply', function(e) {
 		let form = {
 			seq_user_id : $('#seq_user_id').val(),
-			product_id : "${pdVO.productVO.product_id}",
+			product_id : $('#product_id').val(),
 			user_name : $('#user_name').val(),
 			content : $('#content').val(),
 			rating : rate
@@ -277,7 +290,7 @@
 			};
 			$.ajax({
 				type: "POST",
-				url: "${contextPath}/postProductReplyAnswer",
+				url: "/postProductReplyAnswer",
 				dataType: "json",
 				contentType: "application/json",
 				data: JSON.stringify(form),
@@ -317,7 +330,7 @@
 			};
 			$.ajax({
 				type: "POST",
-				url: "${contextPath}/postProductReplyAnswer",
+				url: "/postProductReplyAnswer",
 				dataType: "json",
 				contentType: "application/json",
 				data: JSON.stringify(form),
@@ -355,7 +368,7 @@
 		
 		$.ajax({
 			type : "POST",
-			url : "${contextPath}/postProductReplyAnswerDelete",
+			url : "/postProductReplyAnswerDelete",
 			dataType : "json",
 			contentType : "application/json",
 			data : JSON.stringify(form),
