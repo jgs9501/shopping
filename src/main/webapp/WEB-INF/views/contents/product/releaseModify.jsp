@@ -9,58 +9,27 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<title>JS Shop</title>
 	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
 	<script src="${contextPath}/resources/js/bootstrap-select.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-	
-	<script type="text/javascript">
-	var checkNumber = RegExp(/^[0-9]{1,10}$/);
-	function checkInfo() {
-		$('span').empty();
-		if($('#product_name').val() == "") {
-			$('#spanProductName').text("상품 이름을 입력해주세요").css("color", "red");
-			$('#product_name').focus();
-			return false;
-		}
-		if(!checkNumber.test($('#product_cnt').val())) {
-			$('#spanProductCnt').text("상품 개수를 입력해주세요").css("color", "red");
-			$('#product_cnt').focus();
-			return false;
-		}
-		if(!checkNumber.test($('#product_price').val())) {
-			$('#spanProductPrice').text("상품 가격을 입력해주세요").css("color", "red");
-			$('#product_price').focus();
-			return false;
-		}
-		if($('#product_desc').val() == "") {
-			$('#spanProductDesc').text("상품 설명을 입력해주세요").css("color", "red");
-			$('#product_desc').focus();
-			return false;
-		}
-		if($('#discount').val() == "") {
-			$('#spanDiscount').text("할인 가격을 입력해주세요.").css("color", "red");
-			$('#discount').focus();
-			return false;
-		}
-		return true;
-	}
-	</script>
 </head>
 <body>
 	<header>
 		<jsp:include page="/WEB-INF/views/header/header.jsp"></jsp:include>
 	</header>
 	
+	<section>
 	<ol class="breadcrumb container">
 		<li><a href="/index">메인</a></li>
 		<li><a href="/product/release/${product.seq_user_id}">상품조회</a></li>
 		<li class="active">${product.product_name}</li>
 	</ol>
 	
-	<section>
 		<div class="container">
 			<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()" enctype="multipart/form-data">
 				<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}"> 
@@ -188,6 +157,48 @@
     <footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer/footer.jsp"></jsp:include>
     </footer>
+	<script type="text/javascript">
 	
+		$(function csrf() {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(function() {
+				$(document).ajaxSend(function(e, xhr, options) {
+					xhr.setRequestHeader(header, token);
+				});
+			});
+		})
+		var checkNumber = RegExp(/^[0-9]{1,10}$/);
+		function checkInfo() {
+			$('span').empty();
+			if ($('#product_name').val() == "") {
+				$('#spanProductName').text("상품 이름을 입력해주세요").css("color", "red");
+				$('#product_name').focus();
+				return false;
+			}
+			if (!checkNumber.test($('#product_cnt').val())) {
+				$('#spanProductCnt').text("상품 개수를 입력해주세요").css("color", "red");
+				$('#product_cnt').focus();
+				return false;
+			}
+			if (!checkNumber.test($('#product_price').val())) {
+				$('#spanProductPrice').text("상품 가격을 입력해주세요")
+						.css("color", "red");
+				$('#product_price').focus();
+				return false;
+			}
+			if ($('#product_desc').val() == "") {
+				$('#spanProductDesc').text("상품 설명을 입력해주세요").css("color", "red");
+				$('#product_desc').focus();
+				return false;
+			}
+			if ($('#discount').val() == "") {
+				$('#spanDiscount').text("할인 가격을 입력해주세요.").css("color", "red");
+				$('#discount').focus();
+				return false;
+			}
+			return true;
+		}
+	</script>
 </body>
 </html>

@@ -41,9 +41,14 @@ public class ReplyServiceImpl implements ReplyService{
 				return null;
 			}
 			return replyDAO.selectProductReply(prVO);
+		} catch (NumberFormatException nfe) {
+			logger.error(nfe.getMessage());
+			nfe.printStackTrace();
+			throw nfe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -57,9 +62,14 @@ public class ReplyServiceImpl implements ReplyService{
 		map.put("pageSize", paginationInfo.getPageSize());
 		try {
 			return replyDAO.selectProductReplies(map);
+		} catch (NumberFormatException nfe) {
+			logger.error(nfe.getMessage());
+			nfe.printStackTrace();
+			throw nfe;
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-			return null;
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -70,8 +80,14 @@ public class ReplyServiceImpl implements ReplyService{
 			if(replyDAO.selectProductReplyCount(product_id) > 0) {
 				return replyDAO.selectProductAvgRating(product_id);
 			}
+		} catch (NumberFormatException nfe) {
+			logger.error(nfe.getMessage());
+			nfe.printStackTrace();
+			throw nfe;
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 		return 0.0f;
 	}
@@ -103,20 +119,28 @@ public class ReplyServiceImpl implements ReplyService{
 		hashMap.put("seq_user_id", prVO.getSeq_user_id());
 		hashMap.put("product_id", prVO.getProduct_id());
 		try {
-			// 해당 제품의 구입 이력 확인
-			if(productService.selectBuyProduct(hashMap) == null) {
-				logger.warn("couldn't write the product reply. seq_user_id : " + prVO.getSeq_user_id() + 
+			// 구입내역
+			Map<String, Object> order_historyMap = new HashMap<String, Object>();
+			order_historyMap = productService.selectBuyProduct(hashMap);
+			// 해당 제품의 구매 이력 확인
+			// 구매이력, 리뷰 작성 여부 확인, 평점 입력 확인
+			if(order_historyMap == null || order_historyMap.get("content") != null || order_historyMap.get("rating") != null) {
+				logger.info("couldn't write the product reply. seq_user_id : " + prVO.getSeq_user_id() + 
 						    " product_id : " + prVO.getProduct_id() + 
 						    " user_name : " + prVO.getUser_name());
 				return -1;
 			}
-			// 해당 제품의 현재 아이디와 중복된 댓글 확인
 			replyDAO.insertProductReply(prVO);
 			return 1;
+		} catch (NumberFormatException nfe) {
+			logger.error(nfe.getMessage());
+			nfe.printStackTrace();
+			throw nfe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return 0;
-		} 
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
@@ -133,9 +157,14 @@ public class ReplyServiceImpl implements ReplyService{
 				return -1;
 			}
 			replyDAO.updateProductReplyAnswer(prVO);
+		} catch (NumberFormatException nfe) {
+			logger.error(nfe.getMessage());
+			nfe.printStackTrace();
+			throw nfe;
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-			return 0;
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 		return 1;
 	}
@@ -154,9 +183,14 @@ public class ReplyServiceImpl implements ReplyService{
 				return -1;
 			}
 			replyDAO.deleteProductReplyAnswer(prVO);
+		} catch (NumberFormatException nfe) {
+			logger.error(nfe.getMessage());
+			nfe.printStackTrace();
+			throw nfe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return 0;
+			e.printStackTrace();
+			throw e;
 		}
 		return 1;
 	}

@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>

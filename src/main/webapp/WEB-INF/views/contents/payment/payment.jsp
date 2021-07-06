@@ -8,6 +8,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
 	<script src="${contextPath}/resources/js/jquery.number.min.js"></script> 
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
@@ -29,6 +31,7 @@
     </nav>
 	<section>
 		<form id="frmSubmit" name="frmSubmit">
+			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 			<div class="container section">
 				<h2><strong>주문/결제</strong></h2>
 				<hr>

@@ -29,7 +29,7 @@ public class QnaController {
 	private QnaService qnaService;
 	
 	// 자주묻는질문 등록페이지 호출하는 메소드
-	@RequestMapping(value = "/qna", method = RequestMethod.GET) 
+	@RequestMapping(value = "/admin/qna", method = RequestMethod.GET) 
 	public ModelAndView getQna(HttpServletRequest request) throws Exception{
 		
 		ModelAndView mv = new ModelAndView();
@@ -48,7 +48,7 @@ public class QnaController {
 	}
 	
 	// 자주묻는질문 등록페이지에서 등록할 경우, DB로 입력처리하는 메소드
-	@RequestMapping(value = "/qna", method = RequestMethod.POST) 
+	@RequestMapping(value = "/admin/qna", method = RequestMethod.POST) 
 	public ModelAndView postQna(HttpServletRequest request,
 									@ModelAttribute QnaVO qnaVO) throws Exception{
 		
@@ -77,20 +77,8 @@ public class QnaController {
 		return mv;
 	}
 	
-	// 자주묻는질문 Ajax 통신
-	// 해당 종류 리스트 호출 메소드
-	@RequestMapping(value = "/ajaxQnaList", method = RequestMethod.POST)
-	public List<QnaVO> ajaxQnaList(@RequestBody HashMap<String, Object> hashMap) throws Exception {
-		
-		List<QnaVO> list = new ArrayList<QnaVO>();
-		String type = String.valueOf(hashMap.get("type"));
-		list = qnaService.selectTypeQna(type);
-		
-		return list;
-	}
-	
 	// 자주묻는질문 수정 페이지 호출 메소드
-	@RequestMapping(value = "/qna/{qna_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/qna/{qna_id}", method = RequestMethod.GET)
 	public ModelAndView getQnaUpdate(HttpServletRequest request,
 									@PathVariable int qna_id) throws Exception {
 		
@@ -111,7 +99,7 @@ public class QnaController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/qna/{qna_id}/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/qna/{qna_id}/update", method = RequestMethod.POST)
 	public ModelAndView patchQnaUpdate(HttpServletRequest request,
 									@ModelAttribute QnaVO qnaVO) throws Exception {
 		
@@ -137,7 +125,7 @@ public class QnaController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/qna/{qna_id}/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/qna/{qna_id}/delete", method = RequestMethod.POST)
 	public ModelAndView deleteQna(HttpServletRequest request,
 								@PathVariable int qna_id) throws Exception {
 		

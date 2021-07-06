@@ -11,6 +11,8 @@
 <title>고객센터</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main.css">
@@ -76,7 +78,7 @@
 									<c:forEach var="notice" items="${noticeVO_list}">
 										<tr>
 											<th scope="row">${notice.notice_id }</th>
-											<td><a href="/contact/notice/${notice.notice_id}">[${notice.type}]&nbsp;${notice.title}</a></td>
+											<td><a href="/notice/${notice.notice_id}">[${notice.type}]&nbsp;${notice.title}</a></td>
 											<td>${notice.views}</td>
 											<td>${notice.reg_date}</td>
 										</tr>
@@ -154,7 +156,7 @@
 													<c:if test="${userVO.auth eq 3}">
 														<div style="float: right;">
 															<form id="delete_form" action="" method="post">
-																<a class="btn btn-primary btn-lg" href="/qna/${qna.qna_id}" style="color: white;">수정</a>
+																<a class="btn btn-primary btn-lg" href="/admin/qna/${qna.qna_id}" style="color: white;">수정</a>
 																<input class="btn btn-primary btn-lg" type="button" onclick="deleteQna(${qna.qna_id});" style="color: white;" value="삭제">
 															</form>
 														</div>
@@ -176,10 +178,21 @@
 	</footer>
 
 	<script type="text/javascript">
+	
+		$(function csrf() {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(function() {
+			    $(document).ajaxSend(function(e, xhr, options) {
+			        xhr.setRequestHeader(header, token);
+			    });
+			});
+		})
+		
 		function deleteQna(qna_id) {
 			var flag = confirm("정말로 삭제하시겠습니까?");
 			if(flag) {
-				$('#delete_form').attr('action', '/qna/'+qna_id+'/delete');
+				$('#delete_form').attr('action', '/admin/qna/'+qna_id+'/delete');
 				$('#delete_form').submit();
 			}
 		}
@@ -189,7 +202,7 @@
 			var type = $(this).attr('value');
 			var html = '';
 			$.ajax({
-				url : '/ajaxQnaList',
+				url : '/contact/ajaxQnaList',
 				type : 'POST',
 				dataType : "json",
 				contentType : "application/json",
@@ -213,7 +226,7 @@
 						html += '<c:if test="${userVO.auth eq 3}">';
 						html += '<div style="float: right;">';
 						html += '<form id="delete_form" action="" method="post">';
-						html += '<a class="btn btn-primary btn-lg" href="/qna/'+item.qna_id+'" style="color: white;">수정</a> ';
+						html += '<a class="btn btn-primary btn-lg" href="/admin/qna/'+item.qna_id+'" style="color: white;">수정</a> ';
 						html += '<input class="btn btn-primary btn-lg" type="button" onclick="deleteQna(${qna.qna_id});" style="color: white;" value="삭제">';
 						html += '</form>';
 						html += '</div></c:if>';
@@ -234,7 +247,7 @@
 							pageSize : 10};
 			
 			$.ajax({
-				url : '/ajaxNoticeTemplate',
+				url : '/contact/ajaxNoticeTemplate',
 				type : 'POST',
 				dataType : "html",
 				contentType : "application/json",

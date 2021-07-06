@@ -30,7 +30,7 @@ public class CartController {
 	private CartService cartService;
 	
 	// 장바구니 화면 호출 메소드
-	@RequestMapping(value = "cart", method = RequestMethod.GET)
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public ModelAndView getCart(HttpServletRequest request) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
@@ -47,7 +47,7 @@ public class CartController {
 	}
 	
 	// 장바구니 추가 메소드
-	@RequestMapping(value = "insertCart", method = RequestMethod.POST)
+	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String insertCart(HttpServletRequest request, 
 							 @RequestParam("product_id") int product_id,
 							 @RequestParam("amount") int amount) throws Exception {
@@ -56,6 +56,7 @@ public class CartController {
 		UserVO userVO = new UserVO();
 		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
 		userVO = userService.selectOneUser(user_id);
+		System.out.println(userVO);
 		int seq_user_id = userVO.getSeq_user_id();
 		
 		cartVO.setSeq_user_id(seq_user_id);
@@ -67,7 +68,7 @@ public class CartController {
 	}
 	
 	// 장바구니에서 해당 품목 삭제
-	@RequestMapping(value = "cart/{seq_user_id}/delete/{cart_id}", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/cart/{seq_user_id}/delete/{cart_id}", method = {RequestMethod.GET, RequestMethod.POST})
 	public String deleteCart(@PathVariable("seq_user_id") int seq_user_id,
 							 @PathVariable("cart_id") int cart_id) throws Exception {
 		

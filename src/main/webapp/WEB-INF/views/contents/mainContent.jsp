@@ -15,22 +15,22 @@
 	</div>
 	<div class="content-box">
 		<div class="content content-half">
-			<a href="#"><img src="./resources/images/displayitem_a4b512cf-2055-40e1-8b4f-b3361724a2c5.jpg"></a>
+			<a href="#"><img src="${contextPath }/resources/images/displayitem_a4b512cf-2055-40e1-8b4f-b3361724a2c5.jpg"></a>
 		</div>
 		<div class="content content-half">
-			<a href="#"><img src="./resources/images/C2_1.jpg"></a>
+			<a href="#"><img src="${contextPath }/resources/images/C2_1.jpg"></a>
 		</div>
 		<div class="content content-quarter">
-			<a href="#"><img src="./resources/images/C2_4.jpg"></a>
+			<a href="#"><img src="${contextPath }/resources/images/C2_4.jpg"></a>
 		</div>
 		<div class="content content-quarter">
-			<a href="#"><img src="./resources/images/quarter1.jpg"></a>
+			<a href="#"><img src="${contextPath }/resources/images/quarter1.jpg"></a>
 		</div>
 		<div class="content content-quarter">
-			<a href="#"><img src="./resources/images/C2_8.jpg"></a>
+			<a href="#"><img src="${contextPath }/resources/images/C2_8.jpg"></a>
 		</div>
 		<div class="content content-quarter">
-			<a href="#"><img src="./resources/images/C2_9_(1).jpg"></a>
+			<a href="#"><img src="${contextPath }/resources/images/C2_9_(1).jpg"></a>
 		</div>
 	</div>
 	<hr>

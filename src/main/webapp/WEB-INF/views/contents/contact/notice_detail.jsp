@@ -7,20 +7,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>고객센터</title>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-<link rel="stylesheet"
-	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
-<script src="${contextPath}/resources/js/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/jquery.number.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<script src="${contextPath}/resources/js/swiper.min.js"></script>
+	<title>고객센터</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script>
+	<script src="${contextPath}/resources/js/jquery.number.min.js"></script>
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
 </head>
 <body>
 	<header>
@@ -87,8 +87,9 @@
 			</div>
 			<c:if test="${userVO.auth eq 3}">
 				<div style="float: right;">
-					<form id="notice_form" action="/contact/notice/${noticeVO.notice_id}/delete" method="post">
-						<a class="btn btn-primary btn-lg" href="/contact/notice/${noticeVO.notice_id}/update"
+					<form id="notice_form" action="/admin/notice/${noticeVO.notice_id}/delete" method="post">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<a class="btn btn-primary btn-lg" href="/admin/notice/${noticeVO.notice_id}/update"
 							style="color: white;">수정</a>
 						<input class="btn btn-primary btn-lg" type="submit" style="color: white;" value="삭제">
 					</form>
