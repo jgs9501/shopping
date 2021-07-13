@@ -33,8 +33,7 @@
     	<div class="container">
     		<h2><strong>공지사항등록</strong></h2>
     		<hr>
-    		<form class="form-horizontal" action="/admin/notice" method="post" enctype="multipart/form-data">
-    			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+    		<form class="form-horizontal" action="/admin/notice?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
     			<!-- 제목 -->
     			<div class="form-group">
 	    			<label class="col-sm-1 control-label"><span class="emphasis">*</span>제목</label>

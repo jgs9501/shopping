@@ -21,7 +21,6 @@
 			<div class="collapse navbar-collapse" id="navbar1">
 				<ul class="nav navbar-nav">
 					<!-- auth: 1(소비자), 2(판매자) 3(관리자) -->
-					<security:authentication var="user" property="principal" />
 					<security:authorize access="hasRole('ROLE_STORE')"> 
 						<li><a href="/product/release">상품등록</a></li>
 						<li><a href="/product/release/${userVO.seq_user_id}">상품조회</a></li>

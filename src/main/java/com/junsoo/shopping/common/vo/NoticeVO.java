@@ -16,8 +16,6 @@ import lombok.ToString;
 public class NoticeVO {
 
 	@NonNull
-	private int seq_user_id;
-	@NonNull
 	private int notice_id;
 	@NonNull
 	private String title;

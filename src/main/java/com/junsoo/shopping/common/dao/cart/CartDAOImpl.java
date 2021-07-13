@@ -55,6 +55,23 @@ public class CartDAOImpl implements CartDAO {
 			throw e;
 		}
 	}
+	
+	@Override
+	public void updateCartAmount(CartVO cartVO) throws Exception {
+		
+		try {
+			
+			sqlSession.update(namespace + ".updateAmountCart", cartVO);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
 	@Override
 	public void deleteCart(CartVO cartVO) throws Exception {

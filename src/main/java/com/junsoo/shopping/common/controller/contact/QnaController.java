@@ -1,30 +1,22 @@
 package com.junsoo.shopping.common.controller.contact;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.junsoo.shopping.common.service.contact.QnaService;
-import com.junsoo.shopping.common.service.user.UserService;
 import com.junsoo.shopping.common.vo.QnaVO;
-import com.junsoo.shopping.common.vo.UserVO;
+import com.junsoo.shopping.utils.checker.SecurityAuthorities;
 
 @RestController
 public class QnaController {
 
-	@Inject
-	private UserService userService;
 	@Inject
 	private QnaService qnaService;
 	
@@ -34,10 +26,10 @@ public class QnaController {
 		
 		ModelAndView mv = new ModelAndView();
 		// 세션에 입력된 유저 데이터 취득
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
-		int seq_user_id = userVO.getSeq_user_id();
+		// UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		SecurityAuthorities securityAuthorities = new SecurityAuthorities();
 		// 유저권한 체크, 관리자가 아닐 경우 에러페이지로 이동
-		if(userService.selectOneUser(seq_user_id).getAuth() != 3) {
+		if(!securityAuthorities.hasRoleAdmin()) {
 			mv.addObject("result", "유저 권한 실패");
 			mv.setViewName("contents/error");
 		} else {
@@ -53,12 +45,13 @@ public class QnaController {
 									@ModelAttribute QnaVO qnaVO) throws Exception{
 		
 		ModelAndView mv = new ModelAndView();
+		SecurityAuthorities securityAuthorities = new SecurityAuthorities();
 		// 세션에 입력된 유저 데이터 취득
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
-		int seq_user_id = userVO.getSeq_user_id();
-		qnaVO.setSeq_user_id(seq_user_id);
+		// UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		// qnaVO.setSeq_user_id(seq_user_id);
+		
 		// 유저권한 체크, 관리자가 아닐 경우 에러페이지로 이동
-		if(userService.selectOneUser(seq_user_id).getAuth() != 3) {
+		if(!securityAuthorities.hasRoleAdmin()) {
 			mv.addObject("result", "유저 권한 실패");
 			mv.setViewName("contents/error");
 			return mv;
@@ -73,7 +66,6 @@ public class QnaController {
 		mv.addObject("result", "자주묻는질문 등록");
 		mv.setViewName("contents/complete");
 		
-		
 		return mv;
 	}
 	
@@ -84,10 +76,10 @@ public class QnaController {
 		
 		ModelAndView mv = new ModelAndView();
 		QnaVO qnaVO = new QnaVO();
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		//UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		SecurityAuthorities securityAuthorities = new SecurityAuthorities();
 		// 유저 권한 체크
-		int auth = userVO.getAuth();
-		if(auth != 3) {
+		if(!securityAuthorities.hasRoleAdmin()) {
 			mv.addObject("result", "유저 권한 실패");
 			mv.setViewName("contents/error");
 			return mv;
@@ -104,10 +96,10 @@ public class QnaController {
 									@ModelAttribute QnaVO qnaVO) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		//UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		SecurityAuthorities securityAuthorities = new SecurityAuthorities();
 		// 유저 권한 체크
-		int auth = userVO.getAuth();
-		if(auth != 3) {
+		if(!securityAuthorities.hasRoleAdmin()) {
 			mv.addObject("result", "유저 권한 실패");
 			mv.setViewName("contents/error");
 			return mv;
@@ -130,10 +122,10 @@ public class QnaController {
 								@PathVariable int qna_id) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
-		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		// UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
+		SecurityAuthorities securityAuthorities = new SecurityAuthorities();
 		// 유저 권한 체크
-		int auth = userVO.getAuth();
-		if(auth != 3) {
+		if(!securityAuthorities.hasRoleAdmin()) {
 			mv.addObject("result", "유저 권한 실패");
 			mv.setViewName("contents/error");
 			return mv;

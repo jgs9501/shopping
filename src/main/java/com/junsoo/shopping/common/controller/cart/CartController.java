@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.junsoo.shopping.common.service.cart.CartService;
@@ -65,6 +67,13 @@ public class CartController {
 		cartService.insertCart(cartVO);
 		
 		return "redirect:/products/"+product_id;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/ajaxCartAmountUpdate", method = RequestMethod.POST)
+	public int updateCartAmount(@RequestBody CartVO cartVO) throws Exception {
+		
+		return cartService.updateCartAmount(cartVO);
 	}
 	
 	// 장바구니에서 해당 품목 삭제
