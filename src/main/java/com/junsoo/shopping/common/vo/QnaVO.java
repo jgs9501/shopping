@@ -16,8 +16,6 @@ import lombok.ToString;
 public class QnaVO {
 	
 	@NonNull
-	private int seq_user_id;
-	@NonNull
 	private int qna_id;
 	@NonNull
 	private String title;

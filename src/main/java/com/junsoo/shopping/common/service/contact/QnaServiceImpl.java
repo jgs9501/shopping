@@ -94,6 +94,7 @@ public class QnaServiceImpl implements QnaService {
 		
 		ValueChecker vc = new ValueChecker();
 		try {
+			System.out.println(qnaVO);
 			// 자주묻는질문의 상담종류 존재 확인
 			// 해당 항목이 없을 경우, 기타항목으로 설정
 			if(!vc.isExistContactType(qnaVO.getType())) {
@@ -119,7 +120,7 @@ public class QnaServiceImpl implements QnaService {
 			qnaDAO.insertQna(qnaVO);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return 4000;
+			return 500;
 		}
 		return 200;
 	}

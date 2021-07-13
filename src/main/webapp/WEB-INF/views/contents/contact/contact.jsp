@@ -153,14 +153,15 @@
 											<div id="collapse${index.count}" class="panel-collapse collapse">
 												<div class="panel-body">
 													<span>${qna.answer}</span>
-													<c:if test="${userVO.auth eq 3}">
+													<security:authorize access="hasRole('ROLE_ADMIN')"> 
 														<div style="float: right;">
 															<form id="delete_form" action="" method="post">
+																<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 																<a class="btn btn-primary btn-lg" href="/admin/qna/${qna.qna_id}" style="color: white;">수정</a>
 																<input class="btn btn-primary btn-lg" type="button" onclick="deleteQna(${qna.qna_id});" style="color: white;" value="삭제">
 															</form>
 														</div>
-													</c:if>
+													</security:authorize>
 												</div>
 											</div>
 										</div>
@@ -223,13 +224,13 @@
 						html += '<div id="collapse'+index+'" class="panel-collapse collapse">';
 						html += '<div class="panel-body">';
 						html += '<span>'+item.answer+'</span>';
-						html += '<c:if test="${userVO.auth eq 3}">';
+						html += '<security:authorize access="hasRole('ROLE_ADMIN')">';
 						html += '<div style="float: right;">';
 						html += '<form id="delete_form" action="" method="post">';
 						html += '<a class="btn btn-primary btn-lg" href="/admin/qna/'+item.qna_id+'" style="color: white;">수정</a> ';
 						html += '<input class="btn btn-primary btn-lg" type="button" onclick="deleteQna(${qna.qna_id});" style="color: white;" value="삭제">';
 						html += '</form>';
-						html += '</div></c:if>';
+						html += '</div></security:authorize>';
 						html += '</div></div></div>';
 					});
 					html += '</div></div>';

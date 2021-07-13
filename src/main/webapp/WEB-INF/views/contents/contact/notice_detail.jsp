@@ -85,7 +85,7 @@
 					style="color: white;"><i
 					class="glyphicon glyphicon-chevron-left"></i>뒤로가기</a>
 			</div>
-			<c:if test="${userVO.auth eq 3}">
+			<security:authorize access="hasRole('ROLE_ADMIN')">
 				<div style="float: right;">
 					<form id="notice_form" action="/admin/notice/${noticeVO.notice_id}/delete" method="post">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
@@ -94,7 +94,7 @@
 						<input class="btn btn-primary btn-lg" type="submit" style="color: white;" value="삭제">
 					</form>
 				</div>
-			</c:if>
+			</security:authorize>
 		</div>
 	</section>
 	<footer>

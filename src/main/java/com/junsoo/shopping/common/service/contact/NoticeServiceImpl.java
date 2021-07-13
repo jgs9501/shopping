@@ -36,9 +36,14 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		try {
 			return noticeDAO.selectAllNoticeCount();
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return -1;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -53,9 +58,14 @@ public class NoticeServiceImpl implements NoticeService {
 			}
 			return noticeDAO.selectTypeNoticeCount(type);
 			
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return -1;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -71,11 +81,40 @@ public class NoticeServiceImpl implements NoticeService {
 			}
 			noticeVO = noticeDAO.selectNotice(notice_id);
 			noticeVO.setType(vc.getContactTypeToName(noticeVO.getType()));
-			
 			return noticeVO;
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
+	public NoticeVO selectUpdateNotice(int notice_id) throws Exception {
+		
+		NoticeVO noticeVO = new NoticeVO();
+		ValueChecker vc = new ValueChecker();
+		try {
+			if(notice_id < 1) {
+				logger.error("notice_id does not exist");
+				return null;
+			}
+			noticeVO = noticeDAO.selectNotice(notice_id);
+			noticeVO.setType(vc.getContactTypeToName(noticeVO.getType()));
+			noticeVO.setContent(noticeVO.getContent().replaceAll("<br>", "\n"));
+			return noticeVO;
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -91,14 +130,19 @@ public class NoticeServiceImpl implements NoticeService {
 				vo.setType(vc.getContactTypeToName(vo.getType()));
 			}
 			return noticeVO_list;
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
 	@Override
-	public List<NoticeVO> selectAllNotice() {
+	public List<NoticeVO> selectAllNotice() throws Exception {
 		
 		List<NoticeVO> noticeVO_list = null;
 		ValueChecker vc = new ValueChecker();
@@ -109,9 +153,14 @@ public class NoticeServiceImpl implements NoticeService {
 				vo.setType(vc.getContactTypeToName(vo.getType()));
 			}
 			return noticeVO_list;
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -131,9 +180,14 @@ public class NoticeServiceImpl implements NoticeService {
 				vo.setType(vc.getContactTypeToName(vo.getType()));
 			}
 			return noticeVO_list;
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -220,17 +274,17 @@ public class NoticeServiceImpl implements NoticeService {
 			// 공지사항 공유의 값 확인 
 			if(noticeVO.getNotice_id() < 1) {
 				logger.error("Does not exist notice. : " + noticeVO);
-				return 4001;
+				return 501;
 			}
 			// 공지사항 제목 입력확인
 			if(noticeVO.getTitle().isEmpty() || noticeVO.getTitle() == "") {
 				logger.error("Notice title error. : " + noticeVO);
-				return 4002;
+				return 502;
 			}
 			// 공지사항 내용 입력확인
 			if(noticeVO.getContent().isEmpty() || noticeVO.getContent() == "") {
 				logger.error("Notice content error. : " + noticeVO);
-				return 4003;
+				return 503;
 			}
 			
 			for(MultipartFile file : uploadFile_list) {
@@ -256,7 +310,7 @@ public class NoticeServiceImpl implements NoticeService {
 			noticeDAO.updateNotice(noticeVO);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return 4000;
+			return 500;
 		}
 		return 200;
 	}
@@ -266,12 +320,12 @@ public class NoticeServiceImpl implements NoticeService {
 		try {
 			if(noticeVO.getNotice_id() < 1) {
 				logger.error("Does not exist notice. : " + noticeVO);
-				return 4001;
+				return 501;
 			}
 			noticeDAO.updateViewsNotice(noticeVO);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return 4000;
+			return 500;
 		}
 		return noticeVO.getViews()+1;
 	}
@@ -282,13 +336,13 @@ public class NoticeServiceImpl implements NoticeService {
 		try {
 			if(notice_id < 1) {
 				logger.error("Does not exist notice. notice_id : " + notice_id);
-				return 4001;
+				return 501;
 			}
 			logger.info("Deleted the notice. notice_id : " + notice_id);
 			noticeDAO.deleteNotice(notice_id);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return 4000;
+			return 500;
 		}
 		return 200;
 	}

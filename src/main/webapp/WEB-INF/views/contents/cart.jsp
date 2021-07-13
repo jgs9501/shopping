@@ -55,30 +55,31 @@
 							</tr>
 						</thead>
 						<c:forEach var="cartList" items="${cartList}" varStatus="i">
-						<tbody>
-							<tr id="cartTr">
-								<td data-th="Product">
-									<div class="row">
-										<div class="col-sm-2 hidden-xs"><img src="${cartList.product_thumbImg}" alt="..." class="img-responsive"/></div>
-										<div class="col-sm-10">
-											<h4 class="nomargin"><a href="/products/${cartList.product_id}">${cartList.product_name}</a></h4>
+							<tbody>
+								<tr id="cartTr">
+									<td data-th="Product">
+										<div class="row">
+											<div class="col-sm-2 hidden-xs"><img src="${cartList.product_thumbImg}" alt="..." class="img-responsive"/></div>
+											<div class="col-sm-10">
+												<h4 class="nomargin"><a href="/products/${cartList.product_id}">${cartList.product_name}</a></h4>
+											</div>
 										</div>
-									</div>
-								</td>
-								<td data-th="Price" id="priceTd${i.index}">
-									<fmt:formatNumber type="number" maxFractionDigits="3" value="${cartList.product_price}"/> 원
-								</td>
-								<td data-th="Quantity" id="qtyTd${i.index}">
-									<input type="number" class="form-control text-center" id="selectAmountId" onchange="changeSelectAmount(this, ${i.index}, ${cartList.product_price})" value="${cartList.amount}" min="1" max="20">
-								</td>
-								<td data-th="Subtotal" class="text-center" id="subTotalTd${i.index}">
-									<fmt:formatNumber type="number" maxFractionDigits="3" value="${cartList.product_price*cartList.amount}"/> 원</td>
-								<td class="actions">
-									<button class="btn btn-danger btn-sm" onclick="deleteCartItem(${cartList.seq_user_id}, ${cartList.cart_id})"><i class="fas fa-trash-alt"></i></button>								
-								</td>
-								<c:set var="totalPrice" value="${totalPrice + (cartList.product_price*cartList.amount)}"/>
-							</tr>
-						</tbody>
+									</td>
+									<td data-th="Price" id="priceTd${i.index}">
+										<fmt:formatNumber type="number" maxFractionDigits="3" value="${cartList.product_price}"/> 원
+									</td>
+									<td data-th="Quantity" id="qtyTd${i.index}">
+										<input type="hidden" id="cart_id${i.index}" value="${cartList.cart_id }">
+										<input type="number" class="form-control text-center" id="selectAmountId" onchange="changeSelectAmount(this, ${i.index}, ${cartList.product_price})" value="${cartList.amount}" min="1" max="20">
+									</td>
+									<td data-th="Subtotal" class="text-center" id="subTotalTd${i.index}">
+										<fmt:formatNumber type="number" maxFractionDigits="3" value="${cartList.product_price*cartList.amount}"/> 원</td>
+									<td class="actions">
+										<button class="btn btn-danger btn-sm" onclick="deleteCartItem(${cartList.seq_user_id}, ${cartList.cart_id})"><i class="fas fa-trash-alt"></i></button>								
+									</td>
+									<c:set var="totalPrice" value="${totalPrice + (cartList.product_price*cartList.amount)}"/>
+								</tr>
+							</tbody>
 						</c:forEach>
 						<tfoot>
 							<tr>
@@ -93,8 +94,8 @@
 							</tr>
 						</tfoot>
 					</table>
-					</c:otherwise>
-				</c:choose>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</section>
 	
@@ -127,8 +128,31 @@
 		var price = price;
 		var subTotal = qty * price;
 		
+		var cart_id = $('#cart_id'+index).val();
+		var param = {
+				cart_id : cart_id,
+				amount : qty
+		};
+		
+		$.ajax({
+			type : "POST",
+			url : "/ajaxCartAmountUpdate",
+			dataType : "json",
+			contentType : "application/json",
+			data : JSON.stringify(param),
+			success : function (data) {
+				if(data != 200) {
+					alert("상품 개수가 변경되지 못하였습니다.");
+				}
+			},
+			error : function(request,status,error){
+				console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			}
+		})
+		
 		subTotalCalc(index, price, qty);
 		totalCalc();
+		
 	}
 
 	function subTotalCalc(index, price, qty) {

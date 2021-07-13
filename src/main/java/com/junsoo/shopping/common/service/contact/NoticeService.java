@@ -25,17 +25,24 @@ public interface NoticeService {
 	public int selectTypeNoticeCount(String type) throws Exception;
 	
 	/**
-	 * 특정 공지사항의 모든 데이터 반환
+	 * 특정 공지사항 조회
 	 * @param notice_id
 	 * @return
 	 */
 	public NoticeVO selectNotice(int notice_id) throws Exception;
+
+	/**
+	 * 특정 공지사항의 수정 메소드
+	 * @param notice_id
+	 * @return
+	 */
+	public NoticeVO selectUpdateNotice(int notice_id) throws Exception;
 	
 	/**
 	 * 공지사항 전체 컬럼의 데이터 반환
 	 * @return
 	 */
-	public List<NoticeVO> selectAllNotice();
+	public List<NoticeVO> selectAllNotice() throws Exception;
 	
 	/**
 	 * 공지사항 해당 상담종류의 전체 데이터 반환
