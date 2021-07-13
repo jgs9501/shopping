@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.junsoo.shopping.common.dao.product.ProductDAO;
+import com.junsoo.shopping.common.vo.ProductDetailVO;
 import com.junsoo.shopping.common.vo.ProductVO;
 import com.junsoo.shopping.utils.UploadFileUtils;
 import com.junsoo.shopping.utils.checker.ValueChecker;
@@ -48,6 +49,27 @@ public class ProductServiceImpl implements ProductService{
 		}
 	}
 
+	@Override
+	public ProductDetailVO selectProductDetail(int product_id) throws Exception {
+		
+		try {
+			ProductDetailVO result_productDetailVO = new ProductDetailVO();
+			if(product_id < 1) {
+				throw new NullPointerException();
+			}
+			result_productDetailVO = productDAO.selectProductDetail(product_id);
+			return result_productDetailVO;
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 	@Override
 	public int selectCategoryProductCount(HashMap<String, Object> hashMap) throws Exception {
 		
@@ -148,6 +170,27 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
+	public ProductVO selectStoreProduct(ProductVO productVO) throws Exception {
+		
+		try {
+			ProductVO result_productVO = new ProductVO();
+			result_productVO = productDAO.selectStoreProduct(productVO);
+			result_productVO.setProduct_desc(result_productVO.getProduct_desc().replaceAll("<br>", "\n"));
+			return result_productVO;
+		}
+		catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
+		}
+		catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
 	public List<HashMap<String, Object>> selectFavoriteProduct() throws Exception {
 		
 		try {
@@ -193,6 +236,8 @@ public class ProductServiceImpl implements ProductService{
 				logger.error("Invalid args " + productVO);
 				return 0;
 			}
+			
+			productVO.setProduct_desc(productVO.getProduct_desc().replaceAll("\n", "<br>"));
 			productDAO.insertProduct(productVO);
 		}
 		catch (NullPointerException npe) {
@@ -214,6 +259,7 @@ public class ProductServiceImpl implements ProductService{
 		String ymdPath = uploadFileUtils.calcPath(imgUploadPath);
 		String fileName = file.getOriginalFilename();
 		
+		System.out.println(productVO);
 		try {
 			
 			if(file != null && !fileName.equals("")) {
@@ -237,6 +283,8 @@ public class ProductServiceImpl implements ProductService{
 				logger.error("Invalid args " + productVO);
 				return 0;
 			}
+			
+			productVO.setProduct_desc(productVO.getProduct_desc().replaceAll("\n", "<br>"));
 			productDAO.updateProduct(productVO);
 		}
 		catch (NullPointerException npe) {

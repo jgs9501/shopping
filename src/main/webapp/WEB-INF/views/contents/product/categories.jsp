@@ -55,9 +55,9 @@
 												<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
 											</ul>
 											<jsp:useBean id="today" class="java.util.Date" />
+											<fmt:parseDate var="parseReg" value="${product.reg_date}" pattern="yyyy-MM-dd HH:mm:ss" />
 											<fmt:formatDate var="now" value="${today}" pattern="yyyyMMdd" />
 											<fmt:formatDate var="reg" value="${parseReg}" pattern="yyyyMMdd" />
-											<fmt:parseDate var="parseReg" value="${product.reg_date}" pattern="yyyy-MM-dd HH:mm:ss" />
 											<c:if test="${now-reg eq 0}">
 												<span class="product-new-label">New</span>
 											</c:if>

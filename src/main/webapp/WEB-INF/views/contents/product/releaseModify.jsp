@@ -31,7 +31,8 @@
 	</ol>
 	
 		<div class="container">
-			<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()" enctype="multipart/form-data">
+			<form class="form-horizontal form-width" method="post" action="/product/release/${userVO.seq_user_id}/${product.product_id}?${_csrf.parameterName}=${_csrf.token}" 
+			onsubmit="return checkInfo()" enctype="multipart/form-data">
 				<input type="hidden" name="seq_user_id" value="${userVO.seq_user_id}"> 
 				<!-- 상품이름 -->
 		    	<div id="productName" class="form-group has-feedback">
@@ -159,15 +160,6 @@
     </footer>
 	<script type="text/javascript">
 	
-		$(function csrf() {
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$(function() {
-				$(document).ajaxSend(function(e, xhr, options) {
-					xhr.setRequestHeader(header, token);
-				});
-			});
-		})
 		var checkNumber = RegExp(/^[0-9]{1,10}$/);
 		function checkInfo() {
 			$('span').empty();
@@ -182,8 +174,7 @@
 				return false;
 			}
 			if (!checkNumber.test($('#product_price').val())) {
-				$('#spanProductPrice').text("상품 가격을 입력해주세요")
-						.css("color", "red");
+				$('#spanProductPrice').text("상품 가격을 입력해주세요").css("color", "red");
 				$('#product_price').focus();
 				return false;
 			}
