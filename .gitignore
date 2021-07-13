@@ -1,6 +1,6 @@
 # ignore properties file
 *.properties
-target/
+target/*
 .classpath
 .project
 .settings/
