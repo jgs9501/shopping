@@ -7,17 +7,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
-	<title>JS Shop</title>
-	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-	<script src="${contextPath}/resources/js/jquery.min.js"></script>
-	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
-	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
+	<title>JS Shop</title>
 </head>
 <body>
 	<!-- 머릿글 -->

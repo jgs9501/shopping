@@ -36,14 +36,12 @@
 	
 	<insert id="insertQna" parameterType="QnaVO">
 		INSERT INTO qna_board(
-			seq_user_id,
 			title,
 			answer,
 			reg_date,
 			mod_date,
 			type
 		) VALUES (
-			#{seq_user_id},
 			#{title},
 			#{answer},
 			NOW(),

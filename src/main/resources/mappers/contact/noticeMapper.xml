@@ -44,7 +44,6 @@
 	
 	<insert id="insertNotice" parameterType="NoticeVO">
 		INSERT INTO notice_board(
-			seq_user_id,
 			title,
 			content,
 			content_img1,
@@ -53,7 +52,6 @@
 			views,
 			type
 		) VALUES (
-			#{seq_user_id},
 			#{title},
 			#{content},
 			#{content_img1},

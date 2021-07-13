@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.junsoo.shopping.common.service.contact.NoticeService;
 import com.junsoo.shopping.common.vo.NoticeVO;
-import com.junsoo.shopping.common.vo.UserVO;
+import com.junsoo.shopping.utils.checker.SecurityAuthorities;
 
 @RestController
 public class NoticeController {
@@ -44,9 +44,8 @@ public class NoticeController {
 
 	// 공지사항 등록 페이지 전환 메소드
 	@RequestMapping(value = "/admin/notice", method = RequestMethod.GET)
-	public ModelAndView getNotice() throws Exception {
+	public ModelAndView getNotice(ModelAndView mv) throws Exception {
 
-		ModelAndView mv = new ModelAndView();
 		mv.setViewName("contents/contact/notice_regist");
 		return mv;
 	}
@@ -79,12 +78,11 @@ public class NoticeController {
 
 	// 공지사항 템플릿 호출 메소드
 	@RequestMapping(value = "/admin/notice/{notice_id}/update", method = RequestMethod.GET)
-	public ModelAndView getUpdateNotice(HttpServletRequest request, @PathVariable int notice_id) throws Exception {
+	public ModelAndView getUpdateNotice(@PathVariable int notice_id) throws Exception {
 
 		ModelAndView mv = new ModelAndView();
 		NoticeVO noticeVO = new NoticeVO();
-		noticeVO = noticeService.selectNotice(notice_id);
-		noticeVO.setContent(noticeVO.getContent().replaceAll("<br>", "\n"));
+		noticeVO = noticeService.selectUpdateNotice(notice_id);
 		mv.addObject("noticeVO", noticeVO);
 		mv.setViewName("contents/contact/notice_update");
 		return mv;
@@ -92,8 +90,10 @@ public class NoticeController {
 
 	// 공지사항 수정 메소드
 	@RequestMapping(value = "/admin/notice/{notice_id}/update", method = RequestMethod.POST)
-	public ModelAndView patchNotice(HttpServletRequest request, @ModelAttribute NoticeVO noticeVO,
-			@PathVariable int notice_id, @RequestPart("uploadFile1") MultipartFile uploadFile1,
+	public ModelAndView patchNotice(HttpServletRequest request, 
+			@ModelAttribute NoticeVO noticeVO,
+			@PathVariable int notice_id, 
+			@RequestPart("uploadFile1") MultipartFile uploadFile1,
 			@RequestPart("uploadFile2") MultipartFile uploadFile2,
 			@RequestPart("uploadFile3") MultipartFile uploadFile3) throws Exception {
 
@@ -121,10 +121,10 @@ public class NoticeController {
 	public ModelAndView deleteNotice(HttpServletRequest request, @PathVariable int notice_id) throws Exception {
 
 		ModelAndView mv = new ModelAndView();
-		UserVO userVO = (UserVO) request.getSession().getAttribute("userVO");
-		int auth = userVO.getAuth();
+		// UserVO userVO = (UserVO) request.getSession().getAttribute("userVO");
+		SecurityAuthorities securityAuthorities = new SecurityAuthorities();
 		// 유저 권한 체크
-		if (auth != 3) {
+		if (!securityAuthorities.hasRoleAdmin()) {
 			mv.addObject("result", "권한");
 			mv.setViewName("contents/error");
 			return mv;

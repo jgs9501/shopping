@@ -39,12 +39,11 @@
 	</insert>
 	
 	<!-- 장바구니에 담긴 물건 수량 수정 -->
-	<update id="updateAmountCart" parameterType="Map">
+	<update id="updateAmountCart" parameterType="CartVO">
 		UPDATE cart
 		SET
 			amount = #{amount}
 		WHERE
-			seq_user_id = #{seq_user_id} AND
 			cart_id = #{cart_id}
 	</update>
 	

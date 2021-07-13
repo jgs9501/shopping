@@ -32,6 +32,7 @@ public class ReplyServiceImpl implements ReplyService{
 	public ProductReplyVO selectProductReply(ProductReplyVO prVO) throws Exception {
 		
 		try {
+			ProductReplyVO resultVO = new ProductReplyVO();
 			if(prVO.getSeq_user_id() < 1) {
 				logger.error("selectProductReply() seq_user_id error " + prVO);
 				return null;
@@ -40,7 +41,9 @@ public class ReplyServiceImpl implements ReplyService{
 				logger.error("selectProductReply() product_id error " + prVO);
 				return null;
 			}
-			return replyDAO.selectProductReply(prVO);
+			resultVO = replyDAO.selectProductReply(prVO);
+			resultVO.setContent(resultVO.getContent().replaceAll("<br>", "\n"));
+			return resultVO;
 		} catch (NumberFormatException nfe) {
 			logger.error(nfe.getMessage());
 			nfe.printStackTrace();
@@ -122,14 +125,18 @@ public class ReplyServiceImpl implements ReplyService{
 			// 구입내역
 			Map<String, Object> order_historyMap = new HashMap<String, Object>();
 			order_historyMap = productService.selectBuyProduct(hashMap);
+			System.out.println(prVO);
+			System.out.println(order_historyMap);
 			// 해당 제품의 구매 이력 확인
 			// 구매이력, 리뷰 작성 여부 확인, 평점 입력 확인
-			if(order_historyMap == null || order_historyMap.get("content") != null || order_historyMap.get("rating") != null) {
+			if(order_historyMap == null || order_historyMap.get("rating") != null) {
 				logger.info("couldn't write the product reply. seq_user_id : " + prVO.getSeq_user_id() + 
 						    " product_id : " + prVO.getProduct_id() + 
 						    " user_name : " + prVO.getUser_name());
 				return -1;
 			}
+			prVO.setContent(prVO.getContent().replaceAll("\n", "<br>"));
+			prVO.setAnswer(prVO.getAnswer().replaceAll("\n", "<br>"));
 			replyDAO.insertProductReply(prVO);
 			return 1;
 		} catch (NumberFormatException nfe) {
@@ -156,6 +163,7 @@ public class ReplyServiceImpl implements ReplyService{
 				logger.error("updateProductReplyAnswer() product_id value error. " + prVO);
 				return -1;
 			}
+			prVO.setAnswer(prVO.getAnswer().replaceAll("\n", "<br>"));
 			replyDAO.updateProductReplyAnswer(prVO);
 		} catch (NumberFormatException nfe) {
 			logger.error(nfe.getMessage());
