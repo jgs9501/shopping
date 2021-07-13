@@ -99,11 +99,11 @@ public class ProductController {
 		productVO.setProduct_name(multiReq.getParameter("product_name"));
 		productVO.setProduct_cnt(Integer.parseInt(multiReq.getParameter("product_cnt")));
 		productVO.setProduct_price(Integer.parseInt(multiReq.getParameter("product_price")));
-		productVO.setProduct_desc(multiReq.getParameter("product_desc"));
+		productVO.setProduct_desc(multiReq.getParameter("product_desc").replaceAll("\n", "<br>"));
 		productVO.setCategory(Integer.parseInt(multiReq.getParameter("category")));
 		productVO.setSale(multiReq.getParameter("sale"));
 		productVO.setDiscount(Integer.parseInt(multiReq.getParameter("discount")));
-		productVO.setProduct_desc(multiReq.getParameter("weight"));
+		productVO.setWeight(multiReq.getParameter("weight"));
 		productVO.setAttention(multiReq.getParameter("attention"));
 		productVO.setValid_date(multiReq.getParameter("valid_date"));
 		productVO.setUse_info(multiReq.getParameter("use_info"));
@@ -133,8 +133,6 @@ public class ProductController {
 											@PathVariable("seq_user_id") int seq_user_id) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
-		
-		
 		List<ProductVO> productList = productDAO.selectStoreProducts(seq_user_id);
 		
 		if(productList.size() < 1) {
@@ -194,8 +192,11 @@ public class ProductController {
 										 @PathVariable("product_id") int product_id) throws Exception{
 		
 		ModelAndView mv = new ModelAndView();
+		UserVO userVO = new UserVO();
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		userVO = userService.selectOneUser(user_id);
 		
-		productVO = productDAO.selectStoreProduct(productVO);
+		productVO = productService.selectStoreProduct(productVO);
 		if(productVO == null) {
 			mv.addObject("result", "검색된 출품 상품이 없습니다");
 			mv.setViewName("contents/error");
@@ -203,6 +204,7 @@ public class ProductController {
 		}
 		mv.setViewName("/contents/product/releaseModify");
 		mv.addObject("product", productVO);
+		mv.addObject("userVO", userVO);
 		
 		return mv;
 	}

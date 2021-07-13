@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.junsoo.shopping.common.vo.ProductDetailVO;
 import com.junsoo.shopping.common.vo.ProductVO;
 
 /**
@@ -25,6 +26,14 @@ public interface ProductService {
 	 */
 	public List<ProductVO> selectRecentlyProduct(int category) throws Exception;
 
+	/**
+	 * 특정 상품 정보 조회 메소드
+	 * @param product_id
+	 * @return
+	 * @throws Exception
+	 */
+	public ProductDetailVO selectProductDetail(int product_id) throws Exception;
+	
 	/**
 	 * 해당 카테고리의 상품 개수 조회 메소드
 	 * @param hashMap
@@ -57,6 +66,14 @@ public interface ProductService {
 	 * @throws Exception
 	 */
 	public List<HashMap<String, Object>> selectBuyProducts(int seq_user_id) throws Exception;
+	
+	/**
+	 * 점포가 출품한 특정 제품 조회 메소드
+	 * @param seq_user_id
+	 * @return
+	 * @throws Exception
+	 */
+	public ProductVO selectStoreProduct(ProductVO productVO) throws Exception;
 	
 	/**
 	 * index 페이지의 마음에 드는 상품 조회 메소드<br>
