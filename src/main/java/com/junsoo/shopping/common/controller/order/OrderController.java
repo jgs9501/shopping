@@ -128,7 +128,7 @@ public class OrderController {
 			cartDAO.deleteAllCart(seq_user_id);
 			// 입력된 주문,주문상세 검색
 			orderVO = orderService.selectOrder(orderVO);
-			ArrayList<OrderDetailVO> orderDetailList = orderDetailService.selectOrderDetail(orderDetailsVO);
+			ArrayList<OrderDetailVO> orderDetailList = orderDetailService.selectListOrderDetail(orderDetailsVO);
 
 			mv.addObject("userVO", userVO);
 			mv.addObject("order", orderVO);
@@ -190,7 +190,7 @@ public class OrderController {
 			cartDAO.deleteAllCart(seq_user_id);
 			// 입력된 주문,주문상세 검색
 			orderVO = orderService.selectOrder(orderVO);
-			ArrayList<OrderDetailVO> orderDetailList = orderDetailService.selectOrderDetail(orderDetailsVO);
+			ArrayList<OrderDetailVO> orderDetailList = orderDetailService.selectListOrderDetail(orderDetailsVO);
 
 			mv.addObject("order", orderVO);
 			mv.addObject("orderDetailList", orderDetailList);

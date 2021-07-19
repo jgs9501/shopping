@@ -80,6 +80,7 @@
 												<input type="hidden" id="os${o.count}${d.count}" value="${order.order_status}">
 												<input type="hidden" id="req${o.count}${d.count}" value="${order.request}">
 												<input type="hidden" id="tp${o.count}${d.count}" value="${order.total_price}">
+												<input type="hidden" id="ty${o.count}${d.count}" value="${order.pay_type}">
 												<input type="hidden" id="odi${o.count}${d.count}" value="${detail.order_detail_id}">
 												<input type="hidden" id="pi${o.count}${d.count}" value="${detail.product_id}">
 												<input type="hidden" id="am${o.count}${d.count}" value="${detail.amount}">
@@ -129,6 +130,7 @@
 		let order_date = $('#od'+idx).val();
 		let order_status = $('#os'+idx).val();
 		let request = $('#req'+idx).val();
+		let pay_type = $('#ty'+idx).val();
 		let total_price = $('#tp'+idx).val();
 		let order_detail_id = $('#odi'+idx).val();
 		let product_id = $('#pi'+idx).val();
@@ -142,6 +144,7 @@
 				order_status : order_status,
 				request : request,
 				total_price : total_price,
+				pay_type : pay_type,
 				order_detail_id : order_detail_id,
 				product_id : product_id,
 				amount : amount,

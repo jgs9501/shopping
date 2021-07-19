@@ -21,9 +21,17 @@
   	<select id="selectOrderDetail" resultType="OrderDetailVO">
   		SELECT *
   		FROM   order_detail
+  		WHERE  order_detail_id = #{order_detail_id}
+  		AND    seq_user_id = #{seq_user_id}
+  	</select>
+  	
+  	<select id="selectListOrderDetail" resultType="OrderDetailVO">
+  		SELECT *
+  		FROM   order_detail
   		WHERE  seq_user_id = #{seq_user_id}
   		AND    order_id = #{order_id}
   	</select>
+  	
   	<insert id="insertOrderDetail" parameterType="OrderDetailVO">
   		INSERT INTO order_detail (
   			order_detail_id,

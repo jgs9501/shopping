@@ -1,49 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
-<meta id="_csrf_header" name="_csrf_header"
-	content="${_csrf.headerName}" />
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
-<link rel="stylesheet"
-	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
-<script src="${contextPath}/resources/js/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<script src="${contextPath}/resources/js/swiper.min.js"></script>
-<title>JS Shop</title>
-<style type="text/css">
-.center-auto {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.form-width {
-	min-width: 700px;
-	width: 800px;
-	position: relative;
-}
-
-.padding-left {
-	padding-left: 50px;
-}
-</style>
-
-
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
+	<title>JS Shop</title>
 </head>
 <body>
 	<header>
@@ -61,6 +37,8 @@
 		<div class="container">
 			<form class="form-horizontal form-width center-auto" method="post"
 				onsubmit="return checkInfo()">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+				
 				<!-- 아이디 -->
 				<div id="inputId" class="form-group has-feedback">
 					<label class="col-sm-2 control-label">아이디</label>

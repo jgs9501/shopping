@@ -36,7 +36,15 @@ public interface OrderDetailService {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<OrderDetailVO> selectOrderDetail(OrderDetailVO orderDetailVO) throws Exception;
+	public OrderDetailVO selectOrderDetail(OrderDetailVO orderDetailVO) throws Exception;
+
+	/**
+	 * 주문/결제시 동일한 order_id와 seq_user_id로 주문목록 조회
+	 * @param orderDetailVO
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<OrderDetailVO> selectListOrderDetail(OrderDetailVO orderDetailVO) throws Exception;
 	
 	/**
 	 * 주문/결제시 상세주문 테이블 입력

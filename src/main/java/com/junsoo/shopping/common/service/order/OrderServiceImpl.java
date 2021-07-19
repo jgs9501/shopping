@@ -157,6 +157,7 @@ public class OrderServiceImpl implements OrderService {
 				logger.error("deleteOrder method error : order_id does not exist.");
 				return 301;
 			}
+			
 			orderDAO.deleteOrder(orderVO);
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());

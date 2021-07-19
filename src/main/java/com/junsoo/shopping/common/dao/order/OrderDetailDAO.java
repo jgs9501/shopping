@@ -31,11 +31,19 @@ public interface OrderDetailDAO {
 	
 	/**
 	 * order_detail 테이블 특정 주문번호로 조회 메소드
+	 * @param orderVO
+	 * @return
+	 * @throws Exception
+	 */
+	public OrderDetailVO selectOrderDetail(OrderDetailVO orderDetailVO) throws Exception;
+	
+	/**
+	 * order_detail 테이블 특정 주문번호로 조회 메소드
 	 * @param orderDetailVO
 	 * @return
 	 * @throws Exception
 	 */
-	public List<OrderDetailVO> selectOrderDetail(OrderDetailVO orderDetailVO) throws Exception;
+	public List<OrderDetailVO> selectListOrderDetail(OrderDetailVO orderDetailVO) throws Exception;
 	
 	/**
 	 * order_detail 테이블 주문한 상품 수량 조회 메소드

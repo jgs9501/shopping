@@ -20,7 +20,7 @@ public class ReplyDAOImpl implements ReplyDAO {
 	private final static String namespace = "com.mapper.replyMapper";
 	
 	@Inject
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public void insertProductReply(ProductReplyVO prVO) throws Exception {

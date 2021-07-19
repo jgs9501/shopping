@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.xml.bind.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +44,14 @@ public class ProductServiceImpl implements ProductService{
 				return null;
 			}
 			return productDAO.selectRecentlyProduct(category);
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -55,7 +61,7 @@ public class ProductServiceImpl implements ProductService{
 		try {
 			ProductDetailVO result_productDetailVO = new ProductDetailVO();
 			if(product_id < 1) {
-				throw new NullPointerException();
+				logger.error("product_id error: " + product_id);
 			}
 			result_productDetailVO = productDAO.selectProductDetail(product_id);
 			return result_productDetailVO;
@@ -95,9 +101,14 @@ public class ProductServiceImpl implements ProductService{
 				return -1;
 			}
 			return productDAO.selectCategoryProductCount(hashMap);
+		}  catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return -1;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -127,9 +138,14 @@ public class ProductServiceImpl implements ProductService{
 			}
 			
 			return productDAO.selectCategoryProducts(hashMap);
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -147,9 +163,14 @@ public class ProductServiceImpl implements ProductService{
 				return null;
 			}
 			return productDAO.selectBuyProduct(hashMap);
+		}  catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -163,9 +184,14 @@ public class ProductServiceImpl implements ProductService{
 				return null;
 			}
 			return productDAO.selectBuyProducts(seq_user_id);
+		}  catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -177,13 +203,11 @@ public class ProductServiceImpl implements ProductService{
 			result_productVO = productDAO.selectStoreProduct(productVO);
 			result_productVO.setProduct_desc(result_productVO.getProduct_desc().replaceAll("<br>", "\n"));
 			return result_productVO;
-		}
-		catch (NullPointerException npe) {
+		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
 			npe.printStackTrace();
 			throw npe;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error(e.getMessage());
 			e.printStackTrace();
 			throw e;
@@ -196,9 +220,35 @@ public class ProductServiceImpl implements ProductService{
 		try {
 			
 			return productDAO.selectFavoriteProduct();
+		}  catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
+	public int updateProductAmount(HashMap<String, Object> hashMap) throws Exception {
+		
+		try {
+			if(!hashMap.containsKey("product_id") || !hashMap.containsKey("product_cnt")) {
+				throw new ValidationException("product_id : "+ hashMap.get("product_id") + 
+							", product_cnt : " + hashMap.get("product_cnt"));
+			}
+			productDAO.updateProductAmount(hashMap);
+			return 200;
+		}  catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -239,14 +289,16 @@ public class ProductServiceImpl implements ProductService{
 			
 			productVO.setProduct_desc(productVO.getProduct_desc().replaceAll("\n", "<br>"));
 			productDAO.insertProduct(productVO);
-		}
-		catch (NullPointerException npe) {
+			return 1;
+		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
-		}
-		catch (Exception e) {
+			npe.printStackTrace();
+			throw npe;
+		} catch (Exception e) {
 			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
-		return 1;
 	}
 	
 	@Override
@@ -286,13 +338,15 @@ public class ProductServiceImpl implements ProductService{
 			
 			productVO.setProduct_desc(productVO.getProduct_desc().replaceAll("\n", "<br>"));
 			productDAO.updateProduct(productVO);
-		}
-		catch (NullPointerException npe) {
+			return 1;
+		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
-		}
-		catch (Exception e) {
+			npe.printStackTrace();
+			throw npe;
+		} catch (Exception e) {
 			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
-		return 1;
 	}
 }
