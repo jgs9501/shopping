@@ -29,16 +29,12 @@ public class StoreVO {
 	
 	@NonNull
 	private int seq_user_id;
-	@NonNull
 	private String reg_date;
-	@NonNull
 	private String mod_date;
-	@NonNull
 	private char del_flg;
 	@NonNull
 	private String store_name;
 	@NonNull
-	private int store_phone;
-	@NonNull
+	private String store_phone;
 	private float ratio;
 }

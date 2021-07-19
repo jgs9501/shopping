@@ -6,7 +6,7 @@ a:hover { color: blue; text-decoration: underline;}
 input {color: transparent; text-shadow: 0 0 0 black;} 
 span {color: transparent; text-shadow: 0 0 0 black;} 
 html {min-height: 100%}
-section {margin-top: 20px;}
+section {margin-top: 20px; min-height: 200px;}
 .header {width: 100%;position: static;list-style-type: none;float: left;height:auto;}
 .main-search{width: 700px; position: relative; text-align: center; left: 30%;}
 .nav-main{margin-left: auto;margin-right: auto;width: 1518px;height:auto;}
@@ -18,16 +18,15 @@ section {margin-top: 20px;}
 .fixed{position:fixed;}
 .abs{position:absolute;}
 .section{height: 100%; min-height: 500px;}
-.list-group{position:absolute; float: left; width: 170px; font-size: x-small; height:auto;}
-
-.list-group{float: left;width: 170px;font-size: x-small;}
+.list-group{position:absolute; float: left; width: 170px; font-size: x-small; height:200px;}
 .list-header{font-size: small;font-weight: bolder;background-color: #eee;}
-
+.padding-left-200{padding-left: 200px;}
+.padding-top-50{padding-top: 50px;}
 .myMenu {font-size: x-small;list-style-type: none;float: right;}
 .myMenu-li{width: 80px;float: right;}
 .img-logo {width: 220px; height: 80px;}
 .navbar .navbar-search .dropdown-menu { min-width: 25px; }
-.footer {float: left;position: relative; width: 100%; padding-top: 200px;}
+.footer {float: left;position: relative; width: 100%; margin-top: 200px;}
 
 .viewed-items-containers {padding-bottom: 50px;}
 .swiper-slide {text-align: center;font-size: 18px;background: #fff;

@@ -58,11 +58,27 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 	}
 	
 	@Override
-	public List<OrderDetailVO> selectOrderDetail(OrderDetailVO orderDetailVO) throws Exception {
+	public List<OrderDetailVO> selectListOrderDetail(OrderDetailVO orderDetailVO) throws Exception {
 		
 		try {
 			
-			return sqlSession.selectList(namespace + ".selectOrderDetail", orderDetailVO);
+			return sqlSession.selectList(namespace + ".selectListOrderDetail", orderDetailVO);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public OrderDetailVO selectOrderDetail(OrderDetailVO orderDetailVO) throws Exception {
+		
+		try {
+			return sqlSession.selectOne(namespace + ".selectOrderDetail", orderDetailVO);
 		} catch (DataAccessException dae) {
 			logger.error(dae.getMessage());
 			dae.printStackTrace();
@@ -158,6 +174,4 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 			throw e;
 		}
 	}
-
-
 }

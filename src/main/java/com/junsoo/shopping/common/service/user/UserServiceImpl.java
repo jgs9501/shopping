@@ -2,6 +2,7 @@ package com.junsoo.shopping.common.service.user;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,16 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.junsoo.shopping.common.dao.user.UserDAO;
 import com.junsoo.shopping.common.dao.user.UserpointDAO;
 import com.junsoo.shopping.common.vo.SecurityUserVO;
+import com.junsoo.shopping.common.vo.StoreVO;
 import com.junsoo.shopping.common.vo.UserVO;
 import com.junsoo.shopping.utils.WebUtils;
 import com.junsoo.shopping.utils.checker.RegexChecker;
+import com.junsoo.shopping.utils.checker.SecurityAuthorities;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserDetailsService, UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-	
+	private static final int ROLE_STORE = 2;
 	@Inject
 	private UserDAO userDAO;
 	
@@ -236,4 +239,37 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		}
 	}
 
+	@Override
+	public void insertUserToStoreAuth(StoreVO storeVO) throws Exception {
+		
+		SecurityAuthorities securityAuthorities = new SecurityAuthorities();
+		UserVO userVO = new UserVO();
+		String username = securityAuthorities.getUsername();
+		int seq_user_id = 0;
+		
+		try {
+			userVO = userDAO.selectOneUser(username);
+			seq_user_id = userVO.getSeq_user_id();
+			if(seq_user_id < 1) {
+				logger.error("inserUserToStoreAuth is error : " + userVO);
+				throw new ValidationException("UserVO seq_user_id is invalid : " + userVO);
+			}
+			storeVO.setSeq_user_id(seq_user_id);
+			userDAO.insertUserToStoreAuth(storeVO);
+			userVO.setAuth(ROLE_STORE);
+			userDAO.updateUser(userVO);
+		} catch (NullPointerException npe) {
+			logger.error(npe.getMessage());
+			npe.printStackTrace();
+			throw npe;
+		} catch (UsernameNotFoundException unfe) {
+			logger.error(unfe.getMessage());
+			unfe.printStackTrace();
+			throw unfe;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw new Error(e.getMessage());
+		}
+	}
 }

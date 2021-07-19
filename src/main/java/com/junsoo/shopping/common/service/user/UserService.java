@@ -2,6 +2,7 @@ package com.junsoo.shopping.common.service.user;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.junsoo.shopping.common.vo.StoreVO;
 import com.junsoo.shopping.common.vo.UserVO;
 
 public interface UserService {
@@ -15,5 +16,5 @@ public interface UserService {
 	public void insertUser(UserVO vo, HttpServletRequest request) throws Exception;
 	public int selectCheckId(String user_id) throws Exception;
 	public void signOut(UserVO userVO) throws Exception;
-	
+	public void insertUserToStoreAuth(StoreVO storeVO) throws Exception;
 }

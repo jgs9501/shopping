@@ -17,8 +17,9 @@ public class QnaDAOImpl implements QnaDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(QnaDAO.class);
 	private static final String namespace = "com.mapper.qnaMapper";
+	
 	@Inject
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public int selectAllQnaCount() throws Exception {

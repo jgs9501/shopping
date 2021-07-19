@@ -20,7 +20,7 @@ public class CartDAOImpl implements CartDAO {
 	private static final String namespace = "com.mapper.cartMapper";
 	
 	@Inject
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public void insertCart(CartVO cartVO) throws Exception {

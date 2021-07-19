@@ -58,8 +58,16 @@ public class SecurityAuthorities {
 	public User getPrincipal() {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User)authentication.getPrincipal();
-		return user;
+		return (User)authentication.getPrincipal();
 	}
 	
+	/**
+	 * 현재 로그인 된 계정 정보 추출
+	 * @return
+	 */
+	public String getUsername() {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authentication.getName();
+	}
 }

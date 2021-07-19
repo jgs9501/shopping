@@ -19,7 +19,7 @@ public class UserpointDAOImpl implements UserpointDAO {
 	private static final String namespace = "com.mapper.userPointMapper";
 	
 	@Inject
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 
 	@Override
 	public int selectCountUserId(String user_id) throws Exception {

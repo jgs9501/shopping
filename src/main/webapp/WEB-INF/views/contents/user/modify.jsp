@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -38,7 +36,10 @@
 			<li class="active">회원정보수정</li>
 		</ol>
 		<div class="container">
-			<section style="margin-left: 150px; margin-right: 150px;">
+			<h2><strong>회원정보수정</strong></h2>
+			<hr>
+			<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
+			<div style="margin-left: 150px; margin-right: 150px;">
 				<form class="form-horizontal form-width" method="post"
 					onsubmit="return checkInfo()">
 					<!-- 아이디 -->
@@ -130,7 +131,7 @@
 							수 정</button>
 					</div>
 				</form>
-			</section>
+			</div>
 		</div>
 	</section>
 	<!--바닥글-->

@@ -31,11 +31,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectList(namespace + ".selectRecentlyProduct", category);
 		} catch (DataAccessException dae) {
-			logger.error("selectRecentlyProduct() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -46,11 +48,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectOne(namespace + ".selectProductDetail", product_id);
 		} catch (DataAccessException dae) {
-			logger.error("selectProductDetail() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -61,11 +65,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectList(namespace + ".selectSameStoreProduct", productVO);
 		} catch (DataAccessException dae) {
-			logger.error("selectSameStoreProduct() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -76,11 +82,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectOne(namespace + ".selectCategoryProductCount", hashMap);
 		} catch (DataAccessException dae) {
-			logger.error("selectCategoryProductCount() Data access Exception. " + dae.getMessage());
-			return -1;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return -1;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -91,11 +99,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectList(namespace + ".selectCategoryProducts", hashMap);
 		} catch (DataAccessException dae) {
-			logger.error("selectCategoryProducts() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -106,11 +116,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectList(namespace + ".selectStoreProducts", seq_user_id);
 		} catch (DataAccessException dae) {
-			logger.error("selectStoreProducts() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -121,11 +133,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectOne(namespace + ".selectStoreProduct", productVO);
 		} catch (DataAccessException dae) {
-			logger.error("selectStoreProduct() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -136,11 +150,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectOne(namespace + ".selectBuyProduct", hashMap);
 		} catch (DataAccessException dae) {
-			logger.error("selectBuyProduct() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -151,11 +167,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectList(namespace + ".selectBuyProducts", seq_user_id);
 		} catch (DataAccessException dae) {
-			logger.error("selectBuyProducts() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -166,11 +184,29 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			return sqlSession.selectList(namespace + ".selectFavoriteProduct");
 		} catch (DataAccessException dae) {
-			logger.error("insertProduct() Data access Exception. " + dae.getMessage());
-			return null;
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return null;
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
+	public int updateProductAmount(HashMap<String, Object> hashMap) throws Exception {
+		
+		try {
+			return sqlSession.update(namespace + ".updateProductAmount", hashMap);
+		} catch (DataAccessException dae) {
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -181,9 +217,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			sqlSession.insert(namespace + ".insertProduct", productVO);
 		} catch (DataAccessException dae) {
-			logger.error("insertProduct() Data access Exception. " + dae.getMessage());
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -194,9 +234,13 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			sqlSession.update(namespace + ".updateProduct", productVO);
 		} catch (DataAccessException dae) {
-			logger.error("updateProduct() Data access Exception. " + dae.getMessage());
+			logger.error(dae.getMessage());
+			dae.printStackTrace();
+			throw dae;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
+			e.printStackTrace();
+			throw e;
 		}
 	}
 

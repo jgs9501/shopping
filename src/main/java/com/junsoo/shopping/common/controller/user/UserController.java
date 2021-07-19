@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.junsoo.shopping.common.service.user.UserService;
 import com.junsoo.shopping.common.service.user.UserpointService;
+import com.junsoo.shopping.common.vo.StoreVO;
 import com.junsoo.shopping.common.vo.UserVO;
 
 @Controller
@@ -172,9 +173,7 @@ public class UserController {
 		UserVO userVO = new UserVO();
 //		UserVO userVO = (UserVO)request.getSession().getAttribute("userVO");
 		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println(user_id);
 		userVO = userService.selectOneUser(user_id);
-		System.out.println(userVO);
 		mv.addObject("userVO", userVO);
 		mv.setViewName("/contents/user/modify");
 		
@@ -352,6 +351,41 @@ public class UserController {
 		mv.addObject("user_id", user_id);
 		mv.setViewName("contents/user/find_password_modify");
 		
+		return mv;
+	}
+	
+	/**
+	 * 유저 권한설정 페이지
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/user/auth", method = RequestMethod.GET)
+	public String getUserAuth() throws Exception {
+		return "contents/user/authority";
+	}
+	
+	/**
+	 * 유저에서 점포로 권한 수정시 호출 페이지
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/user/auth/store", method = RequestMethod.GET)
+	public String getUserToStore() throws Exception {
+		return "contents/user/modify_authority";
+	}
+	
+	/**
+	 * 유저 -> 점포로 계정전환
+	 * @param storeVO
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/user/auth/store", method = RequestMethod.POST)
+	public ModelAndView postUserToStore(@ModelAttribute StoreVO storeVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		userService.insertUserToStoreAuth(storeVO);
+		mv.addObject("result", "권한변경");
+		mv.setViewName("contents/complete");
 		return mv;
 	}
 }

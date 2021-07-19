@@ -197,6 +197,13 @@
 		LIMIT 0, 12
 	</select>
 	
+	<update id="updateProductAmount" parameterType="HashMap">
+		UPDATE product
+		SET    product_cnt = #{product_cnt},
+			   mod_date = NOW()
+		WHERE  product_id = #{product_id}
+	</update>
+	
 <!-- =============================점포용===================== -->
 	<!-- 자신이 출품한 상품 조회 (점포)  -->
 	<select id="selectStoreProducts" resultType="ProductVO">
