@@ -91,4 +91,24 @@
 		AND		user_id = #{user_id}
 	</update>
 	
+	<insert id="insertUserToStore" parameterType="StoreVO">
+		INSERT INTO store (
+			seq_user_id,
+			reg_date,
+			mod_date,
+			del_flg,
+			store_name,
+			store_phone,
+			ratio
+		) VALUES (
+			#{seq_user_id},
+			NOW(),
+			NOW(),
+			'N',
+			#{store_name},
+			#{store_phone},
+			0
+		)
+		
+	</insert>
 </mapper>

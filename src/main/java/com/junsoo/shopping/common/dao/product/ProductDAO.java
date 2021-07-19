@@ -95,6 +95,14 @@ public interface ProductDAO {
 	public List<HashMap<String, Object>> selectFavoriteProduct() throws Exception;
 	
 	/**
+	 * 상품 결제시 남은 개수 변경 메소드
+	 * @param hashMap
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateProductAmount(HashMap<String, Object> hashMap) throws Exception;
+	
+	/**
 	 * 점포의 상품 출판 메소드
 	 * @param productVO
 	 * @throws Exception

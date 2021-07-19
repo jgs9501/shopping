@@ -135,7 +135,7 @@ public class ProductController {
 		ModelAndView mv = new ModelAndView();
 		List<ProductVO> productList = productDAO.selectStoreProducts(seq_user_id);
 		
-		if(productList.size() < 1) {
+		if(productList == null || productList.size() < 1) {
 			mv.setViewName("/contents/product/releaseList");
 			mv.addObject("listResult", "등록한 상품이 없습니다");
 			return mv;

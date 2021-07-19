@@ -18,8 +18,9 @@ public class NoticeDAOImpl implements NoticeDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(NoticeDAO.class);
 	private static final String namespace = "com.mapper.noticeMapper";
+	
 	@Inject
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public int selectAllNoticeCount() throws Exception {

@@ -1,22 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% request.setCharacterEncoding("UTF-8"); %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<meta charset="UTF-8">
-	<title>비밀번호변경</title>
+<head>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
-	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.css">
-	<script src="${contextPath}/resources/js/jquery.min.js"></script>
-	<script src="${contextPath}/resources/js/jquery.cookie.js"></script>
+	<link rel="stylesheet" href="${contextPath}/resources/css/swiper.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/modal.css">
+	<script src="${contextPath}/resources/js/jquery.min.js"></script> 
+	<script src="${contextPath}/resources/js/jquery.cookie.js"></script> 
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="${contextPath}/resources/css/main.css">	
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<script src="${contextPath}/resources/js/swiper.min.js"></script>
+	<title>JS Shop</title>
 </head>
 <body>
 	<!-- 머릿글 -->
@@ -30,56 +32,47 @@
     <section>
 		<ol class="breadcrumb container">
 			<li><a href="/index">메인</a></li>
+			<li><a href="/user/modify">회원정보수정</a></li>
 			<li class="active">비밀번호수정</li>
 		</ol>
-		<c:choose>
-			<c:when test="${not empty sessionScope.user}">
-				<div class="container">
-					<aside>
-						<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
-					</aside>
-					
-					<section style="padding-left: 200px; padding-right: 200px;">
-						<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()">
-							<!-- 아이디 -->
-					    	<div id="inputId" class="form-group has-feedback">
-						    	<label class="col-sm-2 control-label">아이디</label>
-					    		<div class="col-sm-10">
-						    		<input type="text" class="form-control" aria-describedby="inputIdStatus" id="user_id" name="user_id" value="${userVO.user_id}" readonly="readonly">
-				      				<span id="inputIdStatus" class="sr-only"></span>
-						    	</div>
-						    	<span id="spanId"></span>
-					  		</div><hr>
-					  		<!-- 비밀번호 -->
-					  		<div id="inputPw" class="form-group has-feedback">
-					    		<label for="inputPassword" class="col-sm-2 control-label">비밀번호</label>
-					    		<div class="col-sm-10">
-					      			<input type="password" class="form-control" aria-describedby="inputPwStatus" id="password" name="password" placeholder="영문 숫자포함 6자리이상 입력해주세요" maxlength="13">
-					      			<span id="inputPwIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
-				      				<span id="inputPwStatus" class="sr-only"></span>
-					    		</div>
-					    		<span id="spanPassword"></span>
-					  		</div><hr>
-							<!-- 비밀번호 확인 -->
-					  		<div id="inputCheckPw" class="form-group has-feedback">
-					    		<label for="inputPasswordCheck" class="col-sm-2 control-label">비밀번호 확인</label>
-					    		<div class="col-sm-10">
-					      			<input type="password" class="form-control" id="checkPassword" name="checkPassword" placeholder="비밀번호를 다시 입력해주세요" maxlength="13">
-					      			<span id="inputPwCheckIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
-				      				<span id="inputPwCheckStatus" class="sr-only"></span>
-					    		</div>
-					    		<span id="spanCheckPassword"></span>
-					  		</div><hr>
-					  		<div class="form-group" align="center">
-					      		<button type="submit" class="btn btn-primary btn-lg">회 원 수 정</button>
-					  		</div>
-				  		</form>
-					</section>
-				</div>
-			</c:when>
-			<c:otherwise>
-			</c:otherwise>
-		</c:choose>
+		<div class="container">
+		<jsp:include page="/WEB-INF/views/side/registList.jsp"></jsp:include>
+			<div class="padding-left-200 padding-top-50">
+				<form class="form-horizontal form-width" method="post" onsubmit="return checkInfo()">
+					<div id="inputId" class="form-group has-feedback">
+						<label class="col-sm-2 control-label">아이디</label>
+					    <div class="col-sm-10">
+						    <input type="text" class="form-control" aria-describedby="inputIdStatus" id="user_id" name="user_id" value="${userVO.user_id}" readonly="readonly">
+				      		<span id="inputIdStatus" class="sr-only"></span>
+						</div>
+						<span id="spanId"></span>
+					</div><hr>
+					<!-- 비밀번호 -->
+					<div id="inputPw" class="form-group has-feedback">
+						<label for="inputPassword" class="col-sm-2 control-label">비밀번호</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" aria-describedby="inputPwStatus" id="password" name="password" placeholder="영문 숫자포함 6자리이상 입력해주세요" maxlength="13">
+							<span id="inputPwIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+							<span id="inputPwStatus" class="sr-only"></span>
+						</div>
+					<span id="spanPassword"></span>
+					</div><hr>
+						<!-- 비밀번호 확인 -->
+					<div id="inputCheckPw" class="form-group has-feedback">
+						<label for="inputPasswordCheck" class="col-sm-2 control-label">비밀번호 확인</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="checkPassword" name="checkPassword" placeholder="비밀번호를 다시 입력해주세요" maxlength="13">
+							<span id="inputPwCheckIcon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				   			<span id="inputPwCheckStatus" class="sr-only"></span>
+						</div>
+						<span id="spanCheckPassword"></span>
+					</div><hr>
+					<div class="form-group" align="center">
+						<button type="submit" class="btn btn-primary btn-lg">회 원 수 정</button>
+					</div>
+				</form>
+			</div>
+		</div>
     </section>
 	<!--바닥글-->
     <footer class="footer">
